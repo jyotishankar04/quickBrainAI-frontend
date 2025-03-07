@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="bg-neutral-900 text-white py-20 md:py-28 min-h-[70vh] flex items-center">
+    <section id="hero" className="bg-neutral-900 h-15vh text-white py-20 md:py-28 min-h-[10vh] flex items-center">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center">
           {/* Left Column: Text Content */}
