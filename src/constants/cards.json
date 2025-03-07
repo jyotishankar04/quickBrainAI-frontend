@@ -1,0 +1,66 @@
+{
+  "features": [
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'/></svg>",
+      "title": "Smart Note Editor",
+      "description": "Create rich-text notes with formatting options, checklists, and embedded media. Our editor automatically saves your work as you type.",
+      "features": [
+        "Real-time collaboration",
+        "Auto-formatting",
+        "Keyboard shortcuts"
+      ],
+      "animationDelay": "animate__delay-1s"
+    },
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z'/></svg>",
+      "title": "PDF Integration",
+      "description": "Upload PDF documents and extract information directly. Highlight important passages and add notes to specific sections.",
+      "features": [
+        "Easy drag-and-drop upload",
+        "Text extraction and search",
+        "Interactive annotations"
+      ],
+      "animationDelay": "animate__delay-1s"
+    },
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'/></svg>",
+      "title": "AI Assistant",
+      "description": "Our integrated chatbot helps you refine notes, generate summaries, and extract key information from your documents.",
+      "features": [
+        "Content summarization",
+        "Writing suggestions",
+        "Research assistance"
+      ],
+      "animationDelay": "animate__delay-2s"
+    },
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/></svg>",
+      "title": "Security & Privacy",
+      "description": "Your notes are encrypted and securely stored. Control sharing permissions with granular access controls.",
+      "features": [
+        "End-to-end encryption",
+        "Two-factor authentication",
+        "Permission controls"
+      ],
+      "animationDelay": "animate__delay-1s"
+    },
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'/></svg>",
+      "title": "Seamless Sharing",
+      "description": "Share notes with colleagues or make them public. Generate shareable links with custom permissions.",
+      "features": [
+        "Custom share links",
+        "View-only or edit access",
+        "Export in multiple formats"
+      ],
+      "animationDelay": "animate__delay-2s"
+    },
+    {
+      "icon": "<svg xmlns='http://www.w3.org/2000/svg' class='h-7 w-7 text-blue-600' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'/></svg>",
+      "title": "Smart Organization",
+      "description": "Organize notes with tags, folders, and AI-powered suggestions. Find what you need quickly with advanced search.",
+      "features": ["Nested folders", "Tag system", "Full-text search"],
+      "animationDelay": "animate__delay-2s"
+    }
+  ]
+}
