@@ -14,7 +14,7 @@ const Faq = () => {
       };
     
   return (
-    <div className="mt-20 max-w-4xl mx-auto">
+    <div className="mt-20 max-w-4xl mx-auto" id="faq">
       <h3 className="text-2xl font-bold text-center mb-8">
         Frequently Asked Questions
       </h3>

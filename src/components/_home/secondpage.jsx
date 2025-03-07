@@ -315,7 +315,7 @@ const AIPlaygroundSection = () => {
 // SecondPage Component (Combines all components)
 const SecondPage = () => {
   return (
-    <div className="container pb-20 mx-auto px-4">
+    <div id='features' className="container pb-20 mx-auto px-4">
       <NoteTakingFeatures />
       <FeaturesGrid />
       <AIPlaygroundSection />

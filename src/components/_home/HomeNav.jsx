@@ -16,7 +16,7 @@ const HomeNav = () => {
             <Logo />
           </div>
 
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex scroll-smooth space-x-6">
             {homeNavBarLinks.map((obj) => {
               return (
                 <a
@@ -72,7 +72,7 @@ const HomeNav = () => {
           className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
           id="mobile-menu"
         >
-          <div className="flex flex-col space-y-4 mt-4 pb-4">
+          <div className="flex flex-col scroll-smooth space-y-4 mt-4 pb-4">
             {
               homeNavBarLinks.map((obj) => {
                 return (

@@ -4,7 +4,7 @@ import { SvgIcons } from "../../constants/SvgIcons";
 
 const PricingSection = () => {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4" id="pricing">
       {/* Pricing Section */}
       <div className="text-center mb-16 animate__animated animate__fadeIn">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 mt-40">
@@ -19,9 +19,10 @@ const PricingSection = () => {
       {/* Pricing Plans */}
       <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
         {/* Cards will added here */}
-        {SubscriptionDetails.map((obj) => {
+        {SubscriptionDetails.map((obj, index) => {
+
           return (
-            <div className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden animate__animated animate__fadeInUp">
+            <div className={`flex-1 ${obj.isDisabled ? "opacity-50 pointer-events-none" : ""} bg-white rounded-xl border ${index ===1 ? "border-[#2563EB]" : "border-gray-200 scale-90"} shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden animate__animated animate__fadeInUp`}>
               <div className="p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
                   {obj.head}
@@ -46,34 +47,12 @@ const PricingSection = () => {
                   {obj.includes}
                 </h4>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span1}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span2}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span3}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span4}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span5}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span6}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <SvgIcons />
-                    <span className="text-gray-600">{obj.span7}</span>
-                  </li>
+                  {obj.features.map((feature, index) => (
+                      <li key={index} className="flex items-center">
+                        <SvgIcons />
+                        <span className="text-gray-600">{feature}</span>
+                      </li>
+                 ))}
                 </ul>
               </div>
             </div>

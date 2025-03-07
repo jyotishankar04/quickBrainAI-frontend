@@ -2,9 +2,9 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="bg-neutral-900 h-15vh text-white py-20 md:py-28 min-h-[10vh] flex items-center">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center">
+    <section id="hero" className="bg-neutral-900  text-white py-20 md:py-28 h-fit flex items-center">
+      <div className="container mx-auto px-4 ">
+        <div className="flex flex-col md:flex-row h-full items-center">
           {/* Left Column: Text Content */}
           <div className="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft" style={{ opacity: 1 }}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
@@ -146,74 +146,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Feature Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 text-center">
-          {/* Feature 1 */}
-          <div className="bg-neutral-800/50 p-6 rounded-lg border border-neutral-700 hover:border-[#2563EB]/50 transition duration-300 opacity-0 animate__animated animate__fadeIn">
-            <div className="bg-[#2563EB]/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-[#2563EB]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium mb-2">Smart PDF Import</h3>
-            <p className="text-gray-400 text-sm">Upload and extract content from PDFs with intelligent parsing and organization.</p>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="bg-neutral-800/50 p-6 rounded-lg border border-neutral-700 hover:border-[#2563EB]/50 transition duration-300 opacity-0 animate__animated animate__fadeIn">
-            <div className="bg-[#2563EB]/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-[#2563EB]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium mb-2">AI-Powered Assistant</h3>
-            <p className="text-gray-400 text-sm">Get summaries, explanations, and insights with our integrated AI chat assistant.</p>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="bg-neutral-800/50 p-6 rounded-lg border border-neutral-700 hover:border-[#2563EB]/50 transition duration-300 opacity-0 animate__animated animate__fadeIn">
-            <div className="bg-[#2563EB]/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-[#2563EB]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium mb-2">Real-time Sync</h3>
-            <p className="text-gray-400 text-sm">Access your notes across all devices with automatic syncing and offline capabilities.</p>
-          </div>
-        </div>
+       
       </div>
     </section>
   );
