@@ -22,7 +22,7 @@ const FeatureCard = ({ icon, title, description, features, animationDelay }) => 
       className={`bg-neutral-50 rounded-xl p-6 shadow-md transition duration-300 hover:shadow-lg animate__animated animate__fadeInUp ${animationDelay}`}
     >
       <div
-        className="bg-blue-100 rounded-full w-14 h-14 flex items-center justify-center mb-5"
+        className="bg-blue-100 rounded-full w-14  h-14 flex items-center justify-center mb-5"
         dangerouslySetInnerHTML={{ __html: icon }} // Render the SVG icon
       />
       <h3 className="text-xl font-semibold text-neutral-800 mb-3">{title}</h3>
@@ -315,7 +315,7 @@ const AIPlaygroundSection = () => {
 // SecondPage Component (Combines all components)
 const SecondPage = () => {
   return (
-    <div>
+    <div className="container pb-20 mx-auto px-4">
       <NoteTakingFeatures />
       <FeaturesGrid />
       <AIPlaygroundSection />
