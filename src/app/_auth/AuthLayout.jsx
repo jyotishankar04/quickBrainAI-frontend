@@ -5,7 +5,7 @@ const AuthLayout = () => {
   return (
     <div className='w-full h-screen grid grid-cols-2'>
         <div className='w-full flex justify-center items-center'>
-            <h1 className='text-2xl font-bold'>Auth Page</h1>
+            <img src="../../../public/authpage.jpg" className='w-full h-full object-center object-cover'/>
         </div>
         <div className='w-full flex justify-center items-center'>
             <Outlet />
