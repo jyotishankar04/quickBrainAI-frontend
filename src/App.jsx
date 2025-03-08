@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 import Home from './app/_home/Home.jsx'
 import AuthLayout from './app/_auth/AuthLayout.jsx'
 import SignUp from './app/_auth/pages/SignUp.jsx'
@@ -17,8 +17,13 @@ const App = () => {
         <Route path='register' element={<SignUp/>} />
         <Route path='otp-verification' element={<OtpVerification/>} />
         <Route path='onboard' element={<OnBoard />} />
-      </Route>
+       <Route path='*' element={<NotFoundPage />} />
 
+      </Route>
+      <Route path='/app' element={<Outlet />}  >
+      
+
+      </Route>
 
 
       <Route path='*' element={<NotFoundPage />} />
