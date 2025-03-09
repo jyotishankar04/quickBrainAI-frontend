@@ -26,8 +26,9 @@ const App = () => {
       </Route>
       <Route path="/app" element={<RootLayout />}>
         <Route path="" element={<Dashboard />} />
-        <Route path="notes" element={<MyNotes />} />
+        <Route path="notes" element={<CreateNotePage />} />
         <Route path="notes/create" element={<CreateNotePage />} />
+
         <Route path="favorites" element={<Favotires />} />
         <Route path="shared" element={<div>Shared</div>} />
         <Route path="profile" element={<div>Profile</div>} />

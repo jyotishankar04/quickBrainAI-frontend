@@ -111,6 +111,7 @@ export const noteCardsData = [
     category: "Work",
     updated: "2 hours ago",
     iconColor: "blue",
+    badge: "PDF",
   },
   {
     title: "Shopping List",
@@ -119,6 +120,7 @@ export const noteCardsData = [
     category: "Personal",
     updated: "yesterday",
     iconColor: "green",
+    badge: "PDF",
   },
   {
     title: "Vacation Photos",
@@ -127,5 +129,41 @@ export const noteCardsData = [
     category: "Travel",
     updated: "3 days ago",
     iconColor: "purple",
+    badge: "PDF",
   },
-];
+  
+
+
+    {
+      title: "Project Deadlines",
+      updated: "Oct 15, 2023",
+      description: "Critical deadlines for Q4 deliverables - Keep this note accessible for daily reference. Contains timeline details.",
+      category: ["Project", "Planning"],
+      iconColor: "yellow",
+      badge: "Important",
+      badgeColor: "yellow",
+      starred: true
+    },
+    {
+      title: "Product Roadmap",
+      updated: "Oct 10, 2023",
+      description: "Strategic roadmap for next 6 months - Features prioritization and development timeline with milestones.",
+      category: ["Product",  "Strategy"],
+      iconColor: "blue",
+      badge: "PDF",
+      badgeColor: "blue",
+      starred: true
+    },
+    {
+      title: "Interview Questions",
+      updated: "1 week ago",
+      description: "List of technical and behavioral questions for frontend developer interviews. Includes evaluation criteria.",
+      category: ["HR" ,  "Recruitment"],
+      iconColor: "green",
+      badge: "Note",
+      badgeColor: "green",
+      starred: false
+    }
+  ]
+  
+  

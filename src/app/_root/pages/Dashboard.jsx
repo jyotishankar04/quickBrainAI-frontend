@@ -49,7 +49,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {noteCardsData.map((note, index) => (
+            {noteCardsData.slice(0, 3).map((note, index) => (
               <NotesCard
                 key={index}
                 title={note.title}
