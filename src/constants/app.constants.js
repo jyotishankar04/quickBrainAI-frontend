@@ -103,67 +103,78 @@ export const dashboardStats = [
 ];
 
 // constants/notes.constants.js
+// constants/notes.constants.js
 export const noteCardsData = [
   {
     title: "Project Meeting Notes",
+    updated: "2 hours ago",
     description:
       "Discussion about the new dashboard design and upcoming features for the Q3 release.",
+    tags: ["Project", "Meeting"],
     category: "Work",
-    updated: "2 hours ago",
     iconColor: "blue",
     badge: "PDF",
+    badgeColor: "blue",
+    starred: false,
   },
   {
     title: "Shopping List",
+    updated: "yesterday",
     description:
       "Groceries for the week: milk, eggs, bread, fruits, vegetables, chicken, and pasta.",
+    tags: ["Groceries", "Weekly"],
     category: "Personal",
-    updated: "yesterday",
     iconColor: "green",
     badge: "PDF",
+    badgeColor: "green",
+    starred: false,
   },
   {
     title: "Vacation Photos",
+    updated: "3 days ago",
     description:
       "Collection of photos from the beach trip. Need to organize and share with family.",
+    tags: ["Photos", "Family"],
     category: "Travel",
-    updated: "3 days ago",
     iconColor: "purple",
     badge: "PDF",
+    badgeColor: "purple",
+    starred: false,
   },
-  
-
-
-    {
-      title: "Project Deadlines",
-      updated: "Oct 15, 2023",
-      description: "Critical deadlines for Q4 deliverables - Keep this note accessible for daily reference. Contains timeline details.",
-      category: ["Project", "Planning"],
-      iconColor: "yellow",
-      badge: "Important",
-      badgeColor: "yellow",
-      starred: true
-    },
-    {
-      title: "Product Roadmap",
-      updated: "Oct 10, 2023",
-      description: "Strategic roadmap for next 6 months - Features prioritization and development timeline with milestones.",
-      category: ["Product",  "Strategy"],
-      iconColor: "blue",
-      badge: "PDF",
-      badgeColor: "blue",
-      starred: true
-    },
-    {
-      title: "Interview Questions",
-      updated: "1 week ago",
-      description: "List of technical and behavioral questions for frontend developer interviews. Includes evaluation criteria.",
-      category: ["HR" ,  "Recruitment"],
-      iconColor: "green",
-      badge: "Note",
-      badgeColor: "green",
-      starred: false
-    }
-  ]
-  
-  
+  {
+    title: "Project Deadlines",
+    updated: "Oct 15, 2023",
+    description:
+      "Critical deadlines for Q4 deliverables - Keep this note accessible for daily reference. Contains timeline details.",
+    tags: ["Project", "Planning"],
+    category: "Work",
+    iconColor: "yellow",
+    badge: "Important",
+    badgeColor: "yellow",
+    starred: true,
+  },
+  {
+    title: "Product Roadmap",
+    updated: "Oct 10, 2023",
+    description:
+      "Strategic roadmap for next 6 months - Features prioritization and development timeline with milestones.",
+    tags: ["Product", "Strategy"],
+    category: "Work",
+    iconColor: "blue",
+    badge: "PDF",
+    badgeColor: "blue",
+    starred: true,
+  },
+  {
+    title: "Interview Questions",
+    updated: "1 week ago",
+    description:
+      "List of technical and behavioral questions for frontend developer interviews. Includes evaluation criteria.",
+    tags: ["HR", "Recruitment"],
+    category: "Interview",
+    iconColor: "green",
+    badge: "Note",
+    badgeColor: "green",
+    starred: false,
+  },
+];

@@ -54,9 +54,16 @@ const Dashboard = () => {
                 key={index}
                 title={note.title}
                 description={note.description}
+                date={note.date}
+                time={note.time}
+                color={note.color}
+                badge={note.badge}
+                iconColor={note.iconColor}
                 category={note.category}
                 updated={note.updated}
-                iconColor={note.iconColor}
+                badgeColor={note.badgeColor}
+                starred={note.starred}
+                tags={note.tags}
               />
             ))}
           </div>
