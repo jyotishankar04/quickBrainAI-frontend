@@ -1,75 +1,88 @@
-const NotesCard = ({ title, description, category, updated, iconColor }) => {
-  const colors = {
-    blue: { bg: "bg-blue-100", text: "text-blue-600" },
-    green: { bg: "bg-green-100", text: "text-green-600" },
-    purple: { bg: "bg-purple-100", text: "text-purple-600" },
-  };
+import { BiEdit, BiShare, BiStar } from "react-icons/bi";
+import { BsFillStarFill } from "react-icons/bs";
+import { PiTagSimple } from "react-icons/pi";
+import { TbTrash } from "react-icons/tb";
 
+const NotesCard = ({
+  title,
+  updated,
+  description,
+  category,
+  starred,
+  tags,
+}) => {
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-md transition p-4 border border-gray-200">
-      <div className="flex justify-between items-start mb-3">
-        <div
-          className={`${colors[iconColor].bg} ${colors[iconColor].text} p-2 rounded`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+    <div className=" card" id="el-vscmwjky">
+      <div className="flex  justify-between items-start mb-4" id="el-hvne05la">
+        <div id="el-j3wzkfu7">
+          <h3
+            className="font-semibold text-lg text-gray-800 mb-1"
+            id="el-8p7ddh29"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
+            {title}
+          </h3>
+          <p className="text-gray-500 text-sm" id="el-yb7n0324">
+            {updated}
+          </p>
         </div>
-        <div className="flex space-x-2">
-          <button className="text-gray-400 hover:text-yellow-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-              />
-            </svg>
+        <div className="flex" id="el-4ux3vbfb">
+          <button
+            className="text-yellow-400 hover:text-yellow-500 mr-2"
+            aria-label="Favorite"
+            id="el-n72aq7w9"
+          >
+            {starred ? (
+              <BsFillStarFill className="text-2xl" />
+            ) : (
+              <BiStar className="text-2xl" />
+            )}
           </button>
-          <button className="text-gray-400 hover:text-gray-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-              />
-            </svg>
-          </button>
+          <div
+            className={` badge-success text-white  badge text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center`}
+            id="el-o5drto21"
+          >
+            {category}
+          </div>
         </div>
       </div>
-      <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
-      <p className="text-gray-600 text-sm mb-3 line-clamp-2">{description}</p>
-      <div className="flex justify-between items-center">
-        <span className="text-xs text-gray-500">{updated}</span>
-        <span
-          className={`px-2 py-1 ${colors[iconColor].bg} ${colors[iconColor].text} rounded text-xs`}
+      <p className="text-gray-600 text-sm mb-4 line-clamp-2" id="el-1vwt25y3">
+        {description}
+      </p>
+      <div className="flex justify-between items-center" id="el-ixzb3gek">
+        <div
+          className="flex items-center text-sm text-gray-500"
+          id="el-l9x0s9tt"
         >
-          {category}
-        </span>
+          <PiTagSimple className="h-4 w-4 mr-1" />
+          {tags.map((tag, index) => (
+            <span key={index} className="mr-2 badge badge-xs badge-primary">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="flex space-x-2" id="el-dv7z0lh1">
+          <button
+            className="text-gray-400 hover:text-blue-600 transition"
+            aria-label="Edit"
+            id="el-no3gbdnl"
+          >
+            <BiEdit className="h-5 w-5" />
+          </button>
+          <button
+            className="text-gray-400 hover:text-blue-600 transition"
+            aria-label="Share"
+            id="el-06n2alks"
+          >
+            <BiShare className="h-5 w-5" />
+          </button>
+          <button
+            className="text-gray-400 hover:text-red-600 transition"
+            aria-label="Delete"
+            id="el-lftfnxca"
+          >
+            <TbTrash className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import Dashboard from "./app/_root/pages/Dashboard.jsx";
 import Favotires from "./app/_root/pages/Favorites.jsx";
 import MyNotes from "./app/_root/pages/MyNotes.jsx";
 import CreateNotePage from "./app/_root/pages/CreateNotePage.jsx";
+import Shared from "./app/_root/pages/Shared.jsx";
 
 const App = () => {
   return (
@@ -26,11 +27,11 @@ const App = () => {
       </Route>
       <Route path="/app" element={<RootLayout />}>
         <Route path="" element={<Dashboard />} />
-        <Route path="notes" element={<CreateNotePage />} />
-        <Route path="notes/create" element={<CreateNotePage />} />
+        <Route path="notes" element={<MyNotes />} />
+        <Route path="notes/new" element={<CreateNotePage />} />
 
         <Route path="favorites" element={<Favotires />} />
-        <Route path="shared" element={<div>Shared</div>} />
+        <Route path="shared" element={<Shared />} />
         <Route path="profile" element={<div>Profile</div>} />
         <Route
           path="settings"
