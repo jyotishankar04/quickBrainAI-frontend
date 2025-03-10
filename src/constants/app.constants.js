@@ -1,3 +1,5 @@
+import { FaRegFileAlt, FaRegStar, FaRegCalendarAlt } from "react-icons/fa";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 export const sidebarLinks = [
   {
     name: "Dashboard",
@@ -33,7 +35,7 @@ export const sidebarLinks = [
           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>`,
-    link: "/app/mynotes",
+    link: "/app/notes",
   },
   {
     name: "Favorites",
@@ -70,5 +72,109 @@ export const sidebarLinks = [
         />
       </svg>`,
     link: "/app/shared",
+  },
+];
+
+export const dashboardStats = [
+  {
+    title: "Total Notes",
+    value: "24",
+    icon: FaRegFileAlt,
+    color: "blue",
+  },
+  {
+    title: "Recent Views",
+    value: "12",
+    icon: MdOutlineRemoveRedEye,
+    color: "green",
+  },
+  {
+    title: "Favorites",
+    value: "7",
+    icon: FaRegStar,
+    color: "yellow",
+  },
+  {
+    title: "Created This Week",
+    value: "5",
+    icon: FaRegCalendarAlt,
+    color: "purple",
+  },
+];
+
+// constants/notes.constants.js
+// constants/notes.constants.js
+export const noteCardsData = [
+  {
+    title: "Project Meeting Notes",
+    updated: "2 hours ago",
+    description:
+      "Discussion about the new dashboard design and upcoming features for the Q3 release.",
+    tags: ["Project", "Meeting"],
+    category: "Work",
+    iconColor: "blue",
+    badge: "PDF",
+    badgeColor: "blue",
+    starred: false,
+  },
+  {
+    title: "Shopping List",
+    updated: "yesterday",
+    description:
+      "Groceries for the week: milk, eggs, bread, fruits, vegetables, chicken, and pasta.",
+    tags: ["Groceries", "Weekly"],
+    category: "Personal",
+    iconColor: "green",
+    badge: "PDF",
+    badgeColor: "green",
+    starred: false,
+  },
+  {
+    title: "Vacation Photos",
+    updated: "3 days ago",
+    description:
+      "Collection of photos from the beach trip. Need to organize and share with family.",
+    tags: ["Photos", "Family"],
+    category: "Travel",
+    iconColor: "purple",
+    badge: "PDF",
+    badgeColor: "purple",
+    starred: false,
+  },
+  {
+    title: "Project Deadlines",
+    updated: "Oct 15, 2023",
+    description:
+      "Critical deadlines for Q4 deliverables - Keep this note accessible for daily reference. Contains timeline details.",
+    tags: ["Project", "Planning"],
+    category: "Work",
+    iconColor: "yellow",
+    badge: "Important",
+    badgeColor: "yellow",
+    starred: true,
+  },
+  {
+    title: "Product Roadmap",
+    updated: "Oct 10, 2023",
+    description:
+      "Strategic roadmap for next 6 months - Features prioritization and development timeline with milestones.",
+    tags: ["Product", "Strategy"],
+    category: "Work",
+    iconColor: "blue",
+    badge: "PDF",
+    badgeColor: "blue",
+    starred: true,
+  },
+  {
+    title: "Interview Questions",
+    updated: "1 week ago",
+    description:
+      "List of technical and behavioral questions for frontend developer interviews. Includes evaluation criteria.",
+    tags: ["HR", "Recruitment"],
+    category: "Interview",
+    iconColor: "green",
+    badge: "Note",
+    badgeColor: "green",
+    starred: false,
   },
 ];

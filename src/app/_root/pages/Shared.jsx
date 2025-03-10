@@ -1,7 +1,8 @@
 import React from "react";
 import NotesSection from "../../../components/_root/notes/NotesSection";
+import SharedLog from "../../../components/_root/notes/SharedLog";
 
-const Favotires = () => {
+const Shared = () => {
   return (
     <div className="container mx-auto px-4">
       <div
@@ -13,16 +14,17 @@ const Favotires = () => {
             className="text-2xl md:text-3xl font-bold text-gray-800 mb-2"
             id="el-e2u0sbeu"
           >
-            Favorites
+            Shared
           </h1>
           <p className="text-gray-600" id="el-xizs0mqm">
-            View and manage your favorite notes
+            View and manage shared notes
           </p>
         </div>
       </div>
       <NotesSection />
+      <SharedLog />
     </div>
   );
 };
 
-export default Favotires;
+export default Shared;

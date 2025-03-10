@@ -1,10 +1,100 @@
 @import "tailwindcss";
-
- @plugin "daisyui" {
+@plugin "daisyui" {
    themes: light --default
 }
 
 
 .card {
   @apply bg-slate-100 p-4;
+}
+
+.tiptap :first-child {
+  @apply mt-0;
+}
+
+/* List styles */
+.tiptap ul, 
+.tiptap ol {
+  @apply pl-4 my-3;
+}
+
+.tiptap li p {
+  @apply mt-1 mb-1;
+}
+
+/* Heading styles */
+.tiptap h1, 
+.tiptap h2, 
+.tiptap h3, 
+.tiptap h4, 
+.tiptap h5, 
+.tiptap h6 {
+  @apply leading-tight mt-10;
+}
+
+.tiptap h1, 
+.tiptap h2 {
+  @apply mt-14 mb-6;
+}
+
+.tiptap h1 {
+  @apply text-2xl font-bold;
+}
+
+.tiptap h2 {
+  @apply text-xl font-semibold;
+}
+
+.tiptap h3 {
+  @apply text-lg font-medium;
+}
+
+.tiptap h4, 
+.tiptap h5, 
+.tiptap h6 {
+  @apply text-base font-normal;
+}
+
+/* Code and preformatted text styles */
+.tiptap code {
+  @apply bg-purple-100 rounded-md text-black text-sm px-2 py-1;
+}
+
+.tiptap pre {
+  @apply bg-black text-white rounded-lg font-mono my-6 p-4;
+}
+
+.tiptap pre code {
+  @apply bg-transparent text-inherit text-sm p-0;
+}
+
+/* Blockquote */
+.tiptap blockquote {
+  @apply border-l-4 border-gray-300 pl-4 my-6;
+}
+
+/* Horizontal Rule */
+.tiptap hr {
+  @apply border-t border-gray-400 my-8;
+}
+.tiptap p.is-editor-empty:first-child::before {
+  @apply text-gray-400 float-left h-0 pointer-events-none content-[attr(data-placeholder)];
+}
+
+.tiptap :first-child {
+  @apply mt-0;
+}
+.tiptap :first-child {
+  @apply mt-0;
+}
+
+/* List styles */
+.tiptap ul, 
+.tiptap ol {
+  @apply px-4 mt-5 mb-5 mr-2; /* Converted padding and margin */
+}
+
+.tiptap ul li p, 
+.tiptap ol li p {
+  @apply mt-1 mb-1; /* Converted margin */
 }

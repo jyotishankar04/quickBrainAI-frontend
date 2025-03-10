@@ -20,6 +20,7 @@ const HomeNav = () => {
             {homeNavBarLinks.map((obj) => {
               return (
                 <a
+                  key={obj.path}
                   href={obj.path}
                   className="text-gray-700 hover:text-[#2563EB] transition-colors duration-300"
                 >
@@ -73,18 +74,17 @@ const HomeNav = () => {
           id="mobile-menu"
         >
           <div className="flex flex-col scroll-smooth space-y-4 mt-4 pb-4">
-            {
-              homeNavBarLinks.map((obj) => {
-                return (
-                  <a
-                    href={obj.path}
-                    className="text-gray-700 hover:text-[#2563EB] transition-colors duration-300"
-                  >
-                    {obj.name}
-                  </a>
-                );
-              })
-            }
+            {homeNavBarLinks.map((obj) => {
+              return (
+                <a
+                  key={obj.path}
+                  href={obj.path}
+                  className="text-gray-700 hover:text-[#2563EB] transition-colors duration-300"
+                >
+                  {obj.name}
+                </a>
+              );
+            })}
             <div className="pt-2 border-t border-gray-200">
               <a
                 href="#login"
