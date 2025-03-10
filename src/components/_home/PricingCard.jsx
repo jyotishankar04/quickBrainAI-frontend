@@ -20,9 +20,15 @@ const PricingSection = () => {
       <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
         {/* Cards will added here */}
         {SubscriptionDetails.map((obj, index) => {
-
           return (
-            <div className={`flex-1 ${obj.isDisabled ? "opacity-50 pointer-events-none" : ""} bg-white rounded-xl border ${index ===1 ? "border-[#2563EB]" : "border-gray-200 scale-90"} shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden animate__animated animate__fadeInUp`}>
+            <div
+              key={index}
+              className={`flex-1 ${
+                obj.isDisabled ? "opacity-50 pointer-events-none" : ""
+              } bg-white rounded-xl border ${
+                index === 1 ? "border-[#2563EB]" : "border-gray-200 scale-90"
+              } shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden animate__animated animate__fadeInUp`}
+            >
               <div className="p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
                   {obj.head}
@@ -38,7 +44,8 @@ const PricingSection = () => {
                 </p>
                 <a
                   href="#signup"
-                  className="block w-full py-3 px-4 bg-white text-black font-medium rounded-lg text-center transition duration-300 group focus:bg-[#222839] focus:text-white hover:bg-[#222839] hover:text-white"                >
+                  className="block w-full py-3 px-4 bg-white text-black font-medium rounded-lg text-center transition duration-300 group focus:bg-[#222839] focus:text-white hover:bg-[#222839] hover:text-white"
+                >
                   {obj.btn}
                 </a>
               </div>
@@ -48,11 +55,11 @@ const PricingSection = () => {
                 </h4>
                 <ul className="space-y-3 mb-6">
                   {obj.features.map((feature, index) => (
-                      <li key={index} className="flex items-center">
-                        <SvgIcons />
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                 ))}
+                    <li key={index} className="flex items-center">
+                      <SvgIcons />
+                      <span className="text-gray-600">{feature}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

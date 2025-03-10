@@ -2,36 +2,38 @@ import React, { useState } from "react";
 import Logo from "../_home/Logo";
 import { sidebarLinks } from "../../constants/app.constants";
 import { NavLink, useLocation } from "react-router-dom";
+import useCollapseState from "../../context/CollapseStateContext";
 
 const Sidebar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isTagsOpen, setIsTagsOpen] = useState(true);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const { isCollapsed, setIsCollapsed } = useCollapseState();
+
   const location = useLocation();
 
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleTags = () => setIsTagsOpen(!isTagsOpen);
-  const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
+  const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
   return (
     <nav
       className={`flex-1 bg-slate-200 h-screen py-4 overflow-y-auto ${
-        isSidebarCollapsed ? "w-fit" : "w-64"
+        isCollapsed ? "w-fit" : "w-64"
       } transition-all duration-300`}
     >
       {/* Collapse Button */}
       <div
         className={`flex justify-between items-center px-4 ${
-          isSidebarCollapsed ? "flex-col items-center" : ""
+          isCollapsed ? "flex-col items-center" : ""
         }`}
       >
         <div className={`flex items-center`}>
-          <Logo isCollapsed={isSidebarCollapsed} />
+          <Logo isCollapsed={isCollapsed} />
         </div>
         <button
           onClick={toggleSidebar}
           className={`p-2 text-gray-500 hover:text-gray-700 focus:outline-none ${
-            isSidebarCollapsed ? "" : "rotate-180"
+            isCollapsed ? "" : "rotate-180"
           }`}
         >
           <svg
@@ -52,7 +54,7 @@ const Sidebar = () => {
       </div>
 
       {/* Search Bar (Hidden when collapsed) */}
-      {!isSidebarCollapsed && (
+      {!isCollapsed && (
         <div className="px-4 mb-4">
           <div className="relative">
             <input
@@ -98,13 +100,13 @@ const Sidebar = () => {
               dangerouslySetInnerHTML={{ __html: item.icon }}
               className="w-5 h-5"
             />
-            {!isSidebarCollapsed && <span className="ml-3">{item.name}</span>}
+            {!isCollapsed && <span className="ml-3">{item.name}</span>}
           </NavLink>
         ))}
       </div>
 
       {/* Collapsible Categories Section */}
-      {!isSidebarCollapsed && (
+      {!isCollapsed && (
         <div className="mt-6 px-3">
           <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600">
             <span>CATEGORIES</span>
@@ -156,7 +158,7 @@ const Sidebar = () => {
       )}
 
       {/* Collapsible Tags Section */}
-      {!isSidebarCollapsed && (
+      {!isCollapsed && (
         <div className="mt-6 px-3">
           <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600">
             <span>TAGS</span>
