@@ -13,8 +13,11 @@ import Favotires from "./app/_root/pages/Favorites.jsx";
 import MyNotes from "./app/_root/pages/MyNotes.jsx";
 import CreateNotePage from "./app/_root/pages/CreateNotePage.jsx";
 import Shared from "./app/_root/pages/Shared.jsx";
+import UserProfilePage from './app/_root/pages/UserProfile.jsx';
+
 
 const App = () => {
+ 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -32,7 +35,8 @@ const App = () => {
 
         <Route path="favorites" element={<Favotires />} />
         <Route path="shared" element={<Shared />} />
-        <Route path="profile" element={<div>Profile</div>} />
+        <Route path="profile" element={<UserProfilePage />} />
+        
         <Route
           path="settings"
           element={
