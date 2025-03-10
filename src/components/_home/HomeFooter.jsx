@@ -1,5 +1,5 @@
 import React from "react";
-import {  homeNavBarLinks,  supportLinks } from "../../constants/home.constants";
+import { homeNavBarLinks, supportLinks } from "../../constants/home.constants";
 import Logo from "./Logo";
 
 const HomeFooter = () => {
@@ -9,12 +9,11 @@ const HomeFooter = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
-            <Logo/>
+            <Logo />
             <p className="text-gray-400 my-6 max-w-md">
               Transform the way you take notes with our intelligent platform.
               Upload PDFs, collaborate with AI, and access your notes anywhere.
             </p>
-           
           </div>
 
           {/* Product Links */}
@@ -22,7 +21,7 @@ const HomeFooter = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               {homeNavBarLinks.map((link) => (
-                <li key={link.id}>
+                <li key={link.path}>
                   <a
                     href={link.path}
                     className="text-gray-400 hover:text-white transition-colors duration-300"
@@ -34,10 +33,11 @@ const HomeFooter = () => {
             </ul>
           </div>
 
-      
           {/* Support Links */}
           <div className="relative">
-            <h3 className="text-lg font-semibold mb-4 opacity-60 pointer-events-none ">Support</h3>
+            <h3 className="text-lg font-semibold mb-4 opacity-60 pointer-events-none ">
+              Support
+            </h3>
             <ul className="space-y-3">
               {supportLinks.map((link) => (
                 <li key={link.id}>
@@ -51,14 +51,13 @@ const HomeFooter = () => {
               ))}
             </ul>
             <div className="absolute top-0 right-0  h-full bg-gray-700 w-full rounded-lg ">
-                <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-400 text-sm text-center">
-                    Links will be added soon
-                </h1>
+              <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-400 text-sm text-center">
+                Links will be added soon
+              </h1>
             </div>
           </div>
         </div>
 
-       
         {/* Bottom Footer */}
         <div className="border-t border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-col md:flex-row items-center">
@@ -91,7 +90,6 @@ const HomeFooter = () => {
               <span className="text-gray-400 text-sm">
                 Made with ❤️ by QuickBrainAi Team
               </span>
-         
             </div>
           </div>
         </div>
