@@ -229,16 +229,6 @@ export const extensions = [
   Placeholder.configure({
     placeholder: "Start taking notes...",
   }),
-  BulletList.configure({
-    itemTypeName: "listItem",
-    HTMLAttributes: {
-      class: "list-disc list",
-    },
-  }),
-  ListItem,
-  Text,
-  Paragraph,
-  Document,
 ];
 
 export const content = ``;

@@ -20,6 +20,7 @@ const HomeNav = () => {
             {homeNavBarLinks.map((obj) => {
               return (
                 <a
+                  key={obj.path}
                   href={obj.path}
                   className="text-gray-700 hover:text-[#2563EB] transition-colors duration-300"
                 >
@@ -76,6 +77,7 @@ const HomeNav = () => {
             {homeNavBarLinks.map((obj) => {
               return (
                 <a
+                  key={obj.path}
                   href={obj.path}
                   className="text-gray-700 hover:text-[#2563EB] transition-colors duration-300"
                 >
