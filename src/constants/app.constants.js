@@ -1,5 +1,8 @@
 import { FaRegFileAlt, FaRegStar, FaRegCalendarAlt } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+
+
 export const sidebarLinks = [
   {
     name: "Dashboard",
@@ -178,3 +181,95 @@ export const noteCardsData = [
     starred: false,
   },
 ];
+
+export const UserSkillData = [
+  {
+    title: "HTML",
+  },
+  {
+    title: "CSS",
+  },
+  {
+    title: "JavaScript",
+  },
+  {
+    title: "React",
+  },
+  {
+    title: "Node.js",
+  },
+];
+
+export const Connections = [
+  {
+    title: "JS",
+    name: "Jony Sins",
+  },
+  {
+    title: "AS",
+    name: "Alpha Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+  {
+    title: "JS",
+    name: "Jishan Sins",
+  },
+
+];
+
+export const RecentActivities = [
+{
+  title : "Posted a comment",
+   duration : "2 hours ago",
+   description: "Great article on design systems! I've been implementing something similar in my current project.",
+   icon : MdDeleteOutline ,
+   iconcolor : "bg-blue-500 text-white"
+
+   
+
+},
+{
+  title : "Started a new project",
+   duration : "1 week ago",
+  description: "Created Responsive Dashboard UI Kit - A collection of reusable components for building data-rich interfaces",
+  icon : MdDeleteOutline ,
+  iconcolor : "bg-green-500 text-white"
+
+  
+ 
+
+},
+{
+  title : "Deleted this project",
+   duration : "4 week ago",
+  description: "Deleted the project - Responsive Dashboard UI Kit",
+  icon : MdDeleteOutline ,
+  iconcolor : "bg-yellow-500 text-white"
+
+
+},
+
+
+]
+
+
+
