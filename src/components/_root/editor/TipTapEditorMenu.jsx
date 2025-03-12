@@ -234,14 +234,3 @@ export const extensions = [
 export const content = ``;
 
 export default MenuBar;
-
-// // eslint-disable-next-line react-refresh/only-export-components
-// export default () => {
-//   return (
-//     <EditorProvider
-//       slotBefore={<MenuBar />}
-//       extensions={extensions}
-//       content={content}
-//     ></EditorProvider>
-//   );
-// };

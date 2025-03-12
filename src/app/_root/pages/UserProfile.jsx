@@ -86,8 +86,8 @@ const UserProfilePage = () => {
             </div>
 
             <div className="flex-1">
-              <h1 className="text-3xl font-bold">Jonny sins </h1>
-              <p className="text-gray-500">@jonnysins</p>
+              <h1 className="text-3xl font-bold">Jhon Doe </h1>
+              <p className="text-gray-500">@johndoe</p>
             </div>
           </div>
 
@@ -123,39 +123,31 @@ const UserProfilePage = () => {
               </div>
               {/* Recent Activity */}
               <div>
-  <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-  <div className="space-y-4">
-    {RecentActivities.map((activity, index) => {
- 
+                <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
+                <div className="space-y-4">
+                  {RecentActivities.map((activity, index) => {
+                    return (
+                      <div key={index} className="bg-gray-100 p-4 rounded-lg">
+                        <div className="flex items-center mb-2">
+                          {
+                            <activity.icon
+                              className={`${activity.iconcolor}  rounded-full mr-2 w-10 h-10 p-2`}
+                            />
+                          }
 
-
-    
-
-      return (
-        <div key={index} className="bg-gray-100 p-4 rounded-lg">
-          <div className="flex items-center mb-2">
-        
-          
-          {<activity.icon  
-          
-          
-          className= {`${activity.iconcolor}  rounded-full mr-2 w-10 h-10 p-2`}
-          
-          
-          
-          />}
-
-            <div>
-              <p className="font-medium">{activity.title}</p>
-              <p className="text-sm text-gray-500">{activity.duration}</p>
-            </div>
-          </div>
-          <p className="text-gray-600">{activity.description}</p>
-        </div>
-      );
-    })}
-  </div>
-</div>
+                          <div>
+                            <p className="font-medium">{activity.title}</p>
+                            <p className="text-sm text-gray-500">
+                              {activity.duration}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="text-gray-600">{activity.description}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* Right Column */}
@@ -302,16 +294,29 @@ const UserProfilePage = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {(showAll ? Connections : Connections.slice(0, 3)).map(
-                    (obj, index) => (
-                      <div key={index} className="flex flex-col items-center">
-                        <div className="w-16 h-16 bg-gray-200 rounded-full mb-2 flex items-center justify-center shadow-sm">
-                          <span className="text-gray-600">{obj.title}</span>
+                    (obj, index) => {
+                      const nameParts = obj.name.split(" ");
+                      const avatarText =
+                        (nameParts[0]?.charAt(0) || "") +
+                        (nameParts[
+                          nameParts.length - 1 > 1 && nameParts.length - 1
+                        ]?.charAt(0) ||
+                          nameParts[0].charAt(1) ||
+                          "");
+
+                      return (
+                        <div key={index} className="flex flex-col items-center">
+                          <div className="w-16 h-16 bg-gray-200 rounded-full mb-2 flex items-center justify-center shadow-sm">
+                            <span className="text-gray-600 uppercase">
+                              {avatarText}
+                            </span>
+                          </div>
+                          <span className="text-sm text-center text-gray-700">
+                            {obj.name}
+                          </span>
                         </div>
-                        <span className="text-sm text-center text-gray-700">
-                          {obj.name}
-                        </span>
-                      </div>
-                    )
+                      );
+                    }
                   )}
                 </div>
               </div>
