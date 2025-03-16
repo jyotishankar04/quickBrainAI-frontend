@@ -1,11 +1,9 @@
 const PDFViewer = ({ url }) => {
   return (
     <iframe
+      className="w-full h-full"
       src={url + "#toolbar=0&zoom=page-width"}
-      frameBorder="0"
-      className="w-full h-full "
-      width="100%"
-      height="100%"
+      title="PDF Viewer"
     ></iframe>
   );
 };
