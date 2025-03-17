@@ -1,10 +1,7 @@
-// context/ActiveTabContext.js
 import React, { createContext, useContext, useState } from "react";
 
-// Create a context
 const ActiveTabContext = createContext();
 
-// Create a provider component
 export const ActiveTabProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -15,7 +12,6 @@ export const ActiveTabProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the context
 const useActiveTab = () => {
   const context = useContext(ActiveTabContext);
   if (!context) {
@@ -24,5 +20,4 @@ const useActiveTab = () => {
   return context;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export default useActiveTab;
