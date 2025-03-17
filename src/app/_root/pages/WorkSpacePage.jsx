@@ -14,27 +14,21 @@ const WorkSpacePage = () => {
 
   return (
     <div className="w-full h-full flex">
-    
       <Resizable
-        defaultSize={{
-          width: `${leftWidth}%`,
-          height: "100%",
-        }}
+        defaultSize={{ width: `${leftWidth}%`, height: "100%" }}
         minWidth="20%"
         maxWidth="80%"
-        enable={{ right: true }} 
+        enable={{ right: true }}
         className="h-full"
         onResizeStop={(e, direction, ref, d) => {
-          setLeftWidth((prevWidth) => ((prevWidth + d.width) / window.innerWidth) * 100);
+          setLeftWidth(
+            (prevWidth) => ((prevWidth + d.width) / window.innerWidth) * 100
+          );
         }}
       >
         <LeftTab />
       </Resizable>
-
-      {/* Divider Line */}
       <div className="w-1 bg-gray-300 cursor-ew-resize" />
-
-      {/* Right Panel (flexible width) */}
       <div className="flex-1 h-full">
         <RightTab />
       </div>
