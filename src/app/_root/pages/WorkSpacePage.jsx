@@ -6,7 +6,7 @@ import { Resizable } from "re-resizable";
 
 const WorkSpacePage = () => {
   const { setIsCollapsed } = useCollapseState();
-  const [leftWidth, setLeftWidth] = useState(50);
+  const [leftWidth, setLeftWidth] = useState(50); //setting teh width 50%
 
   useEffect(() => {
     setIsCollapsed(true);

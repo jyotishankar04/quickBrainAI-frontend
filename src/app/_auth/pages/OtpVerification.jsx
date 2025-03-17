@@ -1,8 +1,14 @@
 import React, { useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useRegisterVerificationMutation } from "../../../lib/query/react-query";
 
 const OtpVerification = () => {
+  const {
+    mutateAsync: registerVerification,
+    isPending: isRegisterLoading,
+    isSuccess: isRegisterSuccess,
+  } = useRegisterVerificationMutation();
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const inputRefs = useRef([]);
 
@@ -12,7 +18,7 @@ const OtpVerification = () => {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
-      
+
       if (value && index < 5) {
         inputRefs.current[index + 1].focus();
       }
@@ -28,8 +34,23 @@ const OtpVerification = () => {
   const handleResendOtp = () => {
     toast.success("OTP has been resent");
   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const enteredOtp = otp.join("");
+    if (enteredOtp.length !== 6) {
+      return toast.error("Please enter 6 digit OTP");
+    }
+    await registerVerification({
+      otp: enteredOtp,
+    }).catch((error) => {
+      toast.error(error.response.data.message);
+    });
+  };
 
-
+  if (isRegisterSuccess) {
+    toast.success("OTP verified successfully");
+    return <Navigate to="/auth/onboard" />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center card">
@@ -48,18 +69,29 @@ const OtpVerification = () => {
           />
         ))}
       </div>
-      <Link to="/auth/onboard" className="btn btn-primary mt-4 w-full">Verify OTP</Link>
+      <button
+        className={`btn btn-primary w-full mt-4 ${
+          isRegisterLoading && "disabled"
+        }`}
+        disabled={isRegisterLoading}
+        onClick={handleSubmit}
+      >
+        {isRegisterLoading ? (
+          <span className="loading loading-spinner">Verifying...</span>
+        ) : (
+          "Verify OTP"
+        )}
+      </button>
       <div>
-      <div className="mt-2">
-        <span>Didn't receive the OTP? </span>
-        <button
-          onClick={handleResendOtp}
-          className="text-primar link y underline"
-        >
-          Resend OTP
-        </button>
-      </div>
-
+        <div className="mt-2">
+          <span>Didn't receive the OTP? </span>
+          <button
+            onClick={handleResendOtp}
+            className="text-primar link y underline"
+          >
+            Resend OTP
+          </button>
+        </div>
       </div>
     </div>
   );

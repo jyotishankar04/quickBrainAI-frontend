@@ -5,6 +5,7 @@ import WorkSpaceRIghtTopBar from "./WorkSpaceRIghtTopBar";
 import { PDFViewer as ReactPdfViewer } from "@react-pdf/renderer";
 
 const RightTab = () => {
+
   const { activeTab } = useActiveTab();
   return (
     <div className="w-full flex flex-col gap-2 border-l h-full">
