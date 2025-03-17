@@ -26,3 +26,6 @@ dist-ssr
 bun.lock
 ./bun.lock
 .envs
+
+package-lock.json
+bun.lock
