@@ -22,7 +22,7 @@ const Shared = lazy(() => import("./app/_root/pages/Shared.jsx"));
 const UserProfilePage = lazy(() => import("./app/_root/pages/UserProfile.jsx"));
 const WorkSpacePage = lazy(() => import("./app/_root/pages/WorkSpacePage.jsx"));
 const NotFoundPage = lazy(() => import("./components/NotFoundPage.jsx"));
-
+const SettingsPage = lazy(() => import("./app/_root/pages/SettingsPage.jsx"));
 const App = () => {
   return (
     <Routes>
@@ -145,24 +145,9 @@ const App = () => {
         />
 
         {/* Settings Nested Routes */}
-        <Route path="settings" element={<Outlet />}>
-          <Route
-            path="general"
-            element={
-              <LazyLoader>
-                <div>General</div>
-              </LazyLoader>
-            }
-          />
-          <Route
-            path="security"
-            element={
-              <LazyLoader>
-                <div>Security</div>
-              </LazyLoader>
-            }
-          />
-        </Route>
+        <Route path="settings" element={<LazyLoader><SettingsPage /></LazyLoader>}/>
+         
+        
       </Route>
 
       {/* Catch-All Route */}
