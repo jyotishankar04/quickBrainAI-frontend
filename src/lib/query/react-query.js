@@ -18,12 +18,14 @@ export const useSessionQuery = () => {
   return useQuery({
     queryKey: ["session"],
     queryFn: () => getSessionApi(),
+    retry: false,
   });
 };
 
 export const useRefreshSessionMutation = () => {
   return useMutation({
     mutationFn: () => refreshSessionApi(),
+    retry: false,
   });
 };
 

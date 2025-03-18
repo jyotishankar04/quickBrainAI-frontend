@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../../components/_root/Sidebar";
 import AppNavbar from "../../components/_root/AppNavbar";
 import { useAuthContext } from "../../context/AuthContext";
@@ -8,23 +8,25 @@ import toast from "react-hot-toast";
 
 const RootLayout = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ Detects route changes
   const { isAuthenticated, isLoading, checkAuthUser } = useAuthContext();
+  const hasCheckedAuth = useRef(false); // ✅ Prevent multiple checks
 
   useEffect(() => {
     const verifyUser = async () => {
       const success = await checkAuthUser();
       if (!success) {
-        toast.error("You are not logged in, Redirecting to Login Page");
-        navigate("/auth/login");
+        toast.dismiss(); // ✅ Remove any previous toasts
+        return;
       }
     };
 
-    if (!isAuthenticated) {
-      setTimeout(() => {
-        verifyUser();
-      }, 0); // ✅ Schedules authentication check **after** React finishes rendering
+    // ✅ Check session when the app mounts OR when redirected from login
+    if (!isAuthenticated || location.pathname === "/app") {
+      hasCheckedAuth.current = true;
+      setTimeout(() => verifyUser(), 0);
     }
-  }, [checkAuthUser, isAuthenticated, navigate]); // ✅ Dependency array ensures this runs only when necessary
+  }, [checkAuthUser, isAuthenticated, navigate, location.pathname]); // ✅ Re-checks session on route change
 
   if (isLoading) {
     return <LoadingModal isVisible={true} text="Authenticating..." />;
