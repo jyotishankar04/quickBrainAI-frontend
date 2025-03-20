@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  createCategoryApi,
+  createNoteApi,
+  getCategoriesApi,
   getSessionApi,
   loginApi,
   refreshSessionApi,
@@ -44,5 +47,24 @@ export const useRegisterVerificationMutation = () => {
 export const useRegisterCompletionMutation = () => {
   return useMutation({
     mutationFn: registerCompletionApi,
+  });
+};
+
+export const useCreateNoteMutation = () => {
+  return useMutation({
+    mutationFn: createNoteApi,
+  });
+};
+
+export const useCreateCategoryMutation = () => {
+  return useMutation({
+    mutationFn: createCategoryApi,
+  });
+};
+
+export const useCategoriesQuery = () => {
+  return useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategoriesApi(),
   });
 };

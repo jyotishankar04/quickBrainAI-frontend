@@ -37,3 +37,24 @@ export const registerCompletionApi = async (data) => {
   const response = await axiosInstance.post("/auth/register/completion", data);
   return response.data;
 };
+
+// Notes api
+export const createNoteApi = async (data) => {
+  const response = await axiosInstance.post("/notes", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};
+
+// categories api
+export const createCategoryApi = async (data) => {
+  const response = await axiosInstance.post("/notes/categories", data);
+  return response.data;
+};
+
+export const getCategoriesApi = async () => {
+  const response = await axiosInstance.get("/notes/categories");
+  return response.data;
+};
