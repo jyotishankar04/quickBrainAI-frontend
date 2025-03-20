@@ -3,11 +3,18 @@ import Logo from "../_home/Logo";
 import { sidebarLinks } from "../../constants/app.constants";
 import { NavLink, useLocation } from "react-router-dom";
 import useCollapseState from "../../context/CollapseStateContext";
+import { useCategoriesQuery } from "../../lib/query/react-query";
+import { randomColorGenerator } from "../../util/colorGenerators";
 
 const Sidebar = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isTagsOpen, setIsTagsOpen] = useState(true);
   const { isCollapsed, setIsCollapsed } = useCollapseState();
+  const {
+    data: categories,
+    isPending: isCategoryLoading,
+    isSuccess: isCategorySuccess,
+  } = useCategoriesQuery();
 
   const location = useLocation();
 
@@ -132,26 +139,28 @@ const Sidebar = () => {
           </div>
           {isCategoriesOpen && (
             <div className="mt-1 space-y-1">
-              {[
-                { name: "Research", color: "blue-500" },
-                { name: "Meetings", color: "green-500" },
-                { name: "Design", color: "purple-500" },
-                { name: "Project", color: "yellow-500" },
-                { name: "HR", color: "red-500" },
-                { name: "Product", color: "indigo-500" },
-                { name: "Personal", color: "gray-500" },
-              ].map((category, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
-                >
-                  <span
-                    className={`w-2 h-2 bg-${category.color} rounded-full mr-3`}
-                  ></span>
-                  {category.name}
-                </a>
-              ))}
+              {!isCategoryLoading && isCategorySuccess ? (
+                categories.data.map((category, index) => {
+                  const color = randomColorGenerator();
+                  return (
+                    <a
+                      key={index}
+                      href="#"
+                      className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+                    >
+                      <span
+                        style={{ backgroundColor: color }}
+                        className={`w-2 h-2  rounded-full mr-3`}
+                      ></span>
+                      {category.name}
+                    </a>
+                  );
+                })
+              ) : (
+                <div className="flex justify-center my-4">
+                  <span className="loading loading-spinner loading-lg"></span>
+                </div>
+              )}
             </div>
           )}
         </div>
