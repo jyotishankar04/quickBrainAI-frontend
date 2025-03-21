@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "/src/components/_home/_aichatbot/style.css";
-import { ChatBotIcon, ChatBotIcon2 } from "/src/components/_home/_aichatbot/ChatBotIcon";
+import {
+  ChatBotIcon,
+  ChatBotIcon2,
+} from "/src/components/_home/_aichatbot/ChatBotIcon";
 import { ChatForm } from "/src/components/_home/_aichatbot/ChatForm";
 import { getAiResponse } from "/src/util/GeminiUtils";
 import { RefreshBtn } from "/src/components/_home/_aichatbot/RefreshBtn";
@@ -15,7 +18,6 @@ const MainChatBot = () => {
   const chatContainerRef = useRef(null);
 
   // Tracking the chat size
-  const [chatSize, setChatSize] = useState({ width: 350, height: 500 });
 
   const GenerateBotResponse = async (history) => {
     const formattedHistory = history.map((chat) => ({
@@ -64,17 +66,7 @@ const MainChatBot = () => {
 
       {isOpen && (
         <div className="fixed bottom-20 right-4">
-          <ResizableBox
-            width={chatSize.width}
-            height={chatSize.height}
-            minConstraints={[300, 300]}
-            maxConstraints={[800, 800]}
-            resizeHandles={["se", "sw", "ne", "nw", "n", "s", "e", "w"]}
-            onResizeStop={(data) =>
-              setChatSize({ width: data.size.width, height: data.size.height })
-            }
-            className="bg-white shadow-lg rounded-lg border overflow-hidden"
-          >
+          <div className="bg-white shadow-lg md:w-[500px] w-full   rounded-lg border overflow-hidden">
             <div
               className="flex flex-col"
               style={{ width: "100%", height: "100%" }}
@@ -118,7 +110,7 @@ const MainChatBot = () => {
                 GenerateBotResponse={GenerateBotResponse}
               />
             </div>
-          </ResizableBox>
+          </div>
         </div>
       )}
     </div>
