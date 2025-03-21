@@ -7,30 +7,30 @@ import LoadingModal from "../../components/_root/LoadingModel";
 import toast from "react-hot-toast";
 
 const RootLayout = () => {
-  // const navigate = useNavigate();
-  // const location = useLocation(); // ✅ Detects route changes
-  // const { isAuthenticated, isLoading, checkAuthUser } = useAuthContext();
-  // const hasCheckedAuth = useRef(false); // ✅ Prevent multiple checks
+  const navigate = useNavigate();
+  const location = useLocation(); // ✅ Detects route changes
+  const { isAuthenticated, isLoading, checkAuthUser } = useAuthContext();
+  const hasCheckedAuth = useRef(false); // ✅ Prevent multiple checks
 
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     const success = await checkAuthUser();
-  //     if (!success) {
-  //       toast.dismiss(); // ✅ Remove any previous toasts
-  //       return;
-  //     }
-  //   };
+  useEffect(() => {
+    const verifyUser = async () => {
+      const success = await checkAuthUser();
+      if (!success) {
+        toast.dismiss(); // ✅ Remove any previous toasts
+        return;
+      }
+    };
 
-  //   // ✅ Check session when the app mounts OR when redirected from login
-  //   if (!isAuthenticated || location.pathname === "/app") {
-  //     hasCheckedAuth.current = true;
-  //     setTimeout(() => verifyUser(), 0);
-  //   }
-  // }, [checkAuthUser, isAuthenticated, navigate, location.pathname]); // ✅ Re-checks session on route change
+    // ✅ Check session when the app mounts OR when redirected from login
+    if (!isAuthenticated || location.pathname === "/app") {
+      hasCheckedAuth.current = true;
+      setTimeout(() => verifyUser(), 0);
+    }
+  }, [checkAuthUser, isAuthenticated, navigate, location.pathname]); // ✅ Re-checks session on route change
 
-  // if (isLoading) {
-  //   return <LoadingModal isVisible={true} text="Authenticating..." />;
-  // }
+  if (isLoading) {
+    return <LoadingModal isVisible={true} text="Authenticating..." />;
+  }
 
   return (
     <div className="flex min-h-screen">
