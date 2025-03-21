@@ -9,6 +9,7 @@ import CtaSec from '../../components/_home/CtaSec'
 import SecondPage from '../../components/_home/secondpage'
 import HeroTestomonial from '../../components/_home/HeroTestomonial'
 import HomeFooter from '../../components/_home/HomeFooter'
+import MainChatBot from '../../components/_home/MainChatBot'
 // import NoteTakingFeatures from '../../components/_home/toppara'
 
 // import FeaturesGrid from '../../components/_home/sixcards'
@@ -25,6 +26,7 @@ const Home = () => {
     <div className='' >
         <HomeNav />
         <HeroSection/>
+        <MainChatBot />
         <div className="container mx-auto px-4">
           <SecondPage />
         <HowItWorks/>

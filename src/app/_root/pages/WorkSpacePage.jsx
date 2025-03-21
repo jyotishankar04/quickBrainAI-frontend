@@ -6,7 +6,7 @@ import { Resizable } from "re-resizable";
 
 const WorkSpacePage = () => {
   const { setIsCollapsed } = useCollapseState();
-  const [leftWidth, setLeftWidth] = useState(50); //setting teh width 50%
+  const [leftWidth, setLeftWidth] = useState(50); //setting the width 50%
 
   useEffect(() => {
     setIsCollapsed(true);
@@ -20,7 +20,7 @@ const WorkSpacePage = () => {
         maxWidth="80%"
         enable={{ right: true }}
         className="h-full"
-        onResizeStop={(e, direction, ref, d) => {
+        onResizeStop={(d) => {
           setLeftWidth(
             (prevWidth) => ((prevWidth + d.width) / window.innerWidth) * 100
           );
