@@ -10,6 +10,8 @@ import {
 } from "../../../lib/query/react-query";
 import LoadingModal from "../../../components/_root/LoadingModel";
 import { useNavigate } from "react-router-dom";
+import CreateCategoryDialog from "../../../components/_root/dialogs/CreateCategoryDIalog";
+import { FaCirclePlus } from "react-icons/fa6";
 
 const CreateNotePage = () => {
   const {
@@ -254,7 +256,21 @@ const CreateNotePage = () => {
                     </option>
                   )}
                 </select>
-                <CreateCategoryDIalog />
+                <CreateCategoryDialog>
+                  <button
+                    className="mx-2 rounded-full tooltip cursor-pointer"
+                    data-tip="Create Category"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document
+                        .getElementById("createCategoryModal")
+                        ?.showModal();
+                    }}
+                    aria-label="Create Category"
+                  >
+                    <FaCirclePlus className="mr-2 w-10 h-10 text-blue-500" />
+                  </button>
+                </CreateCategoryDialog>
               </div>
             ) : (
               <div>

@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { FaCirclePlus } from "react-icons/fa6";
+
 import { useCreateCategoryMutation } from "../../../lib/query/react-query";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-const CreateCategoryDialog = () => {
+const CreateCategoryDialog = ({ children }) => {
   const {
     register,
     handleSubmit,
@@ -13,6 +14,7 @@ const CreateCategoryDialog = () => {
     reset,
   } = useForm();
   const queryClient = useQueryClient();
+  console.log(children);
 
   const { mutateAsync, isPending, isSuccess, isError, error } =
     useCreateCategoryMutation();
@@ -41,17 +43,7 @@ const CreateCategoryDialog = () => {
 
   return (
     <div className="flex justify-end items-center h-full">
-      <button
-        className="mx-2 rounded-full tooltip cursor-pointer"
-        data-tip="Create Category"
-        onClick={(e) => {
-          e.preventDefault();
-          document.getElementById("createCategoryModal")?.showModal();
-        }}
-        aria-label="Create Category"
-      >
-        <FaCirclePlus className="mr-2 w-10 h-10 text-blue-500" />
-      </button>
+      {children}
       <dialog
         id="createCategoryModal"
         className="modal modal-bottom sm:modal-middle"

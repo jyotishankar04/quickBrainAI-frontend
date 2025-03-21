@@ -47,6 +47,20 @@ export const createNoteApi = async (data) => {
   });
   return response.data;
 };
+export const getNotesApi = async (
+  page = 1,
+  limit = 6,
+  category = "all",
+  orderBy,
+  filterBy
+) => {
+  console.log(page, limit, category);
+  const response = await axiosInstance.get(
+    "/notes" +
+      `?page=${page}&limit=${limit}&orderBy=${orderBy}&filterBy=${filterBy}&category=${category}`
+  );
+  return response.data;
+};
 
 // categories api
 export const createCategoryApi = async (data) => {
