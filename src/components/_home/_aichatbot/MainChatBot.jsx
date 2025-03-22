@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import "/src/components/_home/_aichatbot/style.css";
 import { motion, AnimatePresence } from "framer-motion";
