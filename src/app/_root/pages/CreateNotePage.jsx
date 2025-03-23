@@ -9,12 +9,7 @@ import {
 } from "../../../lib/query/react-query";
 import LoadingModal from "../../../components/_root/LoadingModel";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import CreateCategoryDialog from "../../../components/_root/dialogs/NoteDeleteDailog";
-=======
-import CreateCategoryDialog from "../../../components/_root/dialogs/CreateCategoryDIalog";
-import { FaCirclePlus } from "react-icons/fa6";
->>>>>>> main
 
 const CreateNotePage = () => {
   const {
