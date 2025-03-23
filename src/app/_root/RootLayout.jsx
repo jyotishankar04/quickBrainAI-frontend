@@ -5,7 +5,6 @@ import AppNavbar from "../../components/_root/AppNavbar";
 import { useAuthContext } from "../../context/AuthContext";
 import LoadingModal from "../../components/_root/LoadingModel";
 import toast from "react-hot-toast";
-import useCollapseState from "../../context/CollapseStateContext";
 
 const RootLayout = () => {
   const navigate = useNavigate();

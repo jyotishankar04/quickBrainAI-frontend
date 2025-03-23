@@ -51,11 +51,14 @@ export const useRegisterCompletionMutation = () => {
   });
 };
 
+//notes
 export const useCreateNoteMutation = () => {
   return useMutation({
     mutationFn: createNoteApi,
   });
 };
+
+// categories
 
 export const useCreateCategoryMutation = () => {
   return useMutation({
