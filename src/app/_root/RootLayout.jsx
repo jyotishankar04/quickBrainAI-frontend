@@ -11,7 +11,6 @@ const RootLayout = () => {
   const location = useLocation(); // ✅ Detects route changes
   const { isAuthenticated, isLoading, checkAuthUser } = useAuthContext();
   const hasCheckedAuth = useRef(false); // ✅ Prevent multiple checks
-
   useEffect(() => {
     const verifyUser = async () => {
       const success = await checkAuthUser();

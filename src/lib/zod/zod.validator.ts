@@ -4,7 +4,7 @@ export const createNoteValidator = z.object({
   title: z
     .string()
     .min(1, { message: "Title must be between 1 and 50 characters" })
-    .max(50, { message: "Title must be between 1 and 50 characters" }),
+    .max(30, { message: "Title must be between 1 and 50 characters" }),
   description: z
     .string()
     .min(1, { message: "Description must be between 1 and 255 characters" })

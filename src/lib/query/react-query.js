@@ -58,21 +58,21 @@ export const useCreateNoteMutation = () => {
   });
 };
 
-export const useNotesQuery = (page, limit, category, filterBy, orderBy) => {
-  return useQuery({
-    queryKey: ["notes", { page, limit, category, filterBy, orderBy }],
-    queryFn: () => getNotesApi(page, limit, category, orderBy, filterBy),
-    enabled: false,
-    keepPreviousData: true,
-    staleTime: 1000 * 60 * 5,
-  });
-};
-
 // categories
 
 export const useCreateCategoryMutation = () => {
   return useMutation({
     mutationFn: createCategoryApi,
+  });
+};
+
+export const useNotesQuery = (page, limit, category, filterBy, orderBy) => {
+  return useQuery({
+    queryKey: ["notes", { page, limit, category, filterBy, orderBy }],
+    queryFn: () => getNotesApi(page, limit, category, orderBy, filterBy),
+    enabled: !!page,
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
   });
 };
 

@@ -1,44 +1,37 @@
 import React, { useState } from "react";
 import Logo from "../_home/Logo";
 import { sidebarLinks } from "../../constants/app.constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import useCollapseState from "../../context/CollapseStateContext";
-import { useCategoriesQuery } from "../../lib/query/react-query";
-import { randomColorGenerator } from "../../util/colorGenerators";
+import SideBarCategories from "./SideBarCategories";
 import { Resizable } from "re-resizable";
 
 const Sidebar = () => {
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isTagsOpen, setIsTagsOpen] = useState(true);
   const { isCollapsed, setIsCollapsed } = useCollapseState();
   const [sidebarWidth, setSidebarWidth] = useState(250); // setting the width in default
-
-  const {
-    data: categories,
-    isPending: isCategoryLoading,
-    isSuccess: isCategorySuccess,
-  } = useCategoriesQuery();
-
-  const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
+  const location = useLocation();
   const toggleTags = () => setIsTagsOpen(!isTagsOpen);
   const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
   return (
     <Resizable
       size={{ width: isCollapsed ? 60 : sidebarWidth, height: "100%" }}
-      minWidth={isCollapsed ? 60 : 200}
+      minWidth={isCollapsed ? 60 : 250}
       maxWidth={isCollapsed ? 60 : 350}
       enable={{ right: true }}
       onResizeStop={(e, direction, ref, d) => {
-        setSidebarWidth(
-          (prevWidth) => ((prevWidth + d.width) / window.innerWidth) * 100
-        );
+        setSidebarWidth((prevWidth) => prevWidth + d.width);
       }}
       className="h-screen bg-slate-200 overflow-y-auto transition-all duration-300"
     >
       <nav className="h-full flex flex-col">
         {/* Collapse Button */}
-        <div className="flex items-center justify-between px-4 py-4">
+        <div
+          className={`flex items-center ${
+            isCollapsed ? "flex-col" : ""
+          }  justify-between px-4 py-4`}
+        >
           <Logo isCollapsed={isCollapsed} />
           <button
             onClick={toggleSidebar}
@@ -98,78 +91,30 @@ const Sidebar = () => {
             <NavLink
               key={index}
               to={item.link}
-              className={({ isActive }) =>
-                `flex items-center px-3 py-2.5 text-sm font-medium rounded-lg ${
-                  isActive
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`
-              }
+              className={() => {
+                if (location.pathname === item.link) {
+                  return `flex items-center ${
+                    isCollapsed ? "justify-center" : ""
+                  } py-2.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700`;
+                }
+                return `flex items-center ${
+                  isCollapsed ? "justify-center" : ""
+                } py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100`;
+              }}
             >
               <div
                 dangerouslySetInnerHTML={{ __html: item.icon }}
-                className="w-5 h-5"
+                className="w-6  h-6 "
               />
               {!isCollapsed && <span className="ml-3">{item.name}</span>}
             </NavLink>
           ))}
         </div>
 
-        {/* Categories Section */}
-        {!isCollapsed && (
-          <div className="mt-6 px-3">
-            <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600">
-              <span>CATEGORIES</span>
-              <button
-                className="text-gray-500 hover:text-gray-700"
-                onClick={toggleCategories}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-            </div>
-            {isCategoriesOpen && (
-              <div className="mt-1 space-y-1">
-                {!isCategoryLoading && isCategorySuccess ? (
-                  categories.data.map((category, index) => {
-                    const color = randomColorGenerator();
-                    return (
-                      <a
-                        key={index}
-                        href="#"
-                        className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
-                      >
-                        <span
-                          style={{ backgroundColor: color }}
-                          className="w-2 h-2 rounded-full mr-3"
-                        ></span>
-                        {category.name}
-                      </a>
-                    );
-                  })
-                ) : (
-                  <div className="flex justify-center my-4">
-                    <span className="loading loading-spinner loading-lg"></span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+        {/* Collapsible Categories Section */}
+        <SideBarCategories />
 
-        {/* Tags Section */}
+        {/* Collapsible Tags Section */}
         {!isCollapsed && (
           <div className="mt-6 px-3">
             <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600">

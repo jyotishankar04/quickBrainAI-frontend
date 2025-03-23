@@ -1,7 +1,6 @@
 import { memo, useMemo } from "react";
 import { useCategoriesQuery } from "../../../lib/query/react-query";
-import { FaPlus } from "react-icons/fa6";
-import CreateCategoryDialog from "../dialogs/CreateCategoryDIalog";
+import CreateCategoryDialog from "../dialogs/CreateCategoryDialog";
 
 const NoteCategriesSection = () => {
   const {
@@ -63,10 +62,10 @@ const NoteCategriesSection = () => {
             <span className="loading loading-dots loading-md"></span>
           </div>
         )}
-        <div className="bg-gray-100 hover:bg-gray-200  text-gray-700 px-3 py-1.5 rounded-lg text-md font-medium flex items-center transition">
+        <div className="flex flex-1 justify-end">
           <CreateCategoryDialog>
             <div
-              className="mx-2 tooltip flex flex-row items-center justify-center gap-2 py-3 cursor-pointer"
+              className="btn btn-ghost flex items-center"
               data-tip="Create Category"
               onClick={(e) => {
                 e.preventDefault();
@@ -74,8 +73,7 @@ const NoteCategriesSection = () => {
               }}
               aria-label="Create Category"
             >
-              <FaPlus className="mr-2 text-2xl " />
-              <span className="font-bold ">Create Category</span>
+              <span className="font-bold text-lg">Create Category</span>
             </div>
           </CreateCategoryDialog>
         </div>
