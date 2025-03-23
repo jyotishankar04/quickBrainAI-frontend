@@ -3,13 +3,13 @@ import TagInput from "../../../components/_root/notes/TagsInput";
 import { useForm } from "react-hook-form";
 import { createNoteValidator } from "../../../lib/zod/zod.validator";
 import toast from "react-hot-toast";
-import CreateCategoryDIalog from "../../../components/_root/dialogs/CreateCategoryDIalog";
 import {
   useCategoriesQuery,
   useCreateNoteMutation,
 } from "../../../lib/query/react-query";
 import LoadingModal from "../../../components/_root/LoadingModel";
 import { useNavigate } from "react-router-dom";
+import CreateCategoryDialog from "../../../components/_root/dialogs/NoteDeleteDailog";
 
 const CreateNotePage = () => {
   const {
@@ -254,7 +254,7 @@ const CreateNotePage = () => {
                     </option>
                   )}
                 </select>
-                <CreateCategoryDIalog />
+                <CreateCategoryDialog />
               </div>
             ) : (
               <div>

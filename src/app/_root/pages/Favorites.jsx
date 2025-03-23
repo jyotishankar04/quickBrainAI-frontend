@@ -1,5 +1,6 @@
 import React from "react";
 import NotesSection from "../../../components/_root/notes/NotesSection";
+import FavNotes from "../../../components/_root/notes/FavNotes";
 
 const Favotires = () => {
   return (
@@ -20,7 +21,7 @@ const Favotires = () => {
           </p>
         </div>
       </div>
-      <NotesSection />
+      <FavNotes />
     </div>
   );
 };

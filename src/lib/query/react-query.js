@@ -3,6 +3,7 @@ import {
   createCategoryApi,
   createNoteApi,
   getCategoriesApi,
+  getNotesApi,
   getSessionApi,
   loginApi,
   refreshSessionApi,
@@ -59,6 +60,16 @@ export const useCreateNoteMutation = () => {
 export const useCreateCategoryMutation = () => {
   return useMutation({
     mutationFn: createCategoryApi,
+  });
+};
+
+export const useNotesQuery = (page, limit, category, filterBy, orderBy) => {
+  return useQuery({
+    queryKey: ["notes", { page, limit, category, filterBy, orderBy }],
+    queryFn: () => getNotesApi(page, limit, category, orderBy, filterBy),
+    enabled: !!page,
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
   });
 };
 
