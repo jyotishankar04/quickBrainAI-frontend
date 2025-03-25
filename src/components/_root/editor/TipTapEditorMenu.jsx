@@ -1,9 +1,6 @@
-import Color from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
-import StarterKit from "@tiptap/starter-kit";
+/* eslint-disable no-unused-vars */
 import { useEditorContext } from "../../../context/EditorContext";
-import { FaBold, FaCode } from "react-icons/fa";
+import { FaBold, FaCode, FaHeading } from "react-icons/fa";
 import { FiItalic } from "react-icons/fi";
 import { PiTextStrikethroughBold } from "react-icons/pi";
 import { BsTextParagraph } from "react-icons/bs";
@@ -11,226 +8,392 @@ import { GrBlockQuote, GrOrderedList, GrUnorderedList } from "react-icons/gr";
 import { GoHorizontalRule } from "react-icons/go";
 import { BiCodeBlock, BiHighlight, BiRedo, BiUndo } from "react-icons/bi";
 import { ImTextColor } from "react-icons/im";
-import Highlight from "@tiptap/extension-highlight";
-import Placeholder from "@tiptap/extension-placeholder";
-import TextAlign from "@tiptap/extension-text-align";
-import Text from "@tiptap/extension-text";
-import Paragraph from "@tiptap/extension-paragraph";
-import Document from "@tiptap/extension-document";
-
 import {
   CiTextAlignCenter,
   CiTextAlignLeft,
   CiTextAlignRight,
 } from "react-icons/ci";
-import BulletList from "@tiptap/extension-bullet-list";
+import {
+  RiArrowDropDownLine,
+  RiH1,
+  RiH2,
+  RiH3,
+  RiH4,
+  RiH5,
+  RiH6,
+} from "react-icons/ri";
+import StarterKit from "@tiptap/starter-kit";
+import Color from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import ListItem from "@tiptap/extension-list-item";
+import TextAlign from "@tiptap/extension-text-align";
+import Placeholder from "@tiptap/extension-placeholder";
+import Highlight from "@tiptap/extension-highlight";
+import { useState, useRef, useEffect } from "react";
+
+const headingLevels = [
+  { name: "Heading 1", level: 1, icon: <RiH1 className="text-lg" /> },
+  { name: "Heading 2", level: 2, icon: <RiH2 className="text-lg" /> },
+  { name: "Heading 3", level: 3, icon: <RiH3 className="text-lg" /> },
+  { name: "Heading 4", level: 4, icon: <RiH4 className="text-lg" /> },
+  { name: "Heading 5", level: 5, icon: <RiH5 className="text-lg" /> },
+  { name: "Heading 6", level: 6, icon: <RiH6 className="text-lg" /> },
+  {
+    name: "Paragraph",
+    level: 0,
+    icon: <BsTextParagraph className="text-lg" />,
+  },
+];
+
+const textColors = [
+  { name: "Red", value: "#FF5733" },
+  { name: "Green", value: "#33FF57" },
+  { name: "Blue", value: "#3357FF" },
+  { name: "Gold", value: "#FFD700" },
+  { name: "Pink", value: "#FF33A8" },
+  { name: "Black", value: "#000000" },
+];
+
+const highlightColors = [
+  { name: "Yellow", value: "#FFEB3B" },
+  { name: "Pink", value: "#FFC0CB" },
+  { name: "Blue", value: "#ADD8E6" },
+  { name: "Green", value: "#90EE90" },
+  { name: "Orange", value: "#FFA500" },
+];
 
 export const MenuBar = () => {
   const { editor } = useEditorContext();
+  const [showHeadingDropdown, setShowHeadingDropdown] = useState(false);
+  const [showTextColorDropdown, setShowTextColorDropdown] = useState(false);
+  const [showHighlightDropdown, setShowHighlightDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowHeadingDropdown(false);
+        setShowTextColorDropdown(false);
+        setShowHighlightDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   if (!editor) return null;
 
-  const buttons = [
-    {
-      name: "bold",
-      action: () => editor.chain().focus().toggleBold().run(),
-      icon: <FaBold />,
-      tooltip: "Bold",
-    },
-    {
-      name: "italic",
-      action: () => editor.chain().focus().toggleItalic().run(),
-      icon: <FiItalic />,
-      tooltip: "Italic",
-    },
-    {
-      name: "strike",
-      action: () => editor.chain().focus().toggleStrike().run(),
-      icon: <PiTextStrikethroughBold />,
-      tooltip: "Strikethrough",
-    },
-    {
-      name: "code",
-      action: () => editor.chain().focus().toggleCode().run(),
-      icon: <FaCode />,
-      tooltip: "Code",
-    },
-    {
-      name: "paragraph",
-      action: () => editor.chain().focus().setParagraph().run(),
-      icon: <BsTextParagraph />,
-      tooltip: "Paragraph",
-    },
-    {
-      name: "bulletList",
-      action: () => editor.chain().focus().toggleBulletList().run(),
-      icon: <GrUnorderedList />,
-      tooltip: "Bullet List",
-    },
-    {
-      name: "orderedList",
-      action: () => editor.chain().focus().toggleOrderedList().run(),
-      icon: <GrOrderedList />,
-      tooltip: "Ordered List",
-    },
-    {
-      name: "blockquote",
-      action: () => editor.chain().focus().toggleBlockquote().run(),
-      icon: <GrBlockQuote />,
-      tooltip: "Blockquote",
-    },
-    {
-      name: "codeBlock",
-      action: () => editor.chain().focus().setHorizontalRule().run(),
-      icon: <GoHorizontalRule />,
-      tooltip: "Horizontal Rule",
-    },
-    {
-      name: "undo",
-      action: () => editor.chain().focus().undo().run(),
-      icon: <BiUndo />,
-      tooltip: "Undo",
-    },
-    {
-      name: "redo",
-      action: () => editor.chain().focus().redo().run(),
-      icon: <BiRedo />,
-      tooltip: "Redo",
-    },
-  ];
-
-  const colors = [
-    { hex: "#000000", name: "Black" },
-    { hex: "#FF5733", name: "Red" },
-    { hex: "#33FF57", name: "Green" },
-    { hex: "#33A1FF", name: "Blue" },
-    { hex: "#FFC300", name: "Yellow" },
-    { hex: "#FF33A8", name: "Pink" },
-    { hex: "#A833FF", name: "Violet" },
-    { hex: "#1DB954", name: "Spotify Green" },
-  ];
-
-  const highlightColors = [
-    { hex: "#FF5733", name: "Red" },
-    { hex: "#33FF57", name: "Green" },
-    { hex: "#FFC300", name: "Yellow" },
-  ];
+  const getActiveHeading = () => {
+    for (let i = 1; i <= 6; i++) {
+      if (editor.isActive("heading", { level: i })) {
+        return `H${i}`;
+      }
+    }
+    return "Paragraph";
+  };
 
   return (
-    <div className="control-group">
-      <div className="flex flex-wrap gap-1 items-center p-2 ">
-        {buttons.map((btn, index) => (
-          <button
-            key={index}
-            onClick={btn.action}
-            className={`${
-              editor.isActive(btn.name) ? "btn-primary" : ""
-            } btn btn-sm`}
-            title={btn.tooltip}
-          >
-            {btn.icon}
-          </button>
-        ))}
-
-        <button
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={`${
-            editor.isActive("codeBlock") ? "btn-primary" : ""
-          } btn btn-sm`}
+    <div
+      className="flex flex-wrap gap-2 items-center p-2 bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm"
+      ref={dropdownRef}
+    >
+      {/* Heading Dropdown */}
+      <div className="dropdown dropdown-hover dropdown-bottom">
+        <label tabIndex={0} className="btn btn-sm btn-ghost">
+          <FaHeading className="text-lg" />
+          <span className="ml-1">{getActiveHeading()}</span>
+          <RiArrowDropDownLine className="text-lg" />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-10"
         >
-          <BiCodeBlock className="w-5 h-5" />
+          {headingLevels.map((h) => (
+            <li key={h.level || "paragraph"}>
+              <button
+                onClick={() =>
+                  h.level
+                    ? editor
+                        .chain()
+                        .focus()
+                        .toggleHeading({ level: h.level })
+                        .run()
+                    : editor.chain().focus().setParagraph().run()
+                }
+                className={`${
+                  editor.isActive("heading", { level: h.level }) ? "active" : ""
+                }`}
+              >
+                {h.icon}
+                {h.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Basic Formatting */}
+      <div className="flex gap-1 items-center">
+        <button
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          className={`btn btn-md ${
+            editor.isActive("bold") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Bold"
+        >
+          <FaBold />
         </button>
         <button
-          onClick={() => editor.chain().focus().setTextAlign("left").run()}
-          className={`${
-            editor.isActive({ textAlign: "left" }) ? "btn-primary" : ""
-          } btn btn-sm`}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          className={`btn btn-sm ${
+            editor.isActive("italic") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Italic"
         >
-          <CiTextAlignLeft className="w-5 h-5" />
+          <FiItalic />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          className={`btn btn-sm ${
+            editor.isActive("strike") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Strikethrough"
+        >
+          <PiTextStrikethroughBold />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          className={`btn btn-sm ${
+            editor.isActive("code") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Code"
+        >
+          <FaCode />
+        </button>
+      </div>
+
+      {/* Lists */}
+      <div className="flex gap-1">
+        <button
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={`btn btn-sm ${
+            editor.isActive("bulletList") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Bullet List"
+        >
+          <GrUnorderedList />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          className={`btn btn-sm ${
+            editor.isActive("orderedList") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Ordered List"
+        >
+          <GrOrderedList />
+        </button>
+      </div>
+
+      {/* Block Elements */}
+      <div className="flex gap-1">
+        <button
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          className={`btn btn-sm ${
+            editor.isActive("blockquote") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Blockquote"
+        >
+          <GrBlockQuote />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          className="btn btn-sm btn-ghost"
+          title="Horizontal Rule"
+        >
+          <GoHorizontalRule />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          className={`btn btn-sm ${
+            editor.isActive("codeBlock") ? "btn-active" : "btn-ghost"
+          }`}
+          title="Code Block"
+        >
+          <BiCodeBlock />
+        </button>
+      </div>
+
+      {/* Text Alignment */}
+      <div className="flex gap-1">
+        <button
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+          className={`btn btn-sm ${
+            editor.isActive({ textAlign: "left" }) ? "btn-active" : "btn-ghost"
+          }`}
+          title="Align Left"
+        >
+          <CiTextAlignLeft />
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("center").run()}
-          className={`${
-            editor.isActive({ textAlign: "center" }) ? "btn-primary" : ""
-          } btn btn-sm`}
+          className={`btn btn-sm ${
+            editor.isActive({ textAlign: "center" })
+              ? "btn-active"
+              : "btn-ghost"
+          }`}
+          title="Align Center"
         >
-          <CiTextAlignCenter className="w-5 h-5" />
+          <CiTextAlignCenter />
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("right").run()}
-          className={`${
-            editor.isActive({ textAlign: "right" }) ? "btn-primary" : ""
-          } btn btn-sm`}
+          className={`btn btn-sm ${
+            editor.isActive({ textAlign: "right" }) ? "btn-active" : "btn-ghost"
+          }`}
+          title="Align Right"
         >
-          <CiTextAlignRight className="w-5 h-5" />
+          <CiTextAlignRight />
         </button>
-        {colors.map((color) => (
-          <button
-            key={color.hex}
-            onClick={() => editor.chain().focus().setColor(color.hex).run()}
-            className={`${
-              editor.isActive("textStyle", { color: color.hex })
-                ? "btn-primary"
-                : ""
-            } btn btn-sm`}
-            style={{ color: color.hex }}
-            title={`Text color: ${color.name}`}
-          >
-            <ImTextColor className="w-5 h-5 " />
-          </button>
-        ))}
+      </div>
 
-        {highlightColors.map((color) => (
-          <button
-            key={color.name}
-            onClick={() =>
-              editor.chain().focus().toggleHighlight({ color: color.hex }).run()
-            }
-            className={`${
-              editor.isActive("highlight", { color: color.hex })
-                ? "btn-primary"
-                : ""
-            } btn btn-sm`}
-            title={`Highlight color: ${color.name}`}
-          >
-            <BiHighlight className={`w-5 h-5 `} style={{ color: color.hex }} />
-          </button>
-        ))}
-        <button
-          onClick={() => editor.chain().focus().unsetHighlight().run()}
-          disabled={!editor.isActive("highlight")}
-          title={`Remove Highlight`}
-          className="btn btn-sm "
+      {/* Text Color Dropdown */}
+      <div className="dropdown dropdown-hover dropdown-bottom">
+        <label tabIndex={0} className="btn btn-sm btn-ghost">
+          <ImTextColor />
+          <span className="ml-1">Text Color</span>
+        </label>
+        <div
+          tabIndex={0}
+          className="dropdown-content p-2 shadow bg-base-100 rounded-box w-52 z-10"
         >
-          Remove Highlight
+          <div className="grid grid-cols-4 gap-2">
+            {textColors.map((color) => (
+              <button
+                key={color.value}
+                onClick={() =>
+                  editor.chain().focus().setColor(color.value).run()
+                }
+                className="w-8 h-8 rounded-full border border-base-300 tooltip"
+                data-tip={color.name}
+                style={{ backgroundColor: color.value }}
+                title={color.name}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => editor.chain().focus().unsetColor().run()}
+            className="btn btn-xs btn-block mt-2"
+          >
+            Reset Color
+          </button>
+        </div>
+      </div>
+
+      {/* Highlight Dropdown */}
+      <div className="dropdown dropdown-hover dropdown-bottom">
+        <label tabIndex={0} className="btn btn-sm btn-ghost">
+          <BiHighlight />
+          <span className="ml-1">Highlight</span>
+        </label>
+        <div
+          tabIndex={0}
+          className="dropdown-content p-2 shadow bg-base-100 rounded-box w-52 z-10"
+        >
+          <div className="grid grid-cols-4 gap-2">
+            {highlightColors.map((color) => (
+              <button
+                key={color.value}
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .toggleHighlight({ color: color.value })
+                    .run()
+                }
+                className="w-8 h-8 rounded-full border border-base-300 tooltip"
+                data-tip={color.name}
+                style={{ backgroundColor: color.value }}
+                title={color.name}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => editor.chain().focus().unsetHighlight().run()}
+            className="btn btn-xs btn-block mt-2"
+          >
+            Reset Highlight
+          </button>
+        </div>
+      </div>
+
+      {/* Undo/Redo */}
+      <div className="flex gap-1 ml-auto">
+        <button
+          onClick={() => editor.chain().focus().undo().run()}
+          className="btn btn-sm btn-ghost"
+          disabled={!editor.can().undo()}
+          title="Undo"
+        >
+          <BiUndo />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().redo().run()}
+          className="btn btn-sm btn-ghost"
+          disabled={!editor.can().redo()}
+          title="Redo"
+        >
+          <BiRedo />
         </button>
       </div>
     </div>
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const extensions = [
+  StarterKit.configure({
+    heading: {
+      levels: [1, 2, 3, 4, 5, 6],
+    },
+    bulletList: {
+      keepMarks: true,
+      keepAttributes: false,
+    },
+    orderedList: {
+      keepMarks: true,
+      keepAttributes: false,
+    },
+  }),
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
   TextStyle.configure({ types: [ListItem.name] }),
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),
-  StarterKit.configure({
-    bulletList: {
-      keepMarks: true,
-      keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-    orderedList: {
-      keepMarks: true,
-      keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-  }),
   Highlight.configure({ multicolor: true }),
   Placeholder.configure({
-    placeholder: "Start taking notes...",
+    placeholder: "Start writing here...",
   }),
 ];
 
-export const content = ``;
-
-export default MenuBar;
+export const content = `
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+<p>This is a paragraph with <strong>bold</strong>, <em>italic</em>, and <span style="color: #FF5733">colored</span> text.</p>
+<ul>
+  <li>Bullet list item</li>
+  <li>Another item</li>
+</ul>
+<ol>
+  <li>Ordered list item</li>
+  <li>Second item</li>
+</ol>
+<blockquote>
+  This is a blockquote
+</blockquote>
+<pre><code>// Code block example
+function hello() {
+  return "World";
+}</code></pre>
+`;

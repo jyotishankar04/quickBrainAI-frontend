@@ -4,6 +4,7 @@ import {
   createNoteApi,
   deleteNoteApi,
   getCategoriesApi,
+  getNoteByIdApi,
   getNotesApi,
   getSessionApi,
   loginApi,
@@ -84,6 +85,13 @@ export const useSearchNotesQuery = (query) => {
     enabled: !!query,
     keepPreviousData: true,
     staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useNoteByIdQuery = (noteId) => {
+  return useQuery({
+    queryKey: ["note", noteId],
+    queryFn: () => getNoteByIdApi(noteId),
   });
 };
 

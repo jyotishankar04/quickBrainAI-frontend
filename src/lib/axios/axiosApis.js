@@ -88,7 +88,18 @@ export const getCategoriesApi = async () => {
   return response.data;
 };
 
+export const getNoteByIdApi = async (noteId) => {
+  const response = await axiosInstance.get(`/notes/${noteId}`);
+  return response.data;
+};
+
 export const searchNotesApi = async (query) => {
   const response = await axiosInstance.get(`/notes/search?q=${query}`);
+  return response.data;
+};
+
+//chat bot
+export const getAiResponse = async (message) => {
+  const response = await axiosInstance.post("/ai", { message });
   return response.data;
 };
