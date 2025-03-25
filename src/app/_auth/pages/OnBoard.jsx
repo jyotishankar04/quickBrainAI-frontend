@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRegisterCompletionMutation } from "../../../lib/query/react-query";
@@ -19,12 +19,6 @@ const OnBoard = () => {
     isPending: isRegisterLoading,
     isSuccess: isRegisterSuccess,
   } = useRegisterCompletionMutation();
-
-  useEffect(() => {
-    if (watch("confirmPassword") !== watch("password")) {
-      console.log("Passwords do not match");
-    }
-  }, [watch("confirmPassword"), watch("password")]);
 
   const customSubmit = handleSubmit(async (data) => {
     if (!data.name || !data.password || !data.confirmPassword) {

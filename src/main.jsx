@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <Toaster position="top-center" />
+    <Toaster position="bottom-right" />
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CollapseStateProvider>

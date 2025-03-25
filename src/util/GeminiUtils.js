@@ -7,6 +7,5 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 export const getAiResponse = async (userMessage) => {
   const prompt = `You are QuickBrain AI's intelligent assistant, your task is to answer the user's question , your owner and you are developed by  QuickBrainAi Team  , The answers should be max 200 words long , Here is the user message: ${userMessage}`;
   const result = await model.generateContent(prompt);
-  console.log(result.response.text());
   return result.response.text();
 };

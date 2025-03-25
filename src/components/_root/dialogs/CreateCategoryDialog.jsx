@@ -14,7 +14,6 @@ const CreateCategoryDialog = ({ children }) => {
     reset,
   } = useForm();
   const queryClient = useQueryClient();
-  console.log(children);
 
   const { mutateAsync, isPending, isSuccess, isError, error } =
     useCreateCategoryMutation();
@@ -71,21 +70,29 @@ const CreateCategoryDialog = ({ children }) => {
               </p>
             )}
           </div>
-          <button
-            onClick={handleSubmit(onSubmit)}
-            className="btn btn-primary"
-            disabled={isPending} // Disable the button while the mutation is pending
-          >
-            {isPending ? (
-              <span className="loading loading-spinner loading-lg"></span>
-            ) : (
-              "Create Category"
-            )}
-          </button>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              className="btn btn-outline"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("createCategoryModal").close();
+              }}
+            >
+              Close
+            </button>
+            <button
+              onClick={handleSubmit(onSubmit)}
+              className="btn btn-primary"
+              disabled={isPending} // Disable the button while the mutation is pending
+            >
+              {isPending ? (
+                <span className="loading loading-spinner loading-lg"></span>
+              ) : (
+                "Create Category"
+              )}
+            </button>
+          </div>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
       </dialog>
     </div>
   );

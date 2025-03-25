@@ -9,7 +9,8 @@ import {
 } from "../../../lib/query/react-query";
 import LoadingModal from "../../../components/_root/LoadingModel";
 import { useNavigate } from "react-router-dom";
-import CreateCategoryDialog from "../../../components/_root/dialogs/NoteDeleteDailog";
+import CreateCategoryDialog from "../../../components/_root/dialogs/CreateCategoryDialog";
+import { BiPlus } from "react-icons/bi";
 
 const CreateNotePage = () => {
   const {
@@ -231,7 +232,7 @@ const CreateNotePage = () => {
               Category
             </label>
             {!isCategoryLoading ? (
-              <div className="flex items-center w-full">
+              <div className="flex items-center w-full gap-3">
                 <select
                   disabled={isNoteCreating}
                   {...register("category")}
@@ -254,7 +255,18 @@ const CreateNotePage = () => {
                     </option>
                   )}
                 </select>
-                <CreateCategoryDialog />
+                <CreateCategoryDialog>
+                  <div
+                    onClick={() => {
+                      document
+                        .getElementById("createCategoryModal")
+                        ?.showModal();
+                    }}
+                    className="btn btn-primary btn-circle"
+                  >
+                    <BiPlus className="text-2xl" />
+                  </div>
+                </CreateCategoryDialog>
               </div>
             ) : (
               <div>

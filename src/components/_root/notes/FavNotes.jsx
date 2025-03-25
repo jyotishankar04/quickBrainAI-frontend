@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
@@ -60,7 +61,7 @@ const FavNotes = () => {
             <NotesCard
               key={obj.id}
               title={obj.noteTitle}
-              category={obj.category.name}
+              category={obj.category}
               description={obj.noteDescription}
               updated={obj.updatedAt}
               created={obj.createdAt}
@@ -81,9 +82,10 @@ const FavNotes = () => {
         <p className="text-sm text-gray-600">
           Showing{" "}
           <span className="font-medium">
-            {page * limit - limit + 1} to {Math.min(page * limit, totalNotes)}
+            {Math.min(page * limit - limit + 1, totalNotes)} to{" "}
+            {Math.min(page * limit, totalNotes)}
           </span>{" "}
-          of <span className="font-medium">{totalNotes}</span> starred notes
+          of <span className="font-medium">{totalNotes}</span> notes
         </p>
         <div className="flex space-x-2">
           <button
@@ -94,59 +96,36 @@ const FavNotes = () => {
           >
             <FaAngleLeft className="w-4 h-4" />
           </button>
-          {[...Array(totalPages)].length > 0 && (
-            <div className="flex gap-2">
-              <button
-                className={`px-3 py-1 rounded-md font-medium transition ${
-                  page === 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-                onClick={() => setPage(1)}
-              >
-                1
-              </button>
-
-              {page > 3 && <span className="px-3 py-1">...</span>}
-              {[...Array(totalPages)]
-                .map((_, index) => index + 1)
-                .filter((num) => {
-                  if (totalPages <= 4) return true;
-                  if (num === 1 || num === totalPages) return false;
-                  return num >= page - 1 && num <= page + 1;
-                })
-                .map((num) => (
-                  <button
-                    key={num}
-                    className={`px-3 py-1 rounded-md font-medium transition ${
-                      page === num
-                        ? "bg-blue-600 text-white"
-                        : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                    }`}
-                    onClick={() => setPage(num)}
-                  >
-                    {num}
-                  </button>
-                ))}
-
-              {page < totalPages - 2 && <span className="px-3 py-1">...</span>}
-              <button
-                className={`px-3 py-1 rounded-md font-medium transition ${
-                  page === totalPages
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                }`}
-                onClick={() => setPage(totalPages)}
-              >
-                {totalPages}
-              </button>
-            </div>
-          )}
-
+          {[...Array(totalPages)]
+            .map((_, index) => index + 1)
+            .filter(
+              (num) =>
+                num === 1 ||
+                num === totalPages ||
+                (num >= page - 1 && num <= page + 1)
+            )
+            .map((num, index, arr) => (
+              <React.Fragment key={num}>
+                {index > 0 && arr[index - 1] !== num - 1 && (
+                  <span className="px-3 py-1">...</span>
+                )}
+                <button
+                  className={`px-3 py-1 rounded-md font-medium transition ${
+                    page === num
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setPage(num)}
+                >
+                  {num}
+                </button>
+              </React.Fragment>
+            ))}
           <button
             className="px-3 py-1 bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition"
             aria-label="Next page"
-            onClick={() => setPage((prev) => prev + 1)}
+            disabled={page >= totalPages}
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           >
             <FaAngleRight className="w-4 h-4" />
           </button>
