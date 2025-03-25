@@ -24,7 +24,6 @@ const SignUp = () => {
     return navigate("/auth/otp-verification");
   }
   if (isRegisterError) {
-    console.log(registerError);
     toast.error(registerError.response.data.message);
   }
   const onSubmit = handleSubmit(async (data) => {

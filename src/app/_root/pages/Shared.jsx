@@ -1,6 +1,7 @@
 import React from "react";
 import NotesSection from "../../../components/_root/notes/NotesSection";
 import SharedLog from "../../../components/_root/notes/SharedLog";
+import UnderConstructionPage from "../../../components/UnderConstructionPage";
 
 const Shared = () => {
   return (
@@ -21,8 +22,8 @@ const Shared = () => {
           </p>
         </div>
       </div>
-      <NotesSection />
-      <SharedLog />
+      <UnderConstructionPage />
+      {/* <SharedLog /> */}
     </div>
   );
 };

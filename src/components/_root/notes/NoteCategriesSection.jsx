@@ -1,19 +1,23 @@
 import { memo, useMemo } from "react";
 import { useCategoriesQuery } from "../../../lib/query/react-query";
 import CreateCategoryDialog from "../dialogs/CreateCategoryDialog";
+import { useSearchParams } from "react-router-dom";
 
-const NoteCategriesSection = () => {
+const NoteCategoriesSection = () => {
   const {
     data: categories,
     isPending: isCategoryLoading,
     isSuccess: isCategorySuccess,
   } = useCategoriesQuery();
+  const [params, setParams] = useSearchParams();
+
+  // Get the selected category from URL
+  const selectedCategory = params.get("category") || "all";
 
   // Memoize the processed categories data
   const categoryList = useMemo(() => {
     if (!isCategorySuccess || isCategoryLoading) return [];
     return categories.data.map((category, index) => {
-      // vibrenet colors in tailwind
       const colors = [
         "bg-red-500",
         "bg-green-500",
@@ -24,48 +28,75 @@ const NoteCategriesSection = () => {
         "bg-orange-500",
         "bg-teal-500",
       ];
+      const btns = [
+        "btn-primary",
+        "btn-secondary",
+        "btn-accent",
+        "btn-info",
+        "btn-success",
+        "btn-warning",
+        "btn-error",
+      ];
       return {
         name: category.name,
         color: colors[index % colors.length],
         notesCount: category._count.Notes,
+        btn: btns[index % btns.length],
       };
     });
   }, [categories, isCategorySuccess, isCategoryLoading]);
 
   return (
     <div
-      className="bg-white rounded-xl shadow-sm p-6 mb-8 animate__animated animate__fadeIn animate__animated--visible"
+      className="bg-white rounded-xl shadow-sm p-6 mb-8 animate__animated animate__fadeIn"
       style={{ animationDelay: "0.6s" }}
-      id="el-degtertg"
     >
-      <h2 className="text-xl font-bold text-gray-800 mb-4" id="el-qfczjb89">
-        Note Categories
-      </h2>
-      <div className="flex flex-row items-start" id="el-8s94g432">
+      <h2 className="text-xl font-bold text-gray-800 mb-4">Note Categories</h2>
+      <div className="flex flex-row  items-start gap">
         {isCategorySuccess && (
-          <div className="flex flex-wrap gap-3 flex-1" id="el-8s94g432">
+          <div className="flex filter  flex-wrap gap-3 flex-1">
+            {/* "All" category button */}
+            <input
+              className="btn filter-reset"
+              type="radio"
+              name="category"
+              aria-label="All"
+              checked={selectedCategory === "all"}
+              onChange={() =>
+                setParams((prev) => {
+                  prev.delete("category");
+                  return prev;
+                })
+              }
+            />
+            {/* Category buttons */}
             {categoryList.map((category) => (
-              <button
+              <input
                 key={category.name}
-                className={`px-4 py-2 badge badge-xl rounded-md text-sm font-medium flex items-center justify-between transition text-white ${category.color} hover:opacity-80 hover:scale-105`}
-              >
-                <span>{category.name}</span>
-                <span className="text-xs ml-2 bg-white/20 px-2 py-1 rounded-full">
-                  {category.notesCount}
-                </span>
-              </button>
+                type="radio"
+                name="category"
+                className={`btn ${category.btn}`}
+                aria-label={`${category.name} (${category.notesCount})`}
+                checked={selectedCategory === category.name}
+                onChange={() => {
+                  setParams((prev) => {
+                    prev.set("category", category.name);
+                    return prev;
+                  });
+                }}
+              />
             ))}
           </div>
         )}
         {isCategoryLoading && (
-          <div className="flex flex-wrap gap-3" id="">
+          <div className="flex flex-wrap gap-3">
             <span className="loading loading-dots loading-md"></span>
           </div>
         )}
-        <div className="flex flex-1 justify-end">
+        <div className="flex justify-end">
           <CreateCategoryDialog>
             <div
-              className="btn btn-ghost flex items-center"
+              className="btn btn-ghost  items-center"
               data-tip="Create Category"
               onClick={(e) => {
                 e.preventDefault();
@@ -82,4 +113,4 @@ const NoteCategriesSection = () => {
   );
 };
 
-export default memo(NoteCategriesSection);
+export default memo(NoteCategoriesSection);

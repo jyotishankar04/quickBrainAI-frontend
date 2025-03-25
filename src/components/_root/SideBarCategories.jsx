@@ -1,11 +1,15 @@
 import React, { memo, useState, useCallback, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useCollapseState from "../../context/CollapseStateContext.jsx";
-import { randomLimitedColorGenerator } from "../../util/colorGenerators";
+import colorGenerators from "../../util/colorGenerators";
 import { useCategoriesQuery } from "../../lib/query/react-query";
+import { BiCategory } from "react-icons/bi";
 
 const SideBarCategories = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
-  const { isCollapsed } = useCollapseState(); // Destructure only necessary value
+  const { isCollapsed } = useCollapseState();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const {
     data: categories,
@@ -18,7 +22,7 @@ const SideBarCategories = () => {
     if (!isCategorySuccess || isCategoryLoading) return [];
     return categories.data.map((category) => ({
       name: category.name,
-      color: randomLimitedColorGenerator(),
+      color: colorGenerators.randomColorGenerator(),
     }));
   }, [categories, isCategorySuccess, isCategoryLoading]);
 
@@ -26,6 +30,14 @@ const SideBarCategories = () => {
   const toggleCategories = useCallback(() => {
     setIsCategoriesOpen((prev) => !prev);
   }, []);
+
+  // Handle category click
+  const handleCategoryClick = (category) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("category", category);
+    newParams.set("page", "1");
+    navigate(`/app/notes?${newParams.toString()}`);
+  };
 
   return (
     <>
@@ -54,20 +66,20 @@ const SideBarCategories = () => {
             </button>
           </div>
           {isCategoriesOpen && (
-            <div className="mt-1 space-y-1">
+            <div className="mt-1 space-y-1 max-h-56 overflow-y-auto">
               {!isCategoryLoading && isCategorySuccess ? (
                 categoryList.map((category, index) => (
-                  <a
+                  <button
                     key={index}
-                    href="#"
-                    className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+                    onClick={() => handleCategoryClick(category.name)}
+                    className="flex w-full text-left items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
                   >
                     <span
                       style={{ backgroundColor: category.color }}
                       className="w-2 h-2 rounded-full mr-3"
                     ></span>
                     {category.name}
-                  </a>
+                  </button>
                 ))
               ) : (
                 <div className="flex justify-center my-4">
@@ -76,6 +88,13 @@ const SideBarCategories = () => {
               )}
             </div>
           )}
+          <button
+            className="flex items-center w-full text-left px-3 py-2 gap-2 btn mt-2"
+            onClick={() => navigate("/app/notes")}
+          >
+            <BiCategory />
+            All Categories ({categoryList.length})
+          </button>
         </div>
       )}
     </>

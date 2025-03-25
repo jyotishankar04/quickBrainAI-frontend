@@ -1,20 +1,18 @@
 import { useEffect } from "react";
-import { useDeleteNoteMutation } from "../../../lib/query/react-query";
-import { useQueryClient } from "@tanstack/react-query";
+import { useToggleStarMutation } from "../../../lib/query/react-query";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
-const NoteDeleteDailog = ({ children, id, noteTitle }) => {
+const ToggleStarDialog = ({ children, id, isStarred, noteTitle }) => {
   const { mutateAsync, isPending, isSuccess, isError, error } =
-    useDeleteNoteMutation();
-
+    useToggleStarMutation();
   const queryclient = useQueryClient();
   // Handle success outside useMutation
   useEffect(() => {
     if (isSuccess) {
-      document.getElementById("deleteNoteModal" + id).close();
+      document.getElementById("toggleStarModal" + id).close();
       queryclient.invalidateQueries({ queryKey: ["notes"] });
-      queryclient.invalidateQueries({ queryKey: ["categories"] });
-      toast.success("Note deleted successfully");
+      toast.success("Note star toggled successfully");
     }
   }, [isSuccess, id, queryclient]);
 
@@ -28,37 +26,42 @@ const NoteDeleteDailog = ({ children, id, noteTitle }) => {
   const onSubmit = async () => {
     await mutateAsync(id);
   };
+
   return (
     <div className="flex justify-end items-center h-full">
       {children}
       <dialog
-        id={"deleteNoteModal" + id}
+        id={"toggleStarModal" + id}
         className="modal modal-bottom sm:modal-middle"
       >
         <div className="modal-box flex flex-col gap-4 w-full">
-          <h3 className="font-bold text-lg">Delete Note</h3>
+          <h3 className="font-bold text-lg">Starred Note</h3>
           <p className="text-sm text-gray-500">
-            Are you sure you want to delete{" "}
-            <span className="font-bold text-error">{noteTitle}</span>?
+            {isStarred
+              ? `Are you sure you want to unstar ${noteTitle}`
+              : `Are you sure you want to star ${noteTitle}`}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <button
-              className="btn  btn-outline"
+              className="btn btn-outline"
               onClick={() => {
-                document.getElementById(`deleteNoteModal${id}`).close();
+                document.getElementById("toggleStarModal" + id).close();
               }}
             >
               Cancel
             </button>
             <button
-              disabled={isPending}
-              className={`btn  btn-error text-white `}
               onClick={onSubmit}
+              className={`btn ${
+                isStarred ? "btn-error text-white" : "btn-primary"
+              }`}
             >
               {isPending ? (
                 <span className="loading loading-spinner"></span>
+              ) : isStarred ? (
+                "Remove from Starred Notes"
               ) : (
-                "Delete"
+                " Add to Starred Notes"
               )}
             </button>
           </div>
@@ -68,4 +71,4 @@ const NoteDeleteDailog = ({ children, id, noteTitle }) => {
   );
 };
 
-export default NoteDeleteDailog;
+export default ToggleStarDialog;

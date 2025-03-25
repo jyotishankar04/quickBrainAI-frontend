@@ -48,6 +48,12 @@ export const createNoteApi = async (data) => {
   return response.data;
 };
 
+export const updateNoteApi = async ({ noteId, data }) => {
+  console.log("Received Data in API:", data);
+  const response = await axiosInstance.put(`/notes/${noteId}`, data);
+  return response.data;
+};
+
 export const getNotesApi = async (
   page = 1,
   limit = 6,
@@ -61,6 +67,16 @@ export const getNotesApi = async (
   return response.data;
 };
 
+export const toggleStarApi = async (noteId) => {
+  const response = await axiosInstance.put(`/notes/starred/${noteId}`);
+  return response.data;
+};
+
+export const deleteNoteApi = async (noteId) => {
+  const response = await axiosInstance.delete(`/notes/${noteId}`);
+  return response.data;
+};
+
 // categories api
 export const createCategoryApi = async (data) => {
   const response = await axiosInstance.post("/notes/categories", data);
@@ -69,5 +85,10 @@ export const createCategoryApi = async (data) => {
 
 export const getCategoriesApi = async () => {
   const response = await axiosInstance.get("/notes/categories");
+  return response.data;
+};
+
+export const searchNotesApi = async (query) => {
+  const response = await axiosInstance.get(`/notes/search?q=${query}`);
   return response.data;
 };

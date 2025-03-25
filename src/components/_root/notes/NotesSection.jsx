@@ -4,20 +4,17 @@ import { useSearchParams } from "react-router-dom";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useNotesQuery } from "../../../lib/query/react-query";
 import NotesCard from "./NotesCard";
+import NoDataFound from "../../NoDataFound";
 
 const NotesSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialPage = parseInt(searchParams.get("page")) || 1;
-  const initialLimit = parseInt(searchParams.get("limit")) || 6;
-  const initialCategory = searchParams.get("category") || "all";
-  const initialFilter = searchParams.get("filterBy") || "all";
-  const initialOrder = searchParams.get("orderBy") || "createdAt";
 
-  const [filterBy, setFilterBy] = useState(initialFilter);
-  const [orderBy, setOrderBy] = useState(initialOrder);
-  const [page, setPage] = useState(initialPage);
-  const [limit, setLimit] = useState(initialLimit);
-  const [category, setCategory] = useState(initialCategory);
+  const page = parseInt(searchParams.get("page")) || 1;
+  const limit = parseInt(searchParams.get("limit")) || 6;
+  const category = searchParams.get("category") || "all";
+  const filterBy = searchParams.get("filterBy") || "all";
+  const orderBy = searchParams.get("orderBy") || "newest";
+
   const [totalPages, setTotalPages] = useState(1);
   const [totalNotes, setTotalNotes] = useState(0);
 
@@ -31,32 +28,40 @@ const NotesSection = () => {
   } = useNotesQuery(page, limit, category, filterBy, orderBy);
 
   useEffect(() => {
-    const params = {
-      page: String(page),
-      limit: String(limit),
-    };
-    if (category !== "all") params.category = category;
-    if (filterBy !== "all") params.filterBy = filterBy;
-    if (orderBy) params.orderBy = orderBy;
-
-    setSearchParams(params);
     refetch();
-  }, [page, limit, category, filterBy, orderBy, setSearchParams, refetch]);
+  }, [page, limit, category, filterBy, orderBy, refetch]);
 
   useEffect(() => {
     if (isSuccess && notes?.pagination) {
       setTotalPages(notes.pagination.totalPages);
       setTotalNotes(notes.pagination.totalNotes);
-    }
-  }, [isSuccess, notes]);
 
-  if (isError) {
-    return (
-      <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-        <p className="text-red-500 font-semibold">{error.message}</p>
-      </div>
-    );
-  }
+      // If the current page exceeds the total pages, reset to page 1
+      if (page > notes.pagination.totalPages) {
+        setSearchParams((prevParams) => {
+          const newParams = new URLSearchParams(prevParams);
+          newParams.set("page", "1");
+          return newParams;
+        });
+      }
+    }
+  }, [isSuccess, notes, page, setSearchParams]);
+
+  const handleFilterChange = (newFilter) => {
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("filterBy", newFilter);
+      return newParams;
+    });
+  };
+
+  const handleOrderChange = (newOrder) => {
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("orderBy", newOrder);
+      return newParams;
+    });
+  };
 
   return (
     <>
@@ -68,7 +73,7 @@ const NotesSection = () => {
             {["all", "starred"].map((type) => (
               <button
                 key={type}
-                onClick={() => setFilterBy(type)}
+                onClick={() => handleFilterChange(type)}
                 className={`px-3 py-1 rounded-full text-sm font-medium transition ${
                   filterBy === type
                     ? "bg-blue-100 text-blue-700"
@@ -80,19 +85,21 @@ const NotesSection = () => {
             ))}
           </div>
 
-          {/* Sorting Dropdown */}
-          {/* <div className="flex items-center space-x-3">
+          {/* Order By Select */}
+          <div className="flex items-center gap-3">
+            <span className="text-gray-700 font-medium w-34">Order By:</span>
             <select
               value={orderBy}
-              onChange={(e) => setOrderBy(e.target.value)}
-              className="bg-gray-100 text-gray-700 rounded p-1.5 text-sm border-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => handleOrderChange(e.target.value)}
+              className="px-3 py-1 border select select-primary  rounded-md text-gray-700"
             >
-              <option value="createdAt">Created Date</option>
-              <option value="updatedAt">Last Modified</option>
-              <option value="atoz">Name (A-Z)</option>
-              <option value="ztoa">Name (Z-A)</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="modified">Last Modified</option>
+              <option value="atoz">A to Z</option>
+              <option value="ztoa">Z to A</option>
             </select>
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -108,19 +115,18 @@ const NotesSection = () => {
             <NotesCard
               key={obj.id}
               title={obj.noteTitle}
-              category={obj.category.name}
+              category={obj.category}
               description={obj.noteDescription}
               updated={obj.updatedAt}
               created={obj.createdAt}
               starred={obj.isStared}
               id={obj.id}
+              isPrivate={obj.isPrivate}
               tags={obj.tags}
             />
           ))
         ) : (
-          <div className="col-span-3 flex justify-center items-center">
-            <p className="text-gray-600 text-lg">No Notes Found</p>
-          </div>
+          <NoDataFound text="No notes found" />
         )}
       </div>
 
@@ -139,7 +145,13 @@ const NotesSection = () => {
             className="px-3 py-1 bg-white text-gray-500 border border-gray-300 rounded-md hover:bg-gray-50 transition"
             aria-label="Previous page"
             disabled={page <= 1}
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() =>
+              setSearchParams((prevParams) => {
+                const newParams = new URLSearchParams(prevParams);
+                newParams.set("page", Math.max(page - 1, 1).toString());
+                return newParams;
+              })
+            }
           >
             <FaAngleLeft className="w-4 h-4" />
           </button>
@@ -162,7 +174,13 @@ const NotesSection = () => {
                       ? "bg-blue-600 text-white"
                       : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
                   }`}
-                  onClick={() => setPage(num)}
+                  onClick={() =>
+                    setSearchParams((prevParams) => {
+                      const newParams = new URLSearchParams(prevParams);
+                      newParams.set("page", num.toString());
+                      return newParams;
+                    })
+                  }
                 >
                   {num}
                 </button>
@@ -172,7 +190,9 @@ const NotesSection = () => {
             className="px-3 py-1 bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition"
             aria-label="Next page"
             disabled={page >= totalPages}
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setSearchParams({ page: Math.min(page + 1, totalPages) })
+            }
           >
             <FaAngleRight className="w-4 h-4" />
           </button>

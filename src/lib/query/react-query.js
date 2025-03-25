@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createCategoryApi,
   createNoteApi,
+  deleteNoteApi,
   getCategoriesApi,
   getNotesApi,
   getSessionApi,
@@ -10,6 +11,9 @@ import {
   registerApi,
   registerCompletionApi,
   registerVerificationApi,
+  searchNotesApi,
+  toggleStarApi,
+  updateNoteApi,
 } from "../axios/axiosApis";
 
 export const useLoginMutation = () => {
@@ -58,14 +62,6 @@ export const useCreateNoteMutation = () => {
   });
 };
 
-// categories
-
-export const useCreateCategoryMutation = () => {
-  return useMutation({
-    mutationFn: createCategoryApi,
-  });
-};
-
 export const useNotesQuery = (page, limit, category, filterBy, orderBy) => {
   return useQuery({
     queryKey: ["notes", { page, limit, category, filterBy, orderBy }],
@@ -73,6 +69,41 @@ export const useNotesQuery = (page, limit, category, filterBy, orderBy) => {
     enabled: !!page,
     keepPreviousData: true,
     staleTime: 5 * 60 * 1000,
+  });
+};
+export const useNoteUpdateMutation = () => {
+  return useMutation({
+    mutationFn: updateNoteApi,
+  });
+};
+
+export const useSearchNotesQuery = (query) => {
+  return useQuery({
+    queryKey: ["search", query],
+    queryFn: () => searchNotesApi(query),
+    enabled: !!query,
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useToggleStarMutation = () => {
+  return useMutation({
+    mutationFn: toggleStarApi,
+  });
+};
+
+export const useDeleteNoteMutation = () => {
+  return useMutation({
+    mutationFn: deleteNoteApi,
+  });
+};
+
+// categories
+
+export const useCreateCategoryMutation = () => {
+  return useMutation({
+    mutationFn: createCategoryApi,
   });
 };
 
