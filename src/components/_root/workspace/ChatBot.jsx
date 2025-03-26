@@ -42,7 +42,7 @@ const ChatBot = () => {
         clearInterval(interval);
         setLoading(false);
       }
-    }, 20); // Adjust speed for faster/slower streaming
+    }, 10); // Adjust speed for faster/slower streaming
   };
 
   const sendMessage = async () => {
@@ -123,7 +123,9 @@ const ChatBot = () => {
               chat.isUser ? "flex-row-reverse" : ""
             }`}
           >
-            <div className="chat chat-start">
+            <div
+              className={`chat  ${chat.isUser ? "chat-end " : "chat-start"}`}
+            >
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
                   <img
@@ -142,7 +144,9 @@ const ChatBot = () => {
                   <span className="italic text-gray-400">Thinking...</span>
                 </div>
               ) : chat.isUser ? (
-                <div className="chat-bubble">{chat.message}</div>
+                <div className="chat-bubble chat-bubble-info">
+                  {chat.message}
+                </div>
               ) : (
                 <MarkdownMessage content={chat.message} />
               )}

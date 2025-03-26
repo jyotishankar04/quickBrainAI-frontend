@@ -3,6 +3,7 @@ import {
   createCategoryApi,
   createNoteApi,
   deleteNoteApi,
+  generateQuestionAnswer,
   getCategoriesApi,
   getNoteByIdApi,
   getNotesApi,
@@ -119,5 +120,12 @@ export const useCategoriesQuery = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategoriesApi(),
+  });
+};
+
+// ai
+export const useGenerateAiAnswerMutation = () => {
+  return useMutation({
+    mutationFn: generateQuestionAnswer,
   });
 };

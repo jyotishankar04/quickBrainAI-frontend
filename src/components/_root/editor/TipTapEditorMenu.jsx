@@ -96,7 +96,7 @@ export const MenuBar = () => {
 
   return (
     <div
-      className="flex flex-wrap gap-2 items-center p-2 bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm"
+      className="flex flex-wrap gap-2 items-center p bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm"
       ref={dropdownRef}
     >
       {/* Heading Dropdown */}
@@ -329,7 +329,7 @@ export const MenuBar = () => {
       </div>
 
       {/* Undo/Redo */}
-      <div className="flex gap-1 ml-auto">
+      <div className="flex gap-1 ">
         <button
           onClick={() => editor.chain().focus().undo().run()}
           className="btn btn-sm btn-ghost"
@@ -376,24 +376,4 @@ export const extensions = [
   }),
 ];
 
-export const content = `
-<h1>Heading 1</h1>
-<h2>Heading 2</h2>
-<h3>Heading 3</h3>
-<p>This is a paragraph with <strong>bold</strong>, <em>italic</em>, and <span style="color: #FF5733">colored</span> text.</p>
-<ul>
-  <li>Bullet list item</li>
-  <li>Another item</li>
-</ul>
-<ol>
-  <li>Ordered list item</li>
-  <li>Second item</li>
-</ol>
-<blockquote>
-  This is a blockquote
-</blockquote>
-<pre><code>// Code block example
-function hello() {
-  return "World";
-}</code></pre>
-`;
+export const content = `Who are the members of the team?`;

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import useActiveTab from "../../../context/ActiveTabContext";
+import { useActiveTab } from "../../../context/ActiveTabContext";
 import ChatBot from "./ChatBot";
 import PDFViewer from "./PDFViewer";
 import WorkSpaceRIghtTopBar from "./WorkSpaceRIghtTopBar";
@@ -7,7 +6,6 @@ import WorkSpaceRIghtTopBar from "./WorkSpaceRIghtTopBar";
 const RightTab = ({ note }) => {
   const { activeTab, setActiveTab } = useActiveTab();
 
-  console.log(note);
   return (
     <div className="w-full flex flex-col gap-2 border-l h-full">
       <WorkSpaceRIghtTopBar />

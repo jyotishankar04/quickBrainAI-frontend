@@ -103,3 +103,12 @@ export const getAiResponse = async (message) => {
   const response = await axiosInstance.post("/ai", { message });
   return response.data;
 };
+
+// ai
+export const generateQuestionAnswer = async ({ noteId, question }) => {
+  const response = await axiosInstance.post("/qbai/pdf/answer", {
+    noteId,
+    question,
+  });
+  return response.data;
+};
