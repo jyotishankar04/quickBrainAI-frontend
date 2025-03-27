@@ -88,7 +88,49 @@ export const getCategoriesApi = async () => {
   return response.data;
 };
 
+export const getNoteByIdApi = async (noteId) => {
+  const response = await axiosInstance.get(`/notes/${noteId}`);
+  return response.data;
+};
+
 export const searchNotesApi = async (query) => {
   const response = await axiosInstance.get(`/notes/search?q=${query}`);
+  return response.data;
+};
+
+//chat bot
+export const getAiResponse = async (message) => {
+  const response = await axiosInstance.post("/ai", { message });
+  return response.data;
+};
+
+// ai
+export const generateQuestionAnswer = async ({ noteId, question }) => {
+  const response = await axiosInstance.post("/qbai/pdf/answer", {
+    noteId,
+    question,
+  });
+
+  return response.data;
+};
+
+export const getWorkspacePDFChatBotResponse = async ({ noteId, question }) => {
+  const response = await axiosInstance.post("/qbai/pdf/chat/" + noteId, {
+    question,
+  });
+  return response.data;
+};
+
+export const getNoteChatsApi = async (noteId) => {
+  const response = await axiosInstance.get(`/notes/chat/${noteId}`);
+  return response.data;
+};
+
+export const saveNoteApi = async ({ noteId, content }) => {
+  console.log("Received Data in API:", content);
+  console.log("Received Data in API:", noteId);
+  const response = await axiosInstance.put(`/notes/save/${noteId}`, {
+    content: content,
+  });
   return response.data;
 };

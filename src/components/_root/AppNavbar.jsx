@@ -5,7 +5,7 @@ import WorkSpaceLeftTopBar from "./workspace/WorkSpaceLeftTopBar";
 const AppNavbar = () => {
   const location = useLocation();
   return (
-    <div className="bg-gray-200 flex items-center justify-end">
+    <div className="bg-gray-200 flex items-center pt-2">
       <div
         className={`flex items-center  w-full pr-10 ${
           location.pathname.includes("workspace")

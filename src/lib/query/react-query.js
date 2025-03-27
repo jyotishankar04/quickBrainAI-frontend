@@ -3,14 +3,19 @@ import {
   createCategoryApi,
   createNoteApi,
   deleteNoteApi,
+  generateQuestionAnswer,
   getCategoriesApi,
+  getNoteByIdApi,
+  getNoteChatsApi,
   getNotesApi,
   getSessionApi,
+  getWorkspacePDFChatBotResponse,
   loginApi,
   refreshSessionApi,
   registerApi,
   registerCompletionApi,
   registerVerificationApi,
+  saveNoteApi,
   searchNotesApi,
   toggleStarApi,
   updateNoteApi,
@@ -87,6 +92,13 @@ export const useSearchNotesQuery = (query) => {
   });
 };
 
+export const useNoteByIdQuery = (noteId) => {
+  return useQuery({
+    queryKey: ["note", noteId],
+    queryFn: () => getNoteByIdApi(noteId),
+  });
+};
+
 export const useToggleStarMutation = () => {
   return useMutation({
     mutationFn: toggleStarApi,
@@ -111,5 +123,34 @@ export const useCategoriesQuery = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategoriesApi(),
+  });
+};
+
+// ai
+export const useGenerateAiAnswerMutation = () => {
+  return useMutation({
+    mutationFn: generateQuestionAnswer,
+  });
+};
+
+export const useGetWorkspacePDFChatBotResponse = () => {
+  return useMutation({
+    mutationFn: getWorkspacePDFChatBotResponse,
+  });
+};
+
+export const useGetChats = (noteId) => {
+  return useQuery({
+    queryKey: ["chats", noteId],
+    queryFn: () => getNoteChatsApi(noteId),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useSaveNote = () => {
+  return useMutation({
+    mutationFn: saveNoteApi,
   });
 };

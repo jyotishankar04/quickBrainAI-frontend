@@ -1,9 +1,8 @@
-// components/WorkSpaceRIghtTopBar.js
 import React from "react";
-import useActiveTab from "../../../context/ActiveTabContext";
+import { useActiveTab } from "../../../context/ActiveTabContext";
 import { TABS } from "../../../constants/workspace.constants";
 
-const WorkSpaceRIghtTopBar = () => {
+const WorkSpaceRightTopBar = React.memo(() => {
   const { activeTab, setActiveTab } = useActiveTab();
 
   return (
@@ -21,6 +20,6 @@ const WorkSpaceRIghtTopBar = () => {
       ))}
     </div>
   );
-};
+});
 
-export default WorkSpaceRIghtTopBar;
+export default WorkSpaceRightTopBar;

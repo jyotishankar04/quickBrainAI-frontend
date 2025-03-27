@@ -93,19 +93,22 @@ const Sidebar = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="w-full">
-          <SearchDialog>
-            <button
-              onClick={() => document.getElementById("searchModal").showModal()}
-              className="px-3 py-2 w-full bg-slate-100 rounded mb-3 cursor-pointer flex  hover:bg-slate-200 items-center justify-start gap-4 mx-2"
-            >
-              {" "}
-              <BiSearch className=" right-4 top-3 text-gray-400 " />
-              <p className="text-gray-400">{isCollapsed ? "" : "Search"}</p>
-            </button>
-          </SearchDialog>
-        </div>
-
+        {!isCollapsed && !location.pathname.includes("workspace") && (
+          <div className="w-full">
+            <SearchDialog>
+              <button
+                onClick={() =>
+                  document.getElementById("searchModal").showModal()
+                }
+                className="px-3 py-2 w-full bg-slate-100 rounded mb-3 cursor-pointer flex  hover:bg-slate-200 items-center justify-start gap-4 mx-2"
+              >
+                {" "}
+                <BiSearch className=" right-4 top-3 text-gray-400 " />
+                <p className="text-gray-400">{isCollapsed ? "" : "Search"}</p>
+              </button>
+            </SearchDialog>
+          </div>
+        )}
         {/* Navigation Links */}
 
         <div className="space-y-1 px-3">{navLinks}</div>

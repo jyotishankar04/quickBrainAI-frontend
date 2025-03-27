@@ -123,6 +123,7 @@ const NotesSection = () => {
               id={obj.id}
               isPrivate={obj.isPrivate}
               tags={obj.tags}
+              files={obj.files}
             />
           ))
         ) : (
