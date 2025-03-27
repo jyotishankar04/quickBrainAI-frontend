@@ -30,6 +30,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Highlight from "@tiptap/extension-highlight";
 import { useState, useRef, useEffect } from "react";
+import SaveBtn from "./SaveBtn";
 
 const headingLevels = [
   { name: "Heading 1", level: 1, icon: <RiH1 className="text-lg" /> },
@@ -67,6 +68,7 @@ export const MenuBar = () => {
   const [showHeadingDropdown, setShowHeadingDropdown] = useState(false);
   const [showTextColorDropdown, setShowTextColorDropdown] = useState(false);
   const [showHighlightDropdown, setShowHighlightDropdown] = useState(false);
+
   const dropdownRef = useRef(null);
 
   // Close dropdowns when clicking outside
@@ -347,6 +349,7 @@ export const MenuBar = () => {
           <BiRedo />
         </button>
       </div>
+      <SaveBtn />
     </div>
   );
 };

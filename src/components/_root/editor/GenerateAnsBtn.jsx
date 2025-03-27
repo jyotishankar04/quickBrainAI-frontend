@@ -23,10 +23,13 @@ const GenerateAnsBtn = () => {
   }, [isGenerateAnswerError, generateAnswerError]);
 
   const handleGenerateAnswer = async () => {
-    const selectedText = editor.state.selection
-      .content()
-      .content.textBetween(0, editor.state.selection.content().size + 1, " ");
-    if (!selectedText) return;
+    const { from, to } = editor.state.selection; // Get selection range
+    const selectedText = editor.state.doc.textBetween(from, to, " "); // Extract selected text
+
+    if (!selectedText) {
+      toast.error("Please select some text first.");
+      return;
+    }
 
     await generateQuestionAnswer({ noteId, question: selectedText });
     setShowDropdown(true); // Show dropdown when answers are generated
@@ -85,9 +88,9 @@ const GenerateAnsBtn = () => {
                   <span className="font-semibold text-gray-800">
                     {index + 1}.{" "}
                   </span>
-                  <span className="text-gray-700">
-                    {answer.length > 200
-                      ? answer.substring(0, 200) + "..."
+                  <span className="text-sm text-gray-600">
+                    {answer.length > 400
+                      ? answer.substring(0, 400) + "..."
                       : answer}
                   </span>
                 </li>

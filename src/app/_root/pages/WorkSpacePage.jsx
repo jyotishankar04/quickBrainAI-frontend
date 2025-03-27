@@ -7,10 +7,12 @@ import { useNoteByIdQuery } from "../../../lib/query/react-query";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import LoadingModal from "../../../components/_root/LoadingModel";
+import { useEditorContext } from "../../../context/EditorContext";
 
 const WorkSpacePage = () => {
   const { setIsCollapsed } = useCollapseState();
   const [leftWidth, setLeftWidth] = useState(50); //setting the width 50%
+  const { editor } = useEditorContext();
 
   useEffect(() => {
     setIsCollapsed(true);
@@ -29,9 +31,9 @@ const WorkSpacePage = () => {
 
   useEffect(() => {
     if (isNoteSuccess) {
-      refetchNote();
+      editor.commands.setContent(note.data.noteContent);
     }
-  }, [isNoteSuccess, refetchNote]);
+  }, [isNoteSuccess, refetchNote, editor, note]);
 
   useEffect(() => {
     if (isNoteError) {

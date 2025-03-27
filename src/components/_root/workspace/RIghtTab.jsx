@@ -4,7 +4,7 @@ import PDFViewer from "./PDFViewer";
 import WorkSpaceRIghtTopBar from "./WorkSpaceRIghtTopBar";
 
 const RightTab = ({ note }) => {
-  const { activeTab, setActiveTab } = useActiveTab();
+  const { activeTab } = useActiveTab();
 
   return (
     <div className="w-full flex flex-col gap-2 border-l h-full">

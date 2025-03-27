@@ -93,7 +93,7 @@ const Sidebar = () => {
         </div>
 
         {/* Search Bar */}
-        {!isCollapsed && location.pathname.includes("workspace") && (
+        {!isCollapsed && !location.pathname.includes("workspace") && (
           <div className="w-full">
             <SearchDialog>
               <button

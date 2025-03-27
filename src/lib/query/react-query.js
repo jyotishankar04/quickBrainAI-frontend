@@ -6,13 +6,16 @@ import {
   generateQuestionAnswer,
   getCategoriesApi,
   getNoteByIdApi,
+  getNoteChatsApi,
   getNotesApi,
   getSessionApi,
+  getWorkspacePDFChatBotResponse,
   loginApi,
   refreshSessionApi,
   registerApi,
   registerCompletionApi,
   registerVerificationApi,
+  saveNoteApi,
   searchNotesApi,
   toggleStarApi,
   updateNoteApi,
@@ -127,5 +130,27 @@ export const useCategoriesQuery = () => {
 export const useGenerateAiAnswerMutation = () => {
   return useMutation({
     mutationFn: generateQuestionAnswer,
+  });
+};
+
+export const useGetWorkspacePDFChatBotResponse = () => {
+  return useMutation({
+    mutationFn: getWorkspacePDFChatBotResponse,
+  });
+};
+
+export const useGetChats = (noteId) => {
+  return useQuery({
+    queryKey: ["chats", noteId],
+    queryFn: () => getNoteChatsApi(noteId),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useSaveNote = () => {
+  return useMutation({
+    mutationFn: saveNoteApi,
   });
 };

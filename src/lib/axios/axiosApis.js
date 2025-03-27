@@ -110,5 +110,27 @@ export const generateQuestionAnswer = async ({ noteId, question }) => {
     noteId,
     question,
   });
+
+  return response.data;
+};
+
+export const getWorkspacePDFChatBotResponse = async ({ noteId, question }) => {
+  const response = await axiosInstance.post("/qbai/pdf/chat/" + noteId, {
+    question,
+  });
+  return response.data;
+};
+
+export const getNoteChatsApi = async (noteId) => {
+  const response = await axiosInstance.get(`/notes/chat/${noteId}`);
+  return response.data;
+};
+
+export const saveNoteApi = async ({ noteId, content }) => {
+  console.log("Received Data in API:", content);
+  console.log("Received Data in API:", noteId);
+  const response = await axiosInstance.put(`/notes/save/${noteId}`, {
+    content: content,
+  });
   return response.data;
 };

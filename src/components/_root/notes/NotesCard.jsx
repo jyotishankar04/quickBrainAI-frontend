@@ -18,18 +18,29 @@ const NotesCard = ({
   starred,
   tags,
   isPrivate,
+  files,
 }) => {
-  console.log(category);
+  console.log(files);
   return (
-    <div className=" card" id="el-vscmwjky">
+    <div className=" card indicator w-full" id="el-vscmwjky">
       <div className="flex  justify-between items-start mb-4" id="el-hvne05la">
         <Link to={`/app/workspace/${id}`} id="el-j3wzkfu7">
-          <h3
-            className="font-semibold text-lg text-gray-800 mb-1"
-            id="el-8p7ddh29"
-          >
-            {title.length > 20 ? `${title.slice(0, 20)}...` : title}
-          </h3>
+          <div className="flex flex-row items-center gap-3">
+            <h3
+              className="font-semibold text-lg text-gray-800 mb-1"
+              id="el-8p7ddh29"
+            >
+              {title.length > 20 ? `${title.slice(0, 20)}...` : title}
+            </h3>
+
+            {files && files.length > 0 ? (
+              <span className="badge badge-sm badge-error text-white">PDF</span>
+            ) : (
+              <span className="badge badge-sm badge-error  text-white">
+                TEXT
+              </span>
+            )}
+          </div>
           <p className="text-gray-500 text-sm" id="el-yb7n0324">
             {displayTimeFromSeconds(created)}
           </p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkMath from "remark-math";
@@ -9,17 +9,23 @@ import mermaid from "mermaid";
 import { FiCopy, FiCheck } from "react-icons/fi";
 
 const MarkdownMessage = ({ content }) => {
-  const mdRef = useRef(null);
   const [copiedStates, setCopiedStates] = useState({});
 
   useEffect(() => {
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: "default",
-      fontFamily: "inherit",
-      securityLevel: "loose",
-    });
-    mermaid.contentLoaded();
+    // Initialize mermaid only if it exists and content is present
+    if (mermaid && content) {
+      try {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: "default",
+          fontFamily: "inherit",
+          securityLevel: "loose",
+        });
+        mermaid.contentLoaded();
+      } catch (error) {
+        console.error("Mermaid initialization error:", error);
+      }
+    }
   }, [content]);
 
   const extractPlainText = (children) => {
@@ -36,18 +42,26 @@ const MarkdownMessage = ({ content }) => {
 
   const handleCopy = (children, index) => {
     const copyText = extractPlainText(children);
-    navigator.clipboard.writeText(copyText);
-    setCopiedStates((prev) => ({ ...prev, [index]: true }));
 
-    setTimeout(() => {
-      setCopiedStates((prev) => ({ ...prev, [index]: false }));
-    }, 2000);
+    try {
+      navigator.clipboard.writeText(copyText.trim());
+      setCopiedStates((prev) => ({ ...prev, [index]: true }));
+
+      setTimeout(() => {
+        setCopiedStates((prev) => {
+          const newStates = { ...prev };
+          delete newStates[index];
+          return newStates;
+        });
+      }, 2000);
+    } catch (error) {
+      console.error("Copy to clipboard failed:", error);
+    }
   };
 
   return (
-    <div className="w-full p-4 prose prose-sm sm:prose-base max-w-full text-gray-900">
+    <div className="w-full prose prose-sm sm:prose-base text-gray-900 break-words">
       <ReactMarkdown
-        ref={mdRef}
         rehypePlugins={[rehypeHighlight, rehypeKatex]}
         remarkPlugins={[remarkMath]}
         components={{
@@ -64,7 +78,7 @@ const MarkdownMessage = ({ content }) => {
             }
 
             return (
-              <div className="relative my-4 rounded-lg bg-gray-900 max-w-full">
+              <div className="relative my-4 rounded-lg bg-gray-900">
                 <div className="flex justify-between items-center px-4 py-2 bg-gray-800 text-gray-200 text-xs">
                   <span>{match ? match[1].toUpperCase() : "CODE"}</span>
                   <button
@@ -83,8 +97,11 @@ const MarkdownMessage = ({ content }) => {
                     )}
                   </button>
                 </div>
-                <pre className="p-4 overflow-x-auto text-sm leading-tight max-w-full">
-                  <code className={`text-gray-200 ${className}`} {...props}>
+                <pre className="p-4 overflow-x-auto text-sm leading-tight">
+                  <code
+                    className={`text-gray-200 ${className || ""}`}
+                    {...props}
+                  >
                     {children}
                   </code>
                 </pre>

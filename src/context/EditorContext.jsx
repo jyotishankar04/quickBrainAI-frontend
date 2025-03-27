@@ -1,17 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext } from "react";
 import { useEditor } from "@tiptap/react";
-import {
-  extensions,
-  content,
-} from "../components/_root/editor/TipTapEditorMenu";
+import { extensions } from "../components/_root/editor/TipTapEditorMenu";
 
 const EditorContext = createContext(null);
 
 export const EditorProvider = ({ children }) => {
   const editor = useEditor({
     extensions,
-    content,
     editorProps: {
       attributes: {
         class:
