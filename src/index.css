@@ -1,9 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @plugin "daisyui" {
-   themes: light --default
+  themes: light --default;
 }
-
 
 .card {
   @apply bg-slate-100 p-4;
@@ -14,7 +13,7 @@
 }
 
 /* List styles */
-.tiptap ul, 
+.tiptap ul,
 .tiptap ol {
   @apply pl-4 my-3;
 }
@@ -24,16 +23,16 @@
 }
 
 /* Heading styles */
-.tiptap h1, 
-.tiptap h2, 
-.tiptap h3, 
-.tiptap h4, 
-.tiptap h5, 
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
 .tiptap h6 {
   @apply leading-tight mt-10;
 }
 
-.tiptap h1, 
+.tiptap h1,
 .tiptap h2 {
   @apply mt-14 mb-6;
 }
@@ -50,8 +49,8 @@
   @apply text-lg font-medium;
 }
 
-.tiptap h4, 
-.tiptap h5, 
+.tiptap h4,
+.tiptap h5,
 .tiptap h6 {
   @apply text-base font-normal;
 }
@@ -90,12 +89,61 @@
 }
 
 /* List styles */
-.tiptap ul, 
+.tiptap ul,
 .tiptap ol {
   @apply px-4 mt-5 mb-5 mr-2; /* Converted padding and margin */
 }
 
-.tiptap ul li p, 
+.tiptap ul li p,
 .tiptap ol li p {
   @apply mt-1 mb-1; /* Converted margin */
+}
+.print-content {
+  display: none;
+  padding: 20px;
+}
+
+@media print {
+  .print-content {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: none;
+  }
+  @page {
+    size: A4;
+    margin: 10mm;
+    position: relative;
+  }
+  @page {
+    .print-content::before {
+      content: "QuickBrain AI";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 8px;
+      font-weight: bold;
+      color: #000;
+    }
+  }
+
+  .print-content h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .print-content p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* Ensure page breaks properly */
+  .print-content > * {
+    page-break-inside: avoid;
+  }
 }

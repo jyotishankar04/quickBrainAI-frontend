@@ -127,10 +127,13 @@ export const getNoteChatsApi = async (noteId) => {
 };
 
 export const saveNoteApi = async ({ noteId, content }) => {
-  console.log("Received Data in API:", content);
-  console.log("Received Data in API:", noteId);
   const response = await axiosInstance.put(`/notes/save/${noteId}`, {
     content: content,
   });
+  return response.data;
+};
+
+export const getSummaryApi = async (noteId) => {
+  const response = await axiosInstance.get(`/qbai/pdf/summary/${noteId}`);
   return response.data;
 };
