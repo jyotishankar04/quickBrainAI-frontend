@@ -9,6 +9,7 @@ import {
   getNoteChatsApi,
   getNotesApi,
   getSessionApi,
+  getSummaryApi,
   getWorkspacePDFChatBotResponse,
   loginApi,
   refreshSessionApi,
@@ -152,5 +153,16 @@ export const useGetChats = (noteId) => {
 export const useSaveNote = () => {
   return useMutation({
     mutationFn: saveNoteApi,
+  });
+};
+
+export const useGetSummary = (noteId) => {
+  return useQuery({
+    queryKey: ["summary", noteId],
+    queryFn: () => getSummaryApi(noteId),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+    enabled: false,
   });
 };

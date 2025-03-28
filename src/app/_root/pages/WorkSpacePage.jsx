@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import RightTab from "../../../components/_root/workspace/RIghtTab";
 import useCollapseState from "../../../context/CollapseStateContext";
@@ -29,11 +30,19 @@ const WorkSpacePage = () => {
     refetch: refetchNote,
   } = useNoteByIdQuery(noteId);
 
+  const [editorContent, setEditorContent] = useState("");
+
   useEffect(() => {
     if (isNoteSuccess) {
-      editor.commands.setContent(note.data.noteContent);
+      setEditorContent(note.data.noteContent);
     }
-  }, [isNoteSuccess, refetchNote, editor, note]);
+  }, [isNoteSuccess, note]);
+
+  useEffect(() => {
+    if (editor && editorContent) {
+      editor.commands.setContent(editorContent);
+    }
+  }, [editor, editorContent]);
 
   useEffect(() => {
     if (isNoteError) {
@@ -66,4 +75,4 @@ const WorkSpacePage = () => {
   );
 };
 
-export default WorkSpacePage;
+export default React.memo(WorkSpacePage);
