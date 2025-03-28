@@ -45,7 +45,7 @@ const SaveBtn = () => {
     <button
       onClick={handleSave}
       disabled={isSavePending}
-      className="btn btn-sm btn-primary ml-5 flex items-center"
+      className="btn btn-sm btn-primary flex items-center"
     >
       {isSavePending ? (
         <span>
