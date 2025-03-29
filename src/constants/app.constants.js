@@ -77,33 +77,6 @@ export const sidebarLinks = [
   },
 ];
 
-export const dashboardStats = [
-  {
-    title: "Total Notes",
-    value: "24",
-    icon: FaRegFileAlt,
-    color: "blue",
-  },
-  {
-    title: "Recent Views",
-    value: "12",
-    icon: MdOutlineRemoveRedEye,
-    color: "green",
-  },
-  {
-    title: "Favorites",
-    value: "7",
-    icon: FaRegStar,
-    color: "yellow",
-  },
-  {
-    title: "Created This Week",
-    value: "5",
-    icon: FaRegCalendarAlt,
-    color: "purple",
-  },
-];
-
 // constants/notes.constants.js
 // constants/notes.constants.js
 export const noteCardsData = [

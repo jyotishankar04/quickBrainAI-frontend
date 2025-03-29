@@ -1,4 +1,6 @@
-const QuickAction = ({ title, icon, color }) => {
+import { Link } from "react-router-dom";
+
+const QuickAction = ({ title, icon, color, isDisabled = false, path }) => {
   const colors = {
     blue: { bg: "bg-blue-100", text: "text-blue-600" },
     green: { bg: "bg-green-100", text: "text-green-600" },
@@ -7,9 +9,14 @@ const QuickAction = ({ title, icon, color }) => {
   };
 
   return (
-    <a
-      href="#"
-      className={`flex items-center p-3 ${colors[color].bg} hover:bg-gray-100 rounded-lg transition`}
+    <Link
+      to={isDisabled ? "#" : path}
+      data-tip={"Under Development"}
+      className={`flex tooltip tooltip-left items-center p-3 ${
+        colors[color].bg
+      } hover:bg-gray-100 rounded-lg transition ${
+        isDisabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
     >
       <div
         className={`${colors[color].bg} ${colors[color].text} p-2 rounded mr-3`}
@@ -17,7 +24,7 @@ const QuickAction = ({ title, icon, color }) => {
         {icon}
       </div>
       <span className="font-medium">{title}</span>
-    </a>
+    </Link>
   );
 };
 

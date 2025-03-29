@@ -137,3 +137,9 @@ export const getSummaryApi = async (noteId) => {
   const response = await axiosInstance.get(`/qbai/pdf/summary/${noteId}`);
   return response.data;
 };
+
+// Stats
+export const getStatsApi = async () => {
+  const response = await axiosInstance.get("/stats");
+  return response.data;
+};

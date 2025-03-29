@@ -62,105 +62,111 @@ const EditNoteDialog = ({
     <div className="flex justify-end items-center h-full">
       {children}
       <dialog id={"editNoteModal" + id} className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-lg">Edit Note</h3>
-          <p className="py-4">Edit your note here.</p>
-          <form action="" className="space-y-4">
-            <div className="w-full flex flex-col gap-1">
-              <label className="label text-lg">
-                <span className="label-text">Title</span>
-              </label>
-              <input
-                {...register("noteTitle")}
-                type="text"
-                placeholder=" here"
-                defaultValue={noteTitle}
-                className="input input-bordered w-full"
-              />
-            </div>
-            <div className="w-full flex flex-col gap-1">
-              <label className="label text-lg">
-                <span className="label-text">Description</span>
-              </label>
-              <textarea
-                {...register("noteDescription")}
-                defaultValue={noteDescription}
-                className="textarea textarea-bordered w-full min-h-40 max-h-40"
-                placeholder="here"
-              ></textarea>
-            </div>
-            <div className="flex flex-row items-start w-full gap-3">
-              <label className="label text-lg">
-                <span className="label-text font-bold">Private</span>
-              </label>
-              <input
-                {...register("isPrivate")}
-                type="checkbox"
-                defaultChecked={isPrivate}
-                className="toggle toggle-primary toggle-lg"
-              />
-            </div>
-            <div className="flex flex-col items-start w-full gap-3">
-              <label className="label text-lg">
-                <span className="label-text">Category</span>
-              </label>
-              <div className="flex gap-2 w-full">
-                <select
-                  {...register("noteCategory")}
-                  defaultValue={category.id}
-                  className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
-                >
-                  {data?.map((cat) => (
-                    <option key={cat.id} value={cat.id} className="text-black">
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-                <CreateCategoryDialog>
-                  <div
-                    onClick={() => {
-                      document
-                        .getElementById("createCategoryModal")
-                        ?.showModal();
-                    }}
-                    className="btn btn-primary btn-circle"
-                  >
-                    <BiPlus className="text-2xl" />
-                  </div>
-                </CreateCategoryDialog>
+        {data && (
+          <div className="modal-box w-11/12 max-w-5xl">
+            <h3 className="font-bold text-lg">Edit Note</h3>
+            <p className="py-4">Edit your note here.</p>
+            <form action="" className="space-y-4">
+              <div className="w-full flex flex-col gap-1">
+                <label className="label text-lg">
+                  <span className="label-text">Title</span>
+                </label>
+                <input
+                  {...register("noteTitle")}
+                  type="text"
+                  placeholder=" here"
+                  defaultValue={noteTitle}
+                  className="input input-bordered w-full"
+                />
               </div>
-            </div>
-            <div className="w-full flex flex-col gap-1">
-              <label className="label text-lg">
-                <span className="label-text">Tags</span>
-              </label>
-              <TagInput
-                placeholder="Add tags..."
-                onTagsChange={setNewTags}
-                allowCreate={true}
-                initialTags={newTags}
-              />
-            </div>
-            <div className="w-full flex justify-end gap-2">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("editNoteModal" + id)?.close();
-                  reset();
-                }}
-                className="btn btn-outline w-40"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSubmit(onSubmit)}
-                className="btn btn-primary w-40"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
+              <div className="w-full flex flex-col gap-1">
+                <label className="label text-lg">
+                  <span className="label-text">Description</span>
+                </label>
+                <textarea
+                  {...register("noteDescription")}
+                  defaultValue={noteDescription}
+                  className="textarea textarea-bordered w-full min-h-40 max-h-40"
+                  placeholder="here"
+                ></textarea>
+              </div>
+              <div className="flex flex-row items-start w-full gap-3">
+                <label className="label text-lg">
+                  <span className="label-text font-bold">Private</span>
+                </label>
+                <input
+                  {...register("isPrivate")}
+                  type="checkbox"
+                  defaultChecked={isPrivate}
+                  className="toggle toggle-primary toggle-lg"
+                />
+              </div>
+              <div className="flex flex-col items-start w-full gap-3">
+                <label className="label text-lg">
+                  <span className="label-text">Category</span>
+                </label>
+                <div className="flex gap-2 w-full">
+                  <select
+                    {...register("noteCategory")}
+                    defaultValue={category.id}
+                    className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
+                  >
+                    {data?.map((cat) => (
+                      <option
+                        key={cat.id}
+                        value={cat.id}
+                        className="text-black"
+                      >
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                  <CreateCategoryDialog>
+                    <div
+                      onClick={() => {
+                        document
+                          .getElementById("createCategoryModal")
+                          ?.showModal();
+                      }}
+                      className="btn btn-primary btn-circle"
+                    >
+                      <BiPlus className="text-2xl" />
+                    </div>
+                  </CreateCategoryDialog>
+                </div>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <label className="label text-lg">
+                  <span className="label-text">Tags</span>
+                </label>
+                <TagInput
+                  placeholder="Add tags..."
+                  onTagsChange={setNewTags}
+                  allowCreate={true}
+                  initialTags={newTags}
+                />
+              </div>
+              <div className="w-full flex justify-end gap-2">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("editNoteModal" + id)?.close();
+                    reset();
+                  }}
+                  className="btn btn-outline w-40"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-primary w-40"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </dialog>
     </div>
   );

@@ -9,6 +9,7 @@ import {
   getNoteChatsApi,
   getNotesApi,
   getSessionApi,
+  getStatsApi,
   getSummaryApi,
   getWorkspacePDFChatBotResponse,
   loginApi,
@@ -164,5 +165,13 @@ export const useGetSummary = (noteId) => {
     refetchOnWindowFocus: false,
     staleTime: 5 * 60 * 1000,
     enabled: false,
+  });
+};
+
+// stats
+export const useStatsQuery = () => {
+  return useQuery({
+    queryKey: ["stats"],
+    queryFn: () => getStatsApi(),
   });
 };

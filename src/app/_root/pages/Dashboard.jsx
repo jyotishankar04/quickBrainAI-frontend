@@ -1,24 +1,138 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
 import DashStatsCard from "../../../components/_root/dash/DashStatsCard.jsx";
 import { FaRegCalendarAlt, FaRegFileAlt, FaRegStar } from "react-icons/fa";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import {
-  dashboardStats,
-  noteCardsData,
-} from "../../../constants/app.constants.js";
+import { MdCalendarMonth, MdOutlineRemoveRedEye } from "react-icons/md";
 import NotesCard from "../../../components/_root/notes/NotesCard.jsx";
 import { Link } from "react-router-dom";
 import QuickActions from "../../../components/_root/dash/QuickActions.jsx";
+import { useStatsQuery } from "../../../lib/query/react-query.js";
+import toast from "react-hot-toast";
+import LoadingModal from "../../../components/_root/LoadingModel.jsx";
+import { useQueryClient } from "@tanstack/react-query";
+import { BiCategory, BiPlus } from "react-icons/bi";
+import { TfiLock, TfiUnlock } from "react-icons/tfi";
+import { FiFile } from "react-icons/fi";
+import moment from "moment";
+import { TbEdit } from "react-icons/tb";
 
 const Dashboard = () => {
-  return (
+  const {
+    data: stats,
+    isPending: isStatsPending,
+    isLoading: isStatsLoading,
+    isError: isStatsError,
+    error: statsError,
+    isSuccess: isStatsSuccess,
+    refetch: refetchStats,
+  } = useStatsQuery();
+
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData(["session"]);
+
+  useEffect(() => {
+    if (isStatsError) {
+      toast.error(statsError.message);
+    }
+  }, [isStatsError, statsError]);
+
+  const getActivityIcon = (action) => {
+    switch (action) {
+      case "note_created":
+        return BiPlus;
+      case "note_updated":
+        return TbEdit;
+      case "category_created":
+        return BiPlus;
+      case "note_starred":
+        return FaRegStar;
+      case "note_unstarred":
+        return FaRegStar;
+      default:
+        return MdCalendarMonth;
+    }
+  };
+
+  const getActivityColor = (action) => {
+    switch (action) {
+      case "note_created":
+        return "blue";
+      case "note_updated":
+        return "blue";
+      case "category_created":
+        return "purple";
+      case "note_starred":
+        return "yellow";
+      case "note_unstarred":
+        return "red";
+      default:
+        return "gray";
+    }
+  };
+
+  if (isStatsLoading) {
+    return <LoadingModal isVisible={true} text="Fetching stats..." />;
+  }
+  const dashboardStats = [
+    {
+      title: "Total Notes",
+      value: stats ? stats.data.totalNotes : "_ _",
+      icon: FaRegFileAlt,
+      color: "blue",
+    },
+    {
+      title: "Total Categories",
+      value: stats ? stats.data.totalCategories : "_ _",
+      icon: BiCategory,
+      color: "green",
+    },
+    {
+      title: "Starred Notes",
+      value: stats ? stats.data.starredNotes : "_ _",
+      icon: FaRegStar,
+      color: "yellow",
+    },
+    {
+      title: "Created This Week ( 7 days )", // in last 7 days
+      value: stats ? stats.data.notesLastWeek : "_ _",
+      icon: FaRegCalendarAlt,
+      color: "purple",
+    },
+    {
+      title: "Public Notes",
+      value: stats ? stats.data.publicNotes : "_ _",
+      icon: TfiUnlock,
+      color: "red",
+    },
+    {
+      title: "Private Notes",
+      value: stats ? stats.data.privateNotes : "_ _",
+      icon: TfiLock,
+      color: "gray",
+    },
+    {
+      title: "Note with PDF",
+      value: stats ? stats.data.notesWithFiles : "_ _",
+      icon: FiFile,
+      color: "orange",
+    },
+    {
+      title: "Created This Month ( 30 days )",
+      value: stats ? stats.data.notesLastMonth : "_ _",
+      icon: MdCalendarMonth,
+      color: "pink",
+    },
+  ];
+  return isStatsSuccess && user ? (
     <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Dashboard Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600">
-            Welcome back, John! Here's an overview of your notes.
+            Welcome back,{" "}
+            <span className="font-semibold text-primary">{user.data.name}</span>
+            ! Here's an overview of your notes.
           </p>
         </div>
 
@@ -49,23 +163,22 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {noteCardsData.slice(0, 3).map((note, index) => (
-              <NotesCard
-                key={index}
-                title={note.title}
-                description={note.description}
-                date={note.date}
-                time={note.time}
-                color={note.color}
-                badge={note.badge}
-                iconColor={note.iconColor}
-                category={note.category}
-                updated={note.updated}
-                badgeColor={note.badgeColor}
-                starred={note.starred}
-                tags={note.tags}
-              />
-            ))}
+            {stats &&
+              stats.data.lastThreeNotes.map((obj) => (
+                <NotesCard
+                  key={obj.id}
+                  title={obj.noteTitle}
+                  category={obj.category}
+                  description={obj.noteDescription}
+                  updated={obj.updatedAt}
+                  created={obj.createdAt}
+                  starred={obj.isStared}
+                  id={obj.id}
+                  isPrivate={obj.isPrivate}
+                  tags={obj.tags}
+                  files={obj.files}
+                />
+              ))}
           </div>
         </div>
 
@@ -78,129 +191,73 @@ const Dashboard = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Recent Activity
             </h2>
-            <div className="space-y-4">
-              <ActivityItem
-                title="You edited Project Meeting Notes"
-                time="2 hours ago"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                    />
-                  </svg>
-                }
-                color="blue"
-              />
-              <ActivityItem
-                title="You created Shopping List"
-                time="Yesterday"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                }
-                color="green"
-              />
-              <ActivityItem
-                title="You marked Shopping List as favorite"
-                time="Yesterday"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                    />
-                  </svg>
-                }
-                color="yellow"
-              />
 
-              <ActivityItem
-                title="You uploaded Vacation Photos"
-                time="3 days ago"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                    />
-                  </svg>
-                }
-                color="purple"
-              />
+            <div className="space-y-4">
+              {stats.data.lastFiveActivities.slice(0, 5).map((obj) => (
+                <ActivityItem
+                  key={obj.id}
+                  title={`${obj.action.replace("_", " ")}: ${obj.title}`}
+                  time={obj.createdAt}
+                  Icon={getActivityIcon(obj.action)}
+                  color={getActivityColor(obj.action)}
+                />
+              ))}
             </div>
-            <a
-              href="#"
-              className="block text-center text-blue-600 hover:text-blue-800 mt-4 text-sm font-medium"
-            >
-              View All Activity
-            </a>
           </div>
         </div>
       </div>
     </main>
+  ) : (
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-82 ">
+        <div className="mb-4">
+          <img
+            src="/public/500.svg"
+            alt="500"
+            className="object-cover mx-auto"
+          />
+        </div>
+        <div className="text-center">
+          <button
+            type="button"
+            disabled={isStatsPending}
+            onClick={() => refetchStats()}
+            className="btn btn-primary"
+          >
+            {isStatsPending ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Try Again"
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-// Reusable NoteCard Component
-
-// Reusable QuickAction Component
-
-// Reusable ActivityItem Component
-const ActivityItem = ({ title, time, icon, color }) => {
+const ActivityItem = ({ title, time, Icon, color }) => {
   const colors = {
     blue: { bg: "bg-blue-100", text: "text-blue-600" },
     green: { bg: "bg-green-100", text: "text-green-600" },
-    yellow: { bg: "bg-yellow-100", text: "text-yellow-600" },
     purple: { bg: "bg-purple-100", text: "text-purple-600" },
+    gray: { bg: "bg-gray-100", text: "text-gray-600" },
+    red: { bg: "bg-red-100", text: "text-red-600" },
+    yellow: { bg: "bg-yellow-100", text: "text-yellow-600" },
   };
 
   return (
     <div className="flex items-start">
       <div
-        className={`${colors[color].bg} ${colors[color].text} p-2 rounded-full mr-3`}
+        className={`${colors[color]?.bg || "bg-gray-100"} ${
+          colors[color]?.text || "text-gray-600"
+        } p-2 rounded-full mr-3`}
       >
-        {icon}
+        <Icon className="w-5 h-5" />
       </div>
       <div>
-        <p className="font-medium">{title}</p>
-        <p className="text-sm text-gray-500">{time}</p>
+        <p className="font-medium capitalize">{title.toLowerCase()}</p>
+        <p className="text-sm text-gray-500">{moment(time).fromNow()}</p>
       </div>
     </div>
   );

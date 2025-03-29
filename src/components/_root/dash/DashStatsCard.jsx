@@ -23,6 +23,41 @@ const DashStatsCard = ({ title, value, icon, color }) => {
       text: "text-purple-500",
       border: "border-purple-500",
     },
+    red: {
+      bg: "bg-red-100",
+      text: "text-red-500",
+      border: "border-red-500",
+    },
+    gray: {
+      bg: "bg-gray-100",
+      text: "text-gray-500",
+      border: "border-gray-500",
+    },
+    orange: {
+      bg: "bg-orange-100",
+      text: "text-orange-500",
+      border: "border-orange-500",
+    },
+    pink: {
+      bg: "bg-pink-100",
+      text: "text-pink-500",
+      border: "border-pink-500",
+    },
+    indigo: {
+      bg: "bg-indigo-100",
+      text: "text-indigo-500",
+      border: "border-indigo-500",
+    },
+    cyan: {
+      bg: "bg-cyan-100",
+      text: "text-cyan-500",
+      border: "border-cyan-500",
+    },
+    lime: {
+      bg: "bg-lime-100",
+      text: "text-lime-500",
+      border: "border-lime-500",
+    },
   };
 
   return (
