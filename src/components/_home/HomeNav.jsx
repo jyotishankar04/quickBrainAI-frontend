@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { homeNavBarLinks } from "../../constants/home.constants.js";
 import Logo from "./Logo.jsx";
+import { Link, Links } from "react-router-dom";
 const HomeNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -31,18 +32,18 @@ const HomeNav = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <a
-              href="#login"
+            <Link
+              to="/auth/login"
               className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
             >
               Login
-            </a>
-            <a
-              href="#signup"
+            </Link>
+            <Link
+              to="/auth/register"
               className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
             >
               Sign Up
-            </a>
+            </Link>
           </div>
 
           <button
@@ -86,18 +87,18 @@ const HomeNav = () => {
               );
             })}
             <div className="pt-2 border-t border-gray-200">
-              <a
-                href="#login"
-                className="block px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
+              <Link
+                to="/auth/login"
+                className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
               >
                 Login
-              </a>
-              <a
-                href="#signup"
-                className="block mt-2 px-4 py-2 bg-[#2563EB] text-white rounded-md text-center hover:bg-blue-700 transition-colors duration-300"
+              </Link>
+              <Link
+                to="/auth/register"
+                className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
               >
                 Sign Up
-              </a>
+              </Link>
             </div>
           </div>
         </div>

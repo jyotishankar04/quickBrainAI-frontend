@@ -1,29 +1,37 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="bg-neutral-900  text-white py-20 md:py-28 h-fit flex items-center">
+    <section
+      id="hero"
+      className="bg-neutral-900  text-white py-20 md:py-28 h-fit flex items-center"
+    >
       <div className="container mx-auto px-4 ">
         <div className="flex flex-col md:flex-row h-full items-center">
           {/* Left Column: Text Content */}
-          <div className="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft" style={{ opacity: 1 }}>
+          <div
+            className="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft"
+            style={{ opacity: 1 }}
+          >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Capture Your <span className="text-[#2563EB]">Ideas</span>
               <br />
               Organize Your <span className="text-[#2563EB]">Thoughts</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
-              Transform the way you take notes with our intelligent platform. Upload PDFs, collaborate with AI, and access your notes anywhere.
+              Transform the way you take notes with our intelligent platform.
+              Upload PDFs, collaborate with AI, and access your notes anywhere.
             </p>
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#signup"
+              <Link
+                to="/auth/login"
                 className="bg-[#2563EB] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center"
               >
                 Get Started — Free
-              </a>
+              </Link>
               <a
                 href="#how-it-works"
                 className="bg-transparent border border-gray-400 hover:border-white text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center"
@@ -47,7 +55,7 @@ const HeroSection = () => {
             {/* Login Link */}
             <div className="mt-8 text-sm text-gray-400">
               <p>
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <a href="#login" className="text-[#2563EB] hover:underline">
                   Log in
                 </a>
@@ -56,7 +64,10 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column: App Mockup */}
-          <div className="md:w-1/2 animate__animated animate__fadeInRight" style={{ opacity: 1 }}>
+          <div
+            className="md:w-1/2 animate__animated animate__fadeInRight"
+            style={{ opacity: 1 }}
+          >
             <div className="relative">
               {/* Main App Interface Mockup */}
               <div className="bg-neutral-800 rounded-lg shadow-2xl overflow-hidden border border-neutral-700">
@@ -67,7 +78,9 @@ const HeroSection = () => {
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="text-sm text-center text-gray-400 flex-grow">Note-Taking Playground</div>
+                  <div className="text-sm text-center text-gray-400 flex-grow">
+                    Note-Taking Playground
+                  </div>
                 </div>
 
                 {/* App Content */}
@@ -76,13 +89,20 @@ const HeroSection = () => {
                   <div className="md:w-1/3 border-r border-neutral-700 p-4">
                     <div className="flex justify-between items-center mb-4">
                       <h3 className="font-medium">AI Assistant</h3>
-                      <button className="text-xs bg-[#2563EB] px-2 py-1 rounded text-white">New Chat</button>
+                      <button className="text-xs bg-[#2563EB] px-2 py-1 rounded text-white">
+                        New Chat
+                      </button>
                     </div>
                     <div className="bg-neutral-900 rounded p-3 mb-3">
-                      <p className="text-sm text-gray-300">How can I summarize this research paper?</p>
+                      <p className="text-sm text-gray-300">
+                        How can I summarize this research paper?
+                      </p>
                     </div>
                     <div className="bg-[#2563EB]/10 border border-[#2563EB]/30 rounded p-3">
-                      <p className="text-sm">I can help you extract key points from your paper. Would you like me to focus on methodology or findings?</p>
+                      <p className="text-sm">
+                        I can help you extract key points from your paper. Would
+                        you like me to focus on methodology or findings?
+                      </p>
                     </div>
                   </div>
 
@@ -90,7 +110,10 @@ const HeroSection = () => {
                   <div className="md:w-2/3 p-4">
                     <div className="flex items-center mb-4">
                       <div className="flex space-x-2 bg-neutral-800 p-1 rounded-lg">
-                        <button className="p-1 hover:bg-neutral-700 rounded" title="Bold">
+                        <button
+                          className="p-1 hover:bg-neutral-700 rounded"
+                          title="Bold"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-4 w-4"
@@ -104,7 +127,10 @@ const HeroSection = () => {
                             />
                           </svg>
                         </button>
-                        <button className="p-1 hover:bg-neutral-700 rounded" title="Highlight">
+                        <button
+                          className="p-1 hover:bg-neutral-700 rounded"
+                          title="Highlight"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-4 w-4"
@@ -119,20 +145,31 @@ const HeroSection = () => {
                           </svg>
                         </button>
                       </div>
-                      <span className="ml-auto text-xs text-gray-400">Auto-saving...</span>
+                      <span className="ml-auto text-xs text-gray-400">
+                        Auto-saving...
+                      </span>
                     </div>
 
                     {/* Notes Content */}
                     <div className="bg-neutral-900 rounded-lg p-4 h-48 overflow-auto">
-                      <h2 className="text-lg font-bold mb-2">Research Paper Notes</h2>
+                      <h2 className="text-lg font-bold mb-2">
+                        Research Paper Notes
+                      </h2>
                       <p className="text-sm text-gray-300 mb-2">
-                        The study demonstrates a significant correlation between note-taking methods and information retention.
+                        The study demonstrates a significant correlation between
+                        note-taking methods and information retention.
                       </p>
-                      <p className="text-sm text-gray-300 mb-2">Key findings:</p>
+                      <p className="text-sm text-gray-300 mb-2">
+                        Key findings:
+                      </p>
                       <ul className="text-sm text-gray-300 list-disc pl-5">
-                        <li>Digital note-takers showed 27% better organization</li>
+                        <li>
+                          Digital note-takers showed 27% better organization
+                        </li>
                         <li>Handwritten notes led to 31% better recall</li>
-                        <li className="bg-yellow-500/20 px-1 rounded">Combined approaches yielded optimal results</li>
+                        <li className="bg-yellow-500/20 px-1 rounded">
+                          Combined approaches yielded optimal results
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -145,8 +182,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
-       
       </div>
     </section>
   );

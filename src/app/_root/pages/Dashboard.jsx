@@ -215,11 +215,7 @@ const Dashboard = () => {
     <div className="flex items-center justify-center h-screen">
       <div className="w-82 ">
         <div className="mb-4">
-          <img
-            src="/public/500.svg"
-            alt="500"
-            className="object-cover mx-auto"
-          />
+          <img src="/500.svg" alt="500" className="object-cover mx-auto" />
         </div>
         <div className="text-center">
           <button

@@ -109,7 +109,7 @@ const MainChatBot = () => {
                 }}
               >
                 <img
-                  src="../../../../public/chatBot.png"
+                  src="/chatBot.png"
                   alt="QuickBrain AI"
                   className="w-12 h-12 object-contain"
                 />
@@ -249,7 +249,7 @@ const MainChatBot = () => {
                   <div className="flex items-center gap-3">
                     <div className="bg-white bg-opacity-20 p-2 aspect-square flex justify-center items-center rounded-full">
                       <img
-                        src="../../../../public/chatBot.png"
+                        src="/chatBot.png"
                         alt="QuickBrain AI Logo"
                         className="w-10 h-auto"
                       />

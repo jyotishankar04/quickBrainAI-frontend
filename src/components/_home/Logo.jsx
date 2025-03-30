@@ -7,11 +7,7 @@ const Logo = ({ size = "xl", isCollapsed = false }) => {
       to="/app"
       className={`text-${size} font-bold text-primary-600 flex gap-2 items-center`}
     >
-      <img
-        src="../../../public/quickBrainAi.svg"
-        alt="logo"
-        className="w-6 h-6"
-      />
+      <img src="/quickBrainAi.svg" alt="logo" className="w-6 h-6" />
 
       <span
         className={`text-${size} ${

@@ -40,12 +40,12 @@ const HomeFooter = () => {
             </h3>
             <ul className="space-y-3">
               {supportLinks.map((link) => (
-                <li key={link.id}>
+                <li key={link.path}>
                   <a
-                    href={link.href}
+                    href={link.path}
                     className="text-gray-400 hover:text-white transition-colors duration-300"
                   >
-                    {link.text}
+                    {link.name}
                   </a>
                 </li>
               ))}
