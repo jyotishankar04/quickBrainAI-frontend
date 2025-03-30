@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { BiSave } from "react-icons/bi";
 import { useEditorContext } from "../../../context/EditorContext";
 import { useParams } from "react-router-dom";
