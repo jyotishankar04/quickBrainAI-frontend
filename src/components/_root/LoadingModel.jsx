@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 
 const LoadingModal = ({

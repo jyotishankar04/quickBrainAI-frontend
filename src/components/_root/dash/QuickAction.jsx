@@ -11,7 +11,7 @@ const QuickAction = ({ title, icon, color, isDisabled = false, path }) => {
   return (
     <Link
       to={isDisabled ? "#" : path}
-      data-tip={"Under Development"}
+      data-tip={isDisabled ? "Under Development" : title}
       className={`flex tooltip tooltip-left items-center p-3 ${
         colors[color].bg
       } hover:bg-gray-100 rounded-lg transition ${

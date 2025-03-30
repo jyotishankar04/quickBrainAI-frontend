@@ -30,19 +30,13 @@ const WorkSpacePage = () => {
     refetch: refetchNote,
   } = useNoteByIdQuery(noteId);
 
-  const [editorContent, setEditorContent] = useState("");
-
   useEffect(() => {
     if (isNoteSuccess) {
-      setEditorContent(note.data.noteContent);
+      if (editor && note.data.noteContent) {
+        editor.commands.setContent(note.data.noteContent);
+      }
     }
-  }, [isNoteSuccess, note]);
-
-  useEffect(() => {
-    if (editor && editorContent) {
-      editor.commands.setContent(editorContent);
-    }
-  }, [editor, editorContent]);
+  }, [isNoteSuccess, note, editor]);
 
   useEffect(() => {
     if (isNoteError) {

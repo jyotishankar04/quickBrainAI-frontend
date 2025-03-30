@@ -11,6 +11,7 @@ import {
   getSessionApi,
   getStatsApi,
   getSummaryApi,
+  getUserApi,
   getWorkspacePDFChatBotResponse,
   loginApi,
   refreshSessionApi,
@@ -21,6 +22,7 @@ import {
   searchNotesApi,
   toggleStarApi,
   updateNoteApi,
+  updateUserApi,
 } from "../axios/axiosApis";
 
 export const useLoginMutation = () => {
@@ -173,5 +175,19 @@ export const useStatsQuery = () => {
   return useQuery({
     queryKey: ["stats"],
     queryFn: () => getStatsApi(),
+  });
+};
+
+//user
+export const useUserQuery = () => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserApi(),
+  });
+};
+
+export const useUpdateUserMutation = () => {
+  return useMutation({
+    mutationFn: updateUserApi,
   });
 };
