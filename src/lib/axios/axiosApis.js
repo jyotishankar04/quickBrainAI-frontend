@@ -143,3 +143,18 @@ export const getStatsApi = async () => {
   const response = await axiosInstance.get("/stats");
   return response.data;
 };
+
+//user
+export const getUserApi = async () => {
+  const response = await axiosInstance.get("/users/me");
+  return response.data;
+};
+
+export const updateUserApi = async (data) => {
+  const response = await axiosInstance.put("/users", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};

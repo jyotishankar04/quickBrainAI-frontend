@@ -15,6 +15,7 @@ import { TfiLock, TfiUnlock } from "react-icons/tfi";
 import { FiFile } from "react-icons/fi";
 import moment from "moment";
 import { TbEdit } from "react-icons/tb";
+import NoDataFound from "../../../components/NoDataFound.jsx";
 
 const Dashboard = () => {
   const {
@@ -123,7 +124,7 @@ const Dashboard = () => {
       color: "pink",
     },
   ];
-  return isStatsSuccess && user ? (
+  return stats.success && user ? (
     <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Dashboard Header */}
@@ -163,7 +164,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {stats &&
+            {stats && stats.data.lastThreeNotes.length ? (
               stats.data.lastThreeNotes.map((obj) => (
                 <NotesCard
                   key={obj.id}
@@ -178,7 +179,10 @@ const Dashboard = () => {
                   tags={obj.tags}
                   files={obj.files}
                 />
-              ))}
+              ))
+            ) : (
+              <NoDataFound text={"No notes found"} />
+            )}
           </div>
         </div>
 
