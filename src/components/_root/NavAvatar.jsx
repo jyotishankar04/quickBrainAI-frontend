@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NavAvatar = () => {
+const NavAvatar = ({ image }) => {
+  console.log(image);
   return (
     <div className="dropdown dropdown-end cursor-pointer">
       <div tabIndex={0} role="button" className="avatar m-1">
         <div className="w-8 rounded-full ">
-          <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+          <img src={image} />
         </div>
       </div>
       <div

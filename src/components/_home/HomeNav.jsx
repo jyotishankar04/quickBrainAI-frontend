@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { homeNavBarLinks } from "../../constants/home.constants.js";
 import Logo from "./Logo.jsx";
-import { Link, Links } from "react-router-dom";
+import { Link } from "react-router-dom";
 const HomeNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

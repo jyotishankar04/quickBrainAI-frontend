@@ -197,9 +197,9 @@ const Dashboard = () => {
             </h2>
 
             <div className="space-y-4">
-              {stats.data.lastFiveActivities.slice(0, 5).map((obj) => (
+              {stats.data.lastFiveActivities.slice(0, 5).map((obj, index) => (
                 <ActivityItem
-                  key={obj.id}
+                  key={index}
                   title={`${obj.action.replace("_", " ")}: ${obj.title}`}
                   time={obj.createdAt}
                   Icon={getActivityIcon(obj.action)}
