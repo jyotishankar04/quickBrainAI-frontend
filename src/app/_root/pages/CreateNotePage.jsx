@@ -237,36 +237,43 @@ const CreateNotePage = () => {
                   disabled={isNoteCreating}
                   {...register("category")}
                   defaultValue="Pick a browser"
-                  className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
+                  className="select flex-1 capitalize  ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
                 >
                   {isCategorySuccess && categories.data.length > 0 ? (
-                    categories?.data.map((category) => (
+                    categories?.data.map((category, index) => (
                       <option
                         key={category.id}
-                        defaultValue={category.name == "general"}
+                        defaultValue={index === 0 ? true : false}
                         value={category.id}
+                        className="capitalize"
                       >
                         {category.name}
                       </option>
                     ))
                   ) : (
-                    <option defaultValue={true} value={"general"}>
+                    <option
+                      defaultValue={true}
+                      value={"general"}
+                      className="capitalize"
+                    >
                       General
                     </option>
                   )}
                 </select>
-                <CreateCategoryDialog>
-                  <div
-                    onClick={() => {
-                      document
-                        .getElementById("createCategoryModal")
-                        ?.showModal();
-                    }}
-                    className="btn btn-primary btn-circle"
-                  >
-                    <BiPlus className="text-2xl" />
-                  </div>
-                </CreateCategoryDialog>
+                <div className="w-fit">
+                  <CreateCategoryDialog>
+                    <div
+                      onClick={() => {
+                        document
+                          .getElementById("createCategoryModal")
+                          ?.showModal();
+                      }}
+                      className="btn btn-primary btn-circle"
+                    >
+                      <BiPlus className="text-2xl" />
+                    </div>
+                  </CreateCategoryDialog>
+                </div>
               </div>
             ) : (
               <div>

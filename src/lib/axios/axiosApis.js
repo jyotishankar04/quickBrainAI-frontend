@@ -38,6 +38,11 @@ export const registerCompletionApi = async (data) => {
   return response.data;
 };
 
+export const logoutApi = async () => {
+  const response = await axiosInstance.post("/auth/logout");
+  return response.data;
+};
+
 // Notes api
 export const createNoteApi = async (data) => {
   const response = await axiosInstance.post("/notes", data, {

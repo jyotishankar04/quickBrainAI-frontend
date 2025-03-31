@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEditorContext } from "../../../context/EditorContext";
-import { FaBold, FaCode, FaHeading } from "react-icons/fa";
+import { FaBold, FaCode, FaEllipsisV, FaHeading } from "react-icons/fa";
 import { FiItalic } from "react-icons/fi";
 import { PiTextStrikethroughBold } from "react-icons/pi";
 import { BsTextParagraph } from "react-icons/bs";
@@ -41,6 +41,7 @@ import GenerateSummaryBtn from "./GenerateSummaryBtn";
 import ExportPDFButton from "./PDFExportBtn";
 import ShareDialog from "../dialogs/ShareDialog";
 import { useParams } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 
 const headingLevels = [
   { name: "Heading 1", level: 1, icon: <RiH1 className="text-lg" /> },
@@ -78,10 +79,11 @@ export const MenuBar = () => {
   const [showHeadingDropdown, setShowHeadingDropdown] = useState(false);
   const [showTextColorDropdown, setShowTextColorDropdown] = useState(false);
   const [showHighlightDropdown, setShowHighlightDropdown] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const dropdownRef = useRef(null);
   const { noteId } = useParams();
-  // Close dropdowns when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -106,12 +108,217 @@ export const MenuBar = () => {
     return "Paragraph";
   };
 
+  // Mobile view with collapsed menu
+  if (isMobile) {
+    return (
+      <div
+        className="flex flex-col gap-2 bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm p-2"
+        ref={dropdownRef}
+      >
+        {/* First row - essential controls */}
+        <div className="flex justify-between items-center">
+          <div className="flex gap-1">
+            {/* Heading dropdown */}
+            <div className="dropdown dropdown-bottom">
+              <label
+                tabIndex={0}
+                className="btn btn-sm btn-ghost"
+                onClick={() => setShowHeadingDropdown(!showHeadingDropdown)}
+              >
+                <FaHeading className="text-lg" />
+                <RiArrowDropDownLine className="text-lg" />
+              </label>
+              {showHeadingDropdown && (
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-50"
+                >
+                  {headingLevels.map((h) => (
+                    <li key={h.level || "paragraph"}>
+                      <button
+                        onClick={() => {
+                          h.level
+                            ? editor
+                                .chain()
+                                .focus()
+                                .toggleHeading({ level: h.level })
+                                .run()
+                            : editor.chain().focus().setParagraph().run();
+                          setShowHeadingDropdown(false);
+                        }}
+                      >
+                        {h.icon}
+                        {h.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Basic formatting */}
+            <button
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              className={`btn btn-sm ${
+                editor.isActive("bold") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Bold"
+            >
+              <FaBold />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              className={`btn btn-sm ${
+                editor.isActive("italic") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Italic"
+            >
+              <FiItalic />
+            </button>
+            {/* Undo/Redo */}
+            <button
+              onClick={() => editor.chain().focus().undo().run()}
+              className="btn btn-sm btn-ghost"
+              disabled={!editor.can().undo()}
+              title="Undo"
+            >
+              <BiUndo className="text-lg" />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().redo().run()}
+              className="btn btn-sm btn-ghost"
+              disabled={!editor.can().redo()}
+              title="Redo"
+            >
+              <BiRedo className="text-lg" />
+            </button>
+          </div>
+
+          {/* Mobile menu toggle */}
+          <button
+            className="btn btn-sm btn-ghost"
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+          >
+            <FaEllipsisV />
+          </button>
+        </div>
+
+        {/* Expanded mobile menu */}
+        {showMobileMenu && (
+          <div className="grid grid-cols-4 gap-1 p-2 bg-base-100 rounded-lg">
+            {/* Text formatting */}
+            <button
+              onClick={() => editor.chain().focus().toggleStrike().run()}
+              className={`btn btn-sm ${
+                editor.isActive("strike") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Strikethrough"
+            >
+              <PiTextStrikethroughBold />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleCode().run()}
+              className={`btn btn-sm ${
+                editor.isActive("code") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Code"
+            >
+              <FaCode />
+            </button>
+
+            {/* Lists */}
+            <button
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              className={`btn btn-sm ${
+                editor.isActive("bulletList") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Bullet List"
+            >
+              <GrUnorderedList />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              className={`btn btn-sm ${
+                editor.isActive("orderedList") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Ordered List"
+            >
+              <GrOrderedList />
+            </button>
+
+            {/* Block elements */}
+            <button
+              onClick={() => editor.chain().focus().toggleBlockquote().run()}
+              className={`btn btn-sm ${
+                editor.isActive("blockquote") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Blockquote"
+            >
+              <GrBlockQuote />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().setHorizontalRule().run()}
+              className="btn btn-sm btn-ghost"
+              title="Horizontal Rule"
+            >
+              <GoHorizontalRule />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+              className={`btn btn-sm ${
+                editor.isActive("codeBlock") ? "btn-active" : "btn-ghost"
+              }`}
+              title="Code Block"
+            >
+              <BiCodeBlock />
+            </button>
+
+            {/* Undo/Redo */}
+            <button
+              onClick={() => editor.chain().focus().undo().run()}
+              className="btn btn-sm btn-ghost"
+              disabled={!editor.can().undo()}
+              title="Undo"
+            >
+              <BiUndo />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().redo().run()}
+              className="btn btn-sm btn-ghost"
+              disabled={!editor.can().redo()}
+              title="Redo"
+            >
+              <BiRedo />
+            </button>
+          </div>
+        )}
+
+        {/* Actions row */}
+        <div className="flex justify-between gap-2">
+          <GenerateSummaryBtn />
+          <SaveBtn />
+          <ShareDialog id={noteId}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() =>
+                document.getElementById("shareNoteModal" + noteId).showModal()
+              }
+            >
+              <BiShare />
+              <span className="hidden sm:inline">Share</span>
+            </button>
+          </ShareDialog>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className="flex flex-wrap justify-between items-center p bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm"
+      className="flex flex-col md:flex-row gap-2 justify-between items-start md:items-center p-3 bg-base-200 rounded-lg border border-base-300 mb-4 shadow-sm"
       ref={dropdownRef}
     >
-      <div className="flex gap-2 items-center">
+      <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
         {/* Heading Dropdown */}
         <div className="dropdown dropdown-hover dropdown-bottom">
           <label tabIndex={0} className="btn btn-sm btn-ghost">
@@ -153,7 +360,7 @@ export const MenuBar = () => {
         <div className="flex gap-1 items-center">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`btn btn-md ${
+            className={`btn btn-sm ${
               editor.isActive("bold") ? "btn-active" : "btn-ghost"
             }`}
             title="Bold"
@@ -346,28 +553,10 @@ export const MenuBar = () => {
             </button>
           </div>
         </div>
-
-        {/* Undo/Redo */}
-        <div className="flex gap-1 ">
-          <button
-            onClick={() => editor.chain().focus().undo().run()}
-            className="btn btn-sm btn-ghost"
-            disabled={!editor.can().undo()}
-            title="Undo"
-          >
-            <BiUndo />
-          </button>
-          <button
-            onClick={() => editor.chain().focus().redo().run()}
-            className="btn btn-sm btn-ghost"
-            disabled={!editor.can().redo()}
-            title="Redo"
-          >
-            <BiRedo />
-          </button>
-        </div>
       </div>
-      <div className="flex justify-end gap-2 ">
+
+      {/* Right Side Actions */}
+      <div className="flex flex-wrap gap-2 justify-end w-full md:w-auto mt-2 md:mt-0">
         <GenerateSummaryBtn />
         <SaveBtn />
         <ShareDialog id={noteId}>

@@ -14,6 +14,7 @@ import {
   getUserApi,
   getWorkspacePDFChatBotResponse,
   loginApi,
+  logoutApi,
   refreshSessionApi,
   registerApi,
   registerCompletionApi,
@@ -28,6 +29,12 @@ import {
 export const useLoginMutation = () => {
   return useMutation({
     mutationFn: loginApi,
+  });
+};
+
+export const useLogoutMutation = () => {
+  return useMutation({
+    mutationFn: logoutApi,
   });
 };
 

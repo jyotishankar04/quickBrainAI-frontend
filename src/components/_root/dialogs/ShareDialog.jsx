@@ -43,7 +43,7 @@ const ShareDialog = ({ children, id }) => {
       {children}
       <dialog
         id={"shareNoteModal" + id}
-        className="modal modal-bottom sm:modal-middle"
+        className="modal modal-bottomsm:modal-middle"
       >
         <form method="dialog" className="modal-box">
           <div className="flex flex-row gap-3 w-full mb-5 justify-between">
@@ -103,25 +103,17 @@ const ShareDialog = ({ children, id }) => {
                 </div>
               </div>
             )}
-            <div className="flex justify-end gap-3 mt-4">
-              <button className="btn">Cancel</button>
-              <button className="btn btn-primary" disabled={!emails.length}>
+            <div className="grid grid-cols-2 gap-3 w-full  mt-4">
+              <button className="btn col-span-1">Cancel</button>
+              <button
+                className="btn btn-primary col-span-1"
+                disabled={!emails.length}
+              >
                 Share
               </button>
             </div>
           </div>
         </form>
-
-        <div>
-          <button
-            className="btn"
-            onClick={() =>
-              document.getElementById("shareNoteModal" + id).close()
-            }
-          >
-            Close
-          </button>
-        </div>
       </dialog>
     </div>
   );

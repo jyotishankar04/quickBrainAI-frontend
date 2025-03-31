@@ -102,7 +102,7 @@ const GenerateSummaryBtn = () => {
       <button
         onClick={handleSubmit}
         disabled={isSummaryPending || isLoading}
-        className="btn btn-sm btn-primary flex items-center gap-2"
+        className="btn btn-sm btn-primary flex items-center gap-2 flex-1"
       >
         {isLoading ? (
           <span className="loading loading-spinner loading-xs"></span>

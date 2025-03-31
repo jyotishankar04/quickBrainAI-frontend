@@ -7,7 +7,8 @@ import SideBarCategories from "./SideBarCategories";
 import { Resizable } from "re-resizable";
 import { BiArrowFromTop, BiSearch } from "react-icons/bi";
 import SearchDialog from "./dialogs/SearchDialog";
-
+import { isMobile } from "react-device-detect";
+import MobileBottomBar from "./mobile/MobileBottomBar";
 const Sidebar = () => {
   const { isCollapsed, setIsCollapsed } = useCollapseState();
   const [sidebarWidth, setSidebarWidth] = useState(250);
@@ -24,7 +25,6 @@ const Sidebar = () => {
     });
   }, []);
 
-  // Memoized Navigation Links to prevent unnecessary re-renders
   const navLinks = useMemo(
     () =>
       sidebarLinks.map((item, index) => {
@@ -51,6 +51,10 @@ const Sidebar = () => {
       }),
     [isCollapsed, location.pathname]
   );
+
+  if (isMobile) {
+    return <MobileBottomBar navLinks={sidebarLinks} />;
+  }
 
   return (
     <Resizable

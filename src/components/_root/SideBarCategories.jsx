@@ -72,7 +72,7 @@ const SideBarCategories = () => {
                   <button
                     key={index}
                     onClick={() => handleCategoryClick(category.name)}
-                    className="flex w-full text-left items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+                    className="flex capitalize w-full text-left items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
                   >
                     <span
                       style={{ backgroundColor: category.color }}

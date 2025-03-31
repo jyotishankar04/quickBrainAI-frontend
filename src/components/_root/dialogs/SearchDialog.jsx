@@ -58,7 +58,7 @@ const SearchDialog = ({ children }) => {
         {children}
       </span>
 
-      <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+      <dialog ref={modalRef} className="modal modal-middle  sm:modal-middle">
         <div className="modal-box flex flex-col gap-4 w-full">
           <div className="flex flex-row justify-between items-center">
             <h3 className="font-bold text-xl">Search Note</h3>

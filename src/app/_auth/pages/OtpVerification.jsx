@@ -31,9 +31,9 @@ const OtpVerification = () => {
     }
   };
 
-  const handleResendOtp = () => {
-    toast.success("OTP has been resent");
-  };
+  // const handleResendOtp = () => {
+  //   toast.success("OTP has been resent");
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const enteredOtp = otp.join("");
@@ -82,7 +82,7 @@ const OtpVerification = () => {
           "Verify OTP"
         )}
       </button>
-      <div>
+      {/* <div>
         <div className="mt-2">
           <span>Didn't receive the OTP? </span>
           <button
@@ -92,7 +92,7 @@ const OtpVerification = () => {
             Resend OTP
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -5,7 +5,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import CreateCategoryDialog from "./CreateCategoryDialog";
 import { BiPlus } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { useNoteUpdateMutation } from "../../../lib/query/react-query";
+import {
+  useCategoriesQuery,
+  useNoteUpdateMutation,
+} from "../../../lib/query/react-query";
 import toast from "react-hot-toast";
 
 const EditNoteDialog = ({
@@ -19,7 +22,8 @@ const EditNoteDialog = ({
 }) => {
   const [newTags, setNewTags] = useState(tags);
   const queryClient = useQueryClient();
-  const { data } = queryClient.getQueryData(["categories"]);
+  const { data: categories, isSuccess: isCategorySuccess } =
+    useCategoriesQuery();
   const { register, handleSubmit, reset } = useForm();
 
   const { mutateAsync, isPending, isSuccess, isError, error } =
@@ -62,7 +66,7 @@ const EditNoteDialog = ({
     <div className="flex justify-end items-center h-full">
       {children}
       <dialog id={"editNoteModal" + id} className="modal">
-        {data && (
+        {isCategorySuccess && categories && (
           <div className="modal-box w-11/12 max-w-5xl">
             <h3 className="font-bold text-lg">Edit Note</h3>
             <p className="py-4">Edit your note here.</p>
@@ -111,7 +115,7 @@ const EditNoteDialog = ({
                     defaultValue={category.id}
                     className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
                   >
-                    {data?.map((cat) => (
+                    {categories.data?.map((cat) => (
                       <option
                         key={cat.id}
                         value={cat.id}

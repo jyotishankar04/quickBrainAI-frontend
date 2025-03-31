@@ -139,18 +139,43 @@ const HomeNav = () => {
               );
             })}
             <div className="pt-2 border-t border-gray-200">
-              <Link
-                to="/auth/login"
-                className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
-              >
-                Login
-              </Link>
-              <Link
-                to="/auth/register"
-                className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
-              >
-                Sign Up
-              </Link>
+              {!loading && !isAuth && (
+                <>
+                  <Link
+                    to="/auth/login"
+                    className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/auth/register"
+                    className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+              {loading && (
+                <span className="px-4 py-2 text-[#2563EB] rounded-md">
+                  Loading...
+                </span>
+              )}
+              {isAuth && (
+                <div className="text-[#2563EB] rounded-md flex items-center space-x-2">
+                  <div className="text-md">
+                    Welcome <span className="font-bold">{user?.name}</span>
+                  </div>
+                  <div className="w-10 h-10 rounded-full overflow-hidden avatar ">
+                    <img src={user?.avatarUrl} alt="avatar" />
+                  </div>
+                  <Link
+                    to="/app"
+                    className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Dashboard
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

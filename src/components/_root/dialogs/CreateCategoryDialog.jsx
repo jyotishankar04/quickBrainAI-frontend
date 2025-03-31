@@ -41,11 +41,11 @@ const CreateCategoryDialog = ({ children }) => {
   };
 
   return (
-    <div className="flex justify-end items-center h-full">
+    <div className="flex justify-end items-center w-full h-full">
       {children}
       <dialog
         id="createCategoryModal"
-        className="modal modal-bottom sm:modal-middle"
+        className="modal modal-middle sm:modal-middle"
       >
         <div className="modal-box flex flex-col gap-4">
           <h1 className="text-2xl font-semibold">Create a new category</h1>

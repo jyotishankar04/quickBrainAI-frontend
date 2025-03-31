@@ -11,6 +11,7 @@ import {
 } from "../../../lib/query/react-query.js";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { isMobile } from "react-device-detect";
 
 const ChatMessages = ({ messages, botImage }) => {
   return (
@@ -28,7 +29,7 @@ const ChatMessages = ({ messages, botImage }) => {
             }`}
           >
             <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
+              <div className="w-6 rounded-full">
                 <img
                   alt="Avatar"
                   src={
@@ -220,6 +221,72 @@ const ChatBot = () => {
   const currentMessages = searchType === "gs" ? globalMessages : pdfMessages;
   const hasPDFFiles = note?.data?.files?.length > 0;
 
+  if (isMobile) {
+    return (
+      <div className="w-full h-full flex flex-col bg-base-100 rounded-lg border border-base-300">
+        <div className="p-2 text-white flex justify-between bg-primary rounded-t-lg">
+          <h2 className="text-base font-semibold text-gray-200">
+            QuickBrain AI Assistant
+          </h2>
+          <select
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+            className="select select-bordered w-fit select-sm text-primary font-bold"
+            disabled={isLoading}
+          >
+            <option value="gs">Global Search</option>
+            <option value="pos" disabled={!hasPDFFiles}>
+              PDF Only Search
+            </option>
+          </select>
+        </div>
+
+        <div
+          ref={chatContainerRef}
+          className="flex-1 p-2 overflow-y-auto w-full"
+          style={{ maxHeight: "calc(100vh - 200px)" }}
+        >
+          <ChatMessages messages={currentMessages} botImage="/chatBot.png" />
+          {isLoading && (
+            <div className="flex justify-start items-center mt-4 gap-2">
+              <span className="avatar">
+                <div className="w-4 h-4 mask mask-squircle">
+                  <img src="/chatBot.png" alt="ChatBot" />
+                </div>
+              </span>
+              <span className="loading loading-spinner"></span>{" "}
+              <span>Thinking...</span>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        <form
+          onSubmit={handleSubmit(sendMessage)}
+          className="w-full flex gap-2 items-center p-4 border-t border-base-300"
+        >
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("message")}
+            placeholder="Type your message..."
+            disabled={isLoading}
+          />
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              <BiSend className="text-2xl" />
+            )}
+          </button>
+        </form>
+      </div>
+    );
+  }
   return (
     <div className="w-full 2xl:h-[82vh] xl:h-[70vh] flex flex-col bg-base-100 rounded-lg border border-base-300">
       <div className="p-2 text-white flex justify-between bg-primary rounded-t-lg">

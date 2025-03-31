@@ -12,6 +12,8 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { BsGithub, BsInstagram, BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { extractUsername } from "../../../util/usernameExtract";
 import { Link } from "react-router-dom";
+import { isMobile } from "react-device-detect";
+import { BiPencil } from "react-icons/bi";
 
 const UserProfilePage = () => {
   const {
@@ -77,29 +79,35 @@ const UserProfilePage = () => {
     userData && (
       <div className="max-w-5xl mx-auto w-screen">
         {/* Profile Header */}
-        <div className="mb-10">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold mb-2">My Profile</h2>
-              <p className="text-gray-500">
-                Share your profile with others and connect with like-minded
-                individuals
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <Link
-                to="/app/settings"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors shadow-sm"
-              >
-                Edit Profile
-              </Link>
-              <button
-                disabled
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition-colors shadow-sm"
-              >
-                Share Profile
-              </button>
-            </div>
+        <div className="md:mb-10 md:flex md:items-center md:justify-between">
+          <div>
+            <h2
+              className={`text-xl md:text-2xl ${
+                isMobile ? "text-center" : ""
+              } font-bold mb-2 `}
+            >
+              My Profile
+            </h2>
+            <p className="text-gray-500 hidden">
+              Share your profile with others and connect with like-minded
+              individuals
+            </p>
+          </div>
+          <div className={`flex gap-3 md:mt-0  ${isMobile ? "" : ""}`}>
+            <Link
+              to="/app/settings"
+              className={`bg-blue-500 hover:bg-blue-600 flex justify-center items-center gap-2 text-white px-4 py-2 rounded-md transition-colors shadow-sm ${
+                isMobile ? "w-full mx-4 text-center" : ""
+              }`}
+            >
+              <BiPencil /> Edit Profile
+            </Link>
+            <button
+              disabled
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition-colors shadow-sm disabled:opacity-40 hidden disabled:cursor-not-allowed"
+            >
+              Share Profile
+            </button>
           </div>
         </div>
 
@@ -132,21 +140,6 @@ const UserProfilePage = () => {
                           ? userData.data.bio
                           : "No bio provided."}
                       </p>
-                    </div>
-                    {/* Skills Section */}
-                    <div className="flex flex-col">
-                      <h3 className="text-xl font-semibold mb-4">Skills</h3>
-
-                      <div className="flex flex-wrap gap-2">
-                        {UserSkillData.map((skill, index) => (
-                          <span
-                            key={index}
-                            className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                          >
-                            {skill.title}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -265,3 +258,19 @@ const UserProfilePage = () => {
 };
 
 export default UserProfilePage;
+
+//  Skills Section
+// <div className="flex flex-col">
+//   <h3 className="text-xl font-semibold mb-4">Skills</h3>
+
+//   <div className="flex flex-wrap gap-2">
+//     {UserSkillData.map((skill, index) => (
+//       <span
+//         key={index}
+//         className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+//       >
+//         {skill.title}
+//       </span>
+//     ))}
+//   </div>
+// </div>
