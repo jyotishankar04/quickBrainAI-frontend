@@ -122,7 +122,7 @@ export const testimonials = [
     role: "Professor of Computer Science",
     initials: "DT",
     quote:
-      "I've tried many note-taking apps, but this is the first one that truly understands what researchers need. The AI assistant has saved me countless hours analyzing academic papers.",
+      "I've tried many note-taking apps, but this is the first one that truly understands what researchers need. The AI assistant has saved my hours of work and hardwork",
     bgColor: "bg-yellow-500",
   },
   {

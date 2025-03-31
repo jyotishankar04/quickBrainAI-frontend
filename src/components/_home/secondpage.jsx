@@ -1,5 +1,6 @@
 import React from 'react';
 import cardsData from '../../constants/cards.json'; // Import the JSON file
+import { Link } from 'react-router-dom';
 
 // NoteTakingFeatures Component
 const NoteTakingFeatures = () => {
@@ -155,6 +156,10 @@ const AIPlaygroundSection = () => {
           </ul>
 
           {/* Try the Playground Button */}
+          <Link
+         to={"auth/login"}
+          
+          >
           <button
             className="mt-8 bg-[#2563EB] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center"
             id="el-nv6y6xdw"
@@ -172,9 +177,10 @@ const AIPlaygroundSection = () => {
                 d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
                 clipRule="evenodd"
                 id="el-re508zxd"
-              />
+                />
             </svg>
           </button>
+                </Link>
         </div>
 
         {/* Right Section */}
