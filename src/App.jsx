@@ -24,6 +24,17 @@ const WorkSpacePage = lazy(() => import("./app/_root/pages/WorkSpacePage.jsx"));
 const NotFoundPage = lazy(() => import("./components/NotFoundPage.jsx"));
 const SettingsPage = lazy(() => import("./app/_root/pages/SettingsPage.jsx"));
 const App = () => {
+  let service = true;
+  if (service) {
+    return (
+      <div className="container w-full h-screen flex justify-center items-center mx-auto px-4">
+        <div className="w-full h-full flex justify-center flex-col items-center">
+          <h1 className="text-3xl font-bold">Service is under maintenance</h1>
+          <p className="text-xl font-bold">Please try again later</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <Routes>
       {/* Public Routes */}
@@ -145,9 +156,14 @@ const App = () => {
         />
 
         {/* Settings Nested Routes */}
-        <Route path="settings" element={<LazyLoader><SettingsPage /></LazyLoader>}/>
-         
-        
+        <Route
+          path="settings"
+          element={
+            <LazyLoader>
+              <SettingsPage />
+            </LazyLoader>
+          }
+        />
       </Route>
 
       {/* Catch-All Route */}

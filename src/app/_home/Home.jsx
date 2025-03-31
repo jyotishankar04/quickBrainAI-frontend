@@ -22,7 +22,6 @@ const Home = () => {
       document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
-
   return (
     <div className="">
       <HomeNav />
