@@ -21,7 +21,7 @@ const HomeFooter = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               {homeNavBarLinks.map((link) => (
-                <li key={link.path}>
+                <li key={link.name}>
                   <a
                     href={link.path}
                     className="text-gray-400 hover:text-white transition-colors duration-300"
@@ -39,8 +39,8 @@ const HomeFooter = () => {
               Support
             </h3>
             <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.path}>
+              {supportLinks.map((link, index) => (
+                <li key={index}>
                   <a
                     href={link.path}
                     className="text-gray-400 hover:text-white transition-colors duration-300"

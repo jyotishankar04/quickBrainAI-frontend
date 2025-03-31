@@ -1,23 +1,39 @@
-import React from 'react';
-import cardsData from '../../constants/cards.json'; // Import the JSON file
-import { Link } from 'react-router-dom';
+import React from "react";
+import cardsData from "../../constants/cards.json"; // Import the JSON file
+import { Link } from "react-router-dom";
 
 // NoteTakingFeatures Component
 const NoteTakingFeatures = () => {
   return (
-    <div className="text-center mb-16 animate__animated animate__fadeIn mt-7" id="el-09dp07aa">
-      <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 mb-4" id="el-w67w2ncd">
+    <div
+      className="text-center mb-16 animate__animated animate__fadeIn mt-7"
+      id="el-09dp07aa"
+    >
+      <h2
+        className="text-3xl md:text-4xl font-bold text-neutral-800 mb-4"
+        id="el-w67w2ncd"
+      >
         Powerful Note-Taking Features
       </h2>
-      <p className="text-lg text-neutral-600 max-w-3xl mx-auto" id="el-bhdgs56s">
-        Our platform combines intelligent technology with intuitive design to transform how you capture and organize information.
+      <p
+        className="text-lg text-neutral-600 max-w-3xl mx-auto"
+        id="el-bhdgs56s"
+      >
+        Our platform combines intelligent technology with intuitive design to
+        transform how you capture and organize information.
       </p>
     </div>
   );
 };
 
 // FeatureCard Component
-const FeatureCard = ({ icon, title, description, features, animationDelay }) => {
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+  features,
+  animationDelay,
+}) => {
   return (
     <div
       className={`bg-neutral-50 rounded-xl p-6 shadow-md transition duration-300 hover:shadow-lg animate__animated animate__fadeInUp ${animationDelay}`}
@@ -56,7 +72,10 @@ const FeaturesGrid = () => {
   const { features } = cardsData; // Destructure the features array from the JSON data
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="el-rzwekd3s">
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      id="el-rzwekd3s"
+    >
       {features.map((feature, index) => (
         <FeatureCard key={index} {...feature} />
       ))}
@@ -79,13 +98,18 @@ const AIPlaygroundSection = () => {
             The AI-Powered Playground
           </h3>
           <p className="text-gray-700 mb-6" id="el-qif1wz9n">
-            Our unique two-panel layout combines the power of AI assistance with intuitive note editing. Ask questions, get summaries, and receive explanations while you take notes.
+            Our unique two-panel layout combines the power of AI assistance with
+            intuitive note editing. Ask questions, get summaries, and receive
+            explanations while you take notes.
           </p>
 
           {/* Features List */}
           <ul className="space-y-3" id="el-8u6zx2e4">
             <li className="flex items-start" id="el-oaa1lf9t">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1" id="el-2gmb1gzj">
+              <div
+                className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1"
+                id="el-2gmb1gzj"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-[#2563EB]"
@@ -108,7 +132,10 @@ const AIPlaygroundSection = () => {
               </span>
             </li>
             <li className="flex items-start" id="el-dy9gbzkz">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1" id="el-u3c8313a">
+              <div
+                className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1"
+                id="el-u3c8313a"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-[#2563EB]"
@@ -131,7 +158,10 @@ const AIPlaygroundSection = () => {
               </span>
             </li>
             <li className="flex items-start" id="el-33jkp5sv">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1" id="el-bldgdc55">
+              <div
+                className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1"
+                id="el-bldgdc55"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-[#2563EB]"
@@ -156,44 +186,59 @@ const AIPlaygroundSection = () => {
           </ul>
 
           {/* Try the Playground Button */}
-          <Link
-         to={"auth/login"}
-          
-          >
-          <button
-            className="mt-8 bg-[#2563EB] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center"
-            id="el-nv6y6xdw"
-          >
-            <span id="el-hacgyh5n">Try the Playground</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              id="el-bhguohsn"
+          <Link to={"/app"}>
+            <button
+              className="mt-8 bg-[#2563EB] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center"
+              id="el-nv6y6xdw"
             >
-              <path
-                fillRule="evenodd"
-                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-                id="el-re508zxd"
+              <span id="el-hacgyh5n">Try the Playground</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                id="el-bhguohsn"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                  id="el-re508zxd"
                 />
-            </svg>
-          </button>
-                </Link>
+              </svg>
+            </button>
+          </Link>
         </div>
 
         {/* Right Section */}
         <div className="md:w-1/2" id="el-ms72qr6e">
-          <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" id="el-n2jks71g">
+          <div
+            className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
+            id="el-n2jks71g"
+          >
             {/* Header */}
-            <div className="bg-gray-50 border-b border-gray-200 p-4 flex items-center" id="el-vpqiotxk">
+            <div
+              className="bg-gray-50 border-b border-gray-200 p-4 flex items-center"
+              id="el-vpqiotxk"
+            >
               <div className="flex space-x-2" id="el-h0hwybdg">
-                <div className="w-3 h-3 rounded-full bg-red-400" id="el-pesi0gib"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-400" id="el-x7cwbbf6"></div>
-                <div className="w-3 h-3 rounded-full bg-green-400" id="el-1w4n1wpf"></div>
+                <div
+                  className="w-3 h-3 rounded-full bg-red-400"
+                  id="el-pesi0gib"
+                ></div>
+                <div
+                  className="w-3 h-3 rounded-full bg-yellow-400"
+                  id="el-x7cwbbf6"
+                ></div>
+                <div
+                  className="w-3 h-3 rounded-full bg-green-400"
+                  id="el-1w4n1wpf"
+                ></div>
               </div>
-              <div className="ml-4 text-sm font-medium text-gray-500" id="el-23x6kb3q">
+              <div
+                className="ml-4 text-sm font-medium text-gray-500"
+                id="el-23x6kb3q"
+              >
                 AI Note-Taking Playground
               </div>
             </div>
@@ -201,20 +246,35 @@ const AIPlaygroundSection = () => {
             {/* Content */}
             <div className="flex flex-col md:flex-row h-64" id="el-jvvy57gz">
               {/* AI Assistant Panel */}
-              <div className="md:w-1/3 bg-gray-50 p-4 border-r border-gray-200" id="el-mcrrdo5w">
-                <div className="text-sm font-medium text-gray-700 mb-3" id="el-nnlcqswc">
+              <div
+                className="md:w-1/3 bg-gray-50 p-4 border-r border-gray-200"
+                id="el-mcrrdo5w"
+              >
+                <div
+                  className="text-sm font-medium text-gray-700 mb-3"
+                  id="el-nnlcqswc"
+                >
                   AI Assistant
                 </div>
-                <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 mb-3" id="el-wsdck15c">
+                <div
+                  className="bg-blue-50 rounded-lg p-3 border border-blue-100 mb-3"
+                  id="el-wsdck15c"
+                >
                   <p className="text-xs text-gray-700" id="el-5fgtefc9">
                     Can you explain the key concepts in this document?
                   </p>
                 </div>
-                <div className="bg-white rounded-lg p-3 border border-gray-200" id="el-pt8teb9w">
+                <div
+                  className="bg-white rounded-lg p-3 border border-gray-200"
+                  id="el-pt8teb9w"
+                >
                   <p className="text-xs text-gray-700" id="el-8rh38uzr">
                     Based on your PDF, the main concepts are:
                   </p>
-                  <ul className="mt-1 text-xs text-gray-600 pl-4 list-disc" id="el-5db0c9dd">
+                  <ul
+                    className="mt-1 text-xs text-gray-600 pl-4 list-disc"
+                    id="el-5db0c9dd"
+                  >
                     <li id="el-u4y3nqgy">Information retrieval</li>
                     <li id="el-ebuijnkf">Knowledge mapping</li>
                     <li id="el-78sppr6a">Cognitive learning models</li>
@@ -224,7 +284,10 @@ const AIPlaygroundSection = () => {
 
               {/* Note Editor Panel */}
               <div className="md:w-2/3 p-4" id="el-2h7eumxm">
-                <div className="flex items-center justify-between mb-3" id="el-fyl3ycvh">
+                <div
+                  className="flex items-center justify-between mb-3"
+                  id="el-fyl3ycvh"
+                >
                   <div className="flex space-x-2" id="el-6mrigy6h">
                     <button
                       className="p-1.5 bg-gray-100 rounded hover:bg-gray-200 transition-colors"
@@ -283,30 +346,38 @@ const AIPlaygroundSection = () => {
                     Research Notes: Cognitive Learning
                   </h3>
                   <p className="text-xs text-gray-700 mb-2" id="el-4cbxwz98">
-                    The document explores three primary aspects of cognitive learning:
+                    The document explores three primary aspects of cognitive
+                    learning:
                   </p>
-                  <ol className="pl-5 list-decimal text-xs text-gray-700 space-y-1" id="el-1dkuvp44">
+                  <ol
+                    className="pl-5 list-decimal text-xs text-gray-700 space-y-1"
+                    id="el-1dkuvp44"
+                  >
                     <li id="el-xaat6p8b">
                       <span className="font-medium" id="el-rc8sq84y">
                         Information retrieval
-                      </span>{' '}
+                      </span>{" "}
                       - How we access stored knowledge
                     </li>
                     <li id="el-k82u6ger">
                       <span className="font-medium" id="el-3kat087m">
                         Knowledge mapping
-                      </span>{' '}
+                      </span>{" "}
                       - Creating connections between concepts
                     </li>
-                    <li className="bg-yellow-50 px-1 py-0.5 -mx-1 rounded" id="el-jb57xrr2">
+                    <li
+                      className="bg-yellow-50 px-1 py-0.5 -mx-1 rounded"
+                      id="el-jb57xrr2"
+                    >
                       <span className="font-medium" id="el-oswv0rnw">
                         Cognitive models
-                      </span>{' '}
+                      </span>{" "}
                       - Frameworks that explain learning patterns
                     </li>
                   </ol>
                   <p className="text-xs text-gray-700 mt-2" id="el-olca1oo2">
-                    These concepts form the foundation for effective note-taking strategies that enhance retention and understanding.
+                    These concepts form the foundation for effective note-taking
+                    strategies that enhance retention and understanding.
                   </p>
                 </div>
               </div>
@@ -321,7 +392,7 @@ const AIPlaygroundSection = () => {
 // SecondPage Component (Combines all components)
 const SecondPage = () => {
   return (
-    <div id='features' className="container pb-20 mx-auto px-4">
+    <div id="features" className="container pb-20 mx-auto px-4">
       <NoteTakingFeatures />
       <FeaturesGrid />
       <AIPlaygroundSection />

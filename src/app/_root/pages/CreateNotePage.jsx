@@ -239,7 +239,7 @@ const CreateNotePage = () => {
                   defaultValue="Pick a browser"
                   className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
                 >
-                  {isCategorySuccess ? (
+                  {isCategorySuccess && categories.data.length > 0 ? (
                     categories?.data.map((category) => (
                       <option
                         key={category.id}

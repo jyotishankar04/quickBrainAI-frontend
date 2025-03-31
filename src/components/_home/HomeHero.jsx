@@ -27,15 +27,12 @@ const HeroSection = () => {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/auth/login"
+                to="/app"
                 className="bg-[#2563EB] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center"
               >
                 Get Started — Free
               </Link>
-              <a
-                href="#how-it-works"
-                className="bg-transparent border border-gray-400 hover:border-white text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center"
-              >
+              <div className="bg-transparent border border-gray-400 hover:border-white text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
                 <span>Watch Demo</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +46,7 @@ const HeroSection = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </div>
             </div>
 
             {/* Login Link */}
@@ -58,10 +55,9 @@ const HeroSection = () => {
                 Already have an account?{" "}
                 <Link
                   to="/auth/login"
-                  >
-                <a href="#login" className="text-[#2563EB] hover:underline">
+                  className="text-[#2563EB] hover:underline"
+                >
                   Log in
-                </a>
                 </Link>
               </p>
             </div>

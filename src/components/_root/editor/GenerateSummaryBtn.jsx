@@ -54,7 +54,7 @@ const GenerateSummaryBtn = () => {
 
     // Insert heading for the summary
     editor.commands.setHeading({ level: 2 });
-    editor.commands.insertContent("Generated CSR Summary");
+    editor.commands.insertContent("Generated Summary");
     editor.commands.enter(); // Move to next line
 
     // Insert the summary paragraph
@@ -117,7 +117,7 @@ const GenerateSummaryBtn = () => {
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-base-100 max-h-[90vh] max-w-4xl flex flex-col">
           <div className="flex justify-between items-center mb-4 sticky top-0 bg-base-100 pt-4 z-10">
-            <h3 className="font-bold text-lg">CSR Summary & Key Points</h3>
+            <h3 className="font-bold text-lg">Summary & Key Points</h3>
             <button
               onClick={handleClose}
               className="btn btn-sm btn-circle btn-ghost"

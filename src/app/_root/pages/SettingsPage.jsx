@@ -54,11 +54,11 @@ const SettingsPage = () => {
         gender: user.data.gender || "",
         location: user.data.location || "",
         bio: user.data.bio || "",
-        customUrl: user.data.customUrl || "",
-        twitterUrl: user.data.twitterUrl || "",
-        instagramUrl: user.data.instagramUrl || "",
-        linkedinUrl: user.data.linkedinUrl || "",
-        githubUrl: user.data.githubUrl || "",
+        customUrl: extractUsername(user.data.customUrl) || "",
+        twitterUrl: extractUsername(user.data.twitterUrl) || "",
+        instagramUrl: extractUsername(user.data.instagramUrl) || "",
+        linkedinUrl: extractUsername(user.data.linkedinUrl) || "",
+        githubUrl: extractUsername(user.data.githubUrl) || "",
       });
       setPreviewImage(
         user.data.avatarUrl ||
@@ -396,9 +396,9 @@ const SettingsPage = () => {
                       disabled={isUpdateLoading}
                       type="text"
                       value={extractUsername(formData.instagramUrl)}
-                      onChange={(e) =>
-                        handleInputChange("instagramUrl", e.target.value)
-                      }
+                      onChange={(e) => {
+                        handleInputChange("instagramUrl", e.target.value);
+                      }}
                       readOnly={!isEditing}
                       className={`flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border ${
                         isEditing

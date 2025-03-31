@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { homeNavBarLinks } from "../../constants/home.constants.js";
 import Logo from "./Logo.jsx";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../../lib/axios/axiosApis.js";
 const HomeNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [isAuth, setIsAuth] = React.useState(false);
+  const [user, setUser] = React.useState();
+  const checkAuthUser = async () => {
+    try {
+      setLoading(true);
+      const res = await axiosInstance.get("/auth/session");
+      if (res.status === 200 && res.data.success) {
+        setIsAuth(true);
+        setLoading(false);
+        setUser(res.data.data);
+        return;
+      }
 
+      setIsAuth(false);
+      setLoading(false);
+      return;
+      // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      setIsAuth(false);
+      setLoading(false);
+      return;
+    }
+  };
+  useEffect(() => {
+    checkAuthUser();
+  }, []);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -32,18 +59,43 @@ const HomeNav = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Link
-              to="/auth/login"
-              className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
-            >
-              Login
-            </Link>
-            <Link
-              to="/auth/register"
-              className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
-            >
-              Sign Up
-            </Link>
+            {!loading && !isAuth && (
+              <>
+                <Link
+                  to="/auth/login"
+                  className="px-4 py-2 text-[#2563EB] rounded-md hover:bg-gray-100 transition-colors duration-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/auth/register"
+                  className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+            {loading && (
+              <span className="px-4 py-2 text-[#2563EB] rounded-md">
+                Loading...
+              </span>
+            )}
+            {isAuth && (
+              <div className="text-[#2563EB] rounded-md flex items-center space-x-2">
+                <div className="text-md">
+                  Welcome <span className="font-bold">{user?.name}</span>
+                </div>
+                <div className="w-10 h-10 rounded-full overflow-hidden avatar ">
+                  <img src={user?.avatarUrl} alt="avatar" />
+                </div>
+                <Link
+                  to="/app"
+                  className="px-4 py-2 bg-[#2563EB] text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                >
+                  Dashboard
+                </Link>
+              </div>
+            )}
           </div>
 
           <button

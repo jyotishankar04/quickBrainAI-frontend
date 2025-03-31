@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
@@ -49,7 +49,6 @@ export const createNoteApi = async (data) => {
 };
 
 export const updateNoteApi = async ({ noteId, data }) => {
-  console.log("Received Data in API:", data);
   const response = await axiosInstance.put(`/notes/${noteId}`, data);
   return response.data;
 };

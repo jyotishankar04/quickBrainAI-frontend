@@ -20,7 +20,6 @@ const NotesCard = ({
   isPrivate,
   files,
 }) => {
-  console.log(files);
   return (
     <div className=" card indicator w-full" id="el-vscmwjky">
       <div className="flex  justify-between items-start mb-4" id="el-hvne05la">

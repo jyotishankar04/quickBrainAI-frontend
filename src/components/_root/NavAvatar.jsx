@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NavAvatar = ({ image }) => {
-  console.log(image);
   return (
     <div className="dropdown dropdown-end cursor-pointer">
       <div tabIndex={0} role="button" className="avatar m-1">

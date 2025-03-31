@@ -32,11 +32,11 @@ const WorkSpacePage = () => {
 
   useEffect(() => {
     if (isNoteSuccess) {
-      if (editor && note.data.noteContent) {
+      if (editor && note.data) {
         editor.commands.setContent(note.data.noteContent);
       }
     }
-  }, [isNoteSuccess, note, editor]);
+  }, [isNoteSuccess, note, editor, noteId]);
 
   useEffect(() => {
     if (isNoteError) {
