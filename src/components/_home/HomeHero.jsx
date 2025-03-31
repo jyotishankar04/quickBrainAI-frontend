@@ -56,9 +56,13 @@ const HeroSection = () => {
             <div className="mt-8 text-sm text-gray-400">
               <p>
                 Already have an account?{" "}
+                <Link
+                  to="/auth/login"
+                  >
                 <a href="#login" className="text-[#2563EB] hover:underline">
                   Log in
                 </a>
+                </Link>
               </p>
             </div>
           </div>
@@ -89,7 +93,7 @@ const HeroSection = () => {
                   <div className="md:w-1/3 border-r border-neutral-700 p-4">
                     <div className="flex justify-between items-center mb-4">
                       <h3 className="font-medium">AI Assistant</h3>
-                      <button className="text-xs bg-[#2563EB] px-2 py-1 rounded text-white">
+                      <button className="text-xs bg-[#2563EB] px-2 py-1 rounded text-white cursor-not-allowed ">
                         New Chat
                       </button>
                     </div>

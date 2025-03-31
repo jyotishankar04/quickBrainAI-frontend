@@ -2,7 +2,9 @@ import React, { lazy } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import LazyLoader from "./components/LazyLoader.jsx";
 
+
 // Lazy load components
+const ContactSales = lazy(() => import("./app/_root/pages/ContactSales.jsx"));
 const Home = lazy(() => import("./app/_home/Home.jsx"));
 const AuthLayout = lazy(() => import("./app/_auth/AuthLayout.jsx"));
 const SignUp = lazy(() => import("./app/_auth/pages/SignUp.jsx"));
@@ -87,7 +89,17 @@ const App = () => {
             </LazyLoader>
           }
         />
+     
       </Route>
+{/* Route for contact sales */}
+      <Route
+          path="contactsales"
+          element={
+            <LazyLoader>
+              <ContactSales />
+            </LazyLoader>
+          }
+        />
 
       {/* Protected Routes */}
       <Route

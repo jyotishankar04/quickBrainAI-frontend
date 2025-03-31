@@ -42,6 +42,7 @@ const Faq = () => {
               />
             </svg>
           </button>
+        
           <div
             id="faq-answer-1"
             className="hidden px-6 py-4 bg-gray-50 border-t border-gray-100"
