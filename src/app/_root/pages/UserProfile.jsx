@@ -178,71 +178,83 @@ const UserProfilePage = () => {
               <div className="bg-gray-100 p-5 rounded-lg">
                 <h3 className="text-xl font-semibold mb-4">Social Accounts</h3>
                 <ul className="space-y-3">
-                  <li
-                    data-tip="Click to copy"
-                    className="flex tooltip items-center mt-4 w-full cursor-pointer"
-                    onClick={() => copyToClipboard(userData.data.instagramUrl)}
-                  >
-                    <BsInstagram className="h-5 w-5 text-gray-500 " />
-                    <div className="flex-1  ml-3">
-                      <span className="text-gray-700">
-                        instagram.com/
-                        {extractUsername(userData.data.instagramUrl)}
-                      </span>
-                    </div>
-                  </li>
+                  {extractUsername(userData.data.linkedinUrl) && (
+                    <li
+                      data-tip="Click to copy"
+                      className="flex tooltip items-center mt-4 w-full cursor-pointer"
+                      onClick={() =>
+                        copyToClipboard(userData.data.instagramUrl)
+                      }
+                    >
+                      <BsInstagram className="h-5 w-5 text-gray-500 " />
+                      <div className="flex-1  ml-3">
+                        <span className="text-gray-700">
+                          instagram.com/
+                          {extractUsername(userData.data.instagramUrl)}
+                        </span>
+                      </div>
+                    </li>
+                  )}
 
-                  <li
-                    data-tip="Click to copy"
-                    className="flex tooltip items-center mt-4 w-full cursor-pointer"
-                    onClick={() => copyToClipboard(userData.data.githubUrl)}
-                  >
-                    <BsGithub className="h-5 w-5 text-gray-500 " />
-                    <div className="flex-1  ml-3">
-                      <span className="text-gray-700">
-                        github.com/{extractUsername(userData.data.githubUrl)}
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    data-tip="Click to copy"
-                    className="flex tooltip items-center mt-4 w-full cursor-pointer"
-                    onClick={() => copyToClipboard(userData.data.twitterUrl)}
-                  >
-                    <BsTwitterX className="h-5 w-5 text-gray-500 " />
-                    <div className="flex-1  ml-3">
-                      <span className="text-gray-700">
-                        x.com/{extractUsername(userData.data.twitterUrl)}
-                      </span>
-                    </div>
-                  </li>
-                  <li
-                    data-tip="Click to copy"
-                    className="flex tooltip items-center mt-4 w-full cursor-pointer"
-                    onClick={() => copyToClipboard(userData.data.linkedinUrl)}
-                  >
-                    <BsLinkedin className="h-5 w-5 text-gray-500 " />
-                    <div className="flex-1  ml-3">
-                      <span className="text-gray-700">
-                        linkedin.com/in/
-                        {extractUsername(userData.data.linkedinUrl)}
-                      </span>
-                    </div>
-                  </li>
+                  {extractUsername(userData.data.instagramUrl) && (
+                    <li
+                      data-tip="Click to copy"
+                      className="flex tooltip items-center mt-4 w-full cursor-pointer"
+                      onClick={() => copyToClipboard(userData.data.githubUrl)}
+                    >
+                      <BsGithub className="h-5 w-5 text-gray-500 " />
+                      <div className="flex-1  ml-3">
+                        <span className="text-gray-700">
+                          github.com/{extractUsername(userData.data.githubUrl)}
+                        </span>
+                      </div>
+                    </li>
+                  )}
+                  {extractUsername(userData.data.githubUrl) && (
+                    <li
+                      data-tip="Click to copy"
+                      className="flex tooltip items-center mt-4 w-full cursor-pointer"
+                      onClick={() => copyToClipboard(userData.data.twitterUrl)}
+                    >
+                      <BsTwitterX className="h-5 w-5 text-gray-500 " />
+                      <div className="flex-1  ml-3">
+                        <span className="text-gray-700">
+                          x.com/{extractUsername(userData.data.twitterUrl)}
+                        </span>
+                      </div>
+                    </li>
+                  )}
+                  {extractUsername(userData.data.twitterUrl) && (
+                    <li
+                      data-tip="Click to copy"
+                      className="flex tooltip items-center mt-4 w-full cursor-pointer"
+                      onClick={() => copyToClipboard(userData.data.linkedinUrl)}
+                    >
+                      <BsLinkedin className="h-5 w-5 text-gray-500 " />
+                      <div className="flex-1  ml-3">
+                        <span className="text-gray-700">
+                          linkedin.com/in/
+                          {extractUsername(userData.data.linkedinUrl)}
+                        </span>
+                      </div>
+                    </li>
+                  )}
+
+                  {extractUsername(userData.data.linkedinUrl) && (
+                    <li
+                      data-tip="Click to copy"
+                      className="flex tooltip items-center mt-4 w-full cursor-pointer"
+                      onClick={() => copyToClipboard(userData.data.customUrl)}
+                    >
+                      <ImEarth className="h-5 w-5 text-gray-500 " />
+                      <div className="flex-1  ml-3">
+                        <span className="text-gray-700">
+                          {extractUsername(userData.data.customUrl)}
+                        </span>
+                      </div>
+                    </li>
+                  )}
                 </ul>
-
-                <li
-                  data-tip="Click to copy"
-                  className="flex tooltip items-center mt-4 w-full cursor-pointer"
-                  onClick={() => copyToClipboard(userData.data.customUrl)}
-                >
-                  <ImEarth className="h-5 w-5 text-gray-500 " />
-                  <div className="flex-1  ml-3">
-                    <span className="text-gray-700">
-                      {extractUsername(userData.data.customUrl)}
-                    </span>
-                  </div>
-                </li>
               </div>
             </div>
           </div>
