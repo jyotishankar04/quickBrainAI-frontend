@@ -1,9 +1,4 @@
 import { React, useEffect } from "react";
-import {
-  UserSkillData,
-  Connections,
-  RecentActivities,
-} from "../../../constants/app.constants";
 import { useUserQuery } from "../../../lib/query/react-query";
 import toast from "react-hot-toast";
 import { FaRegEnvelope } from "react-icons/fa6";
@@ -29,9 +24,7 @@ const UserProfilePage = () => {
       toast.error(userError.message);
     }
   }, [isUserError, userError]);
-  if (isLoadingUser) {
-    return <div>Loading...</div>;
-  }
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     toast.custom((t) => (
