@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,8 +10,14 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { mutateAsync, isPending, isSuccess } = useLoginMutation();
+  const { mutateAsync, isPending, isSuccess, isError, error } =
+    useLoginMutation();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.response.data.message);
+    }
+  }, [isError, error]);
   const customSubmit = handleSubmit(async (data) => {
     if (
       !data.email ||
@@ -24,10 +30,10 @@ const Login = () => {
     }
 
     await mutateAsync(data);
-    navigate("/app");
   });
   if (isSuccess) {
     toast.success("Successfully Logged In");
+    navigate("/app");
   }
 
   return (

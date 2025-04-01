@@ -16,6 +16,19 @@ import { FiFile } from "react-icons/fi";
 import moment from "moment";
 import { TbEdit } from "react-icons/tb";
 import NoDataFound from "../../../components/NoDataFound.jsx";
+import {
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const Dashboard = () => {
   const {
@@ -74,6 +87,50 @@ const Dashboard = () => {
   if (isStatsLoading) {
     return <LoadingModal isVisible={true} text="Fetching stats..." />;
   }
+
+  // Prepare data for charts
+  const prepareChartData = () => {
+    if (!stats?.data) return {};
+
+    // Notes Status data
+    const notesStatusData = [
+      { name: "Public", value: stats.data.publicNotes },
+      { name: "Private", value: stats.data.privateNotes },
+    ];
+
+    // Notes with Files vs Without Files
+    const filesComparisonData = [
+      {
+        name: "With Files",
+        value: stats.data.notesWithFiles,
+        fill: "#00C49F",
+      },
+      {
+        name: "Without Files",
+        value: stats.data.totalNotes - stats.data.notesWithFiles,
+        fill: "#FF8042",
+      },
+    ];
+
+    // Category distribution data
+    const categoryDistribution = stats?.data?.categories
+      ? stats.data.categories.map((cat) => {
+          console.log();
+          return {
+            name: cat.name,
+            value: cat._count.Notes || 0,
+          };
+        })
+      : [];
+
+    return { notesStatusData, filesComparisonData, categoryDistribution };
+  };
+
+  const { notesStatusData, filesComparisonData, categoryDistribution } =
+    prepareChartData();
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
+
   const dashboardStats = [
     {
       title: "Total Notes",
@@ -83,7 +140,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Categories",
-      value: stats ? stats.data.totalCategories : "_ _",
+      value: stats ? stats.data.categories.length : "0",
       icon: BiCategory,
       color: "green",
     },
@@ -94,7 +151,7 @@ const Dashboard = () => {
       color: "yellow",
     },
     {
-      title: "Created This Week ( 7 days )", // in last 7 days
+      title: "Created This Week (7 days)",
       value: stats ? stats.data.notesLastWeek : "_ _",
       icon: FaRegCalendarAlt,
       color: "purple",
@@ -112,18 +169,19 @@ const Dashboard = () => {
       color: "gray",
     },
     {
-      title: "Note with PDF",
+      title: "Notes with Files",
       value: stats ? stats.data.notesWithFiles : "_ _",
       icon: FiFile,
       color: "orange",
     },
     {
-      title: "Created This Month ( 30 days )",
+      title: "Created This Month (30 days)",
       value: stats ? stats.data.notesLastMonth : "_ _",
       icon: MdCalendarMonth,
       color: "pink",
     },
   ];
+
   return stats.success && user ? (
     <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -187,7 +245,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions & Recent Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Quick Actions */}
           <QuickActions />
           {/* Recent Activity */}
@@ -195,7 +253,6 @@ const Dashboard = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Recent Activity
             </h2>
-
             <div className="space-y-4">
               {stats.data.lastFiveActivities.slice(0, 5).map((obj, index) => (
                 <ActivityItem
@@ -209,6 +266,136 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Notes Status Pie Chart */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Notes Status (Public/Private)
+            </h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={notesStatusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
+                  >
+                    {notesStatusData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Files Comparison Chart */}
+          <div className="bg-white rounded-lg shadow p-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Notes With Attachments
+            </h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={filesComparisonData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar
+                    dataKey="value"
+                    name="Number of Notes"
+                    radius={[4, 4, 0, 0]}
+                  >
+                    {filesComparisonData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* Category Distribution Chart */}
+        {categoryDistribution.length > 0 ? (
+          <div className="bg-white rounded-lg shadow  mb-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Category Distribution
+            </h2>
+            <div className="h-[400px] w-full">
+              {" "}
+              {/* Use Tailwind classes */}
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={categoryDistribution}
+                  layout="vertical"
+                  margin={{
+                    top: 10, // Reduced
+                    right: 10, // Reduced
+                    left: 10, // Reduced significantly
+                    bottom: 10, // Reduced
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis
+                    type="number"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 12 }}
+                  />
+                  <YAxis
+                    dataKey="name"
+                    type="category"
+                    width={80} // Reduced width
+                    tick={{ fontSize: 12 }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend wrapperStyle={{ paddingTop: "10px" }} />
+                  <Bar dataKey="value" name="Notes Count" radius={[0, 4, 4, 0]}>
+                    {categoryDistribution.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                        strokeWidth={0}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg shadow p-4 mb-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Category Distribution
+            </h2>
+            <NoDataFound text="No category data available" />
+          </div>
+        )}
       </div>
     </main>
   ) : (
