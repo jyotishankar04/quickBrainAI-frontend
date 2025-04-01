@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DashStatsCard from "../../../components/_root/dash/DashStatsCard.jsx";
 import { FaRegCalendarAlt, FaRegFileAlt, FaRegStar } from "react-icons/fa";
 import { MdCalendarMonth, MdOutlineRemoveRedEye } from "react-icons/md";
@@ -16,19 +16,6 @@ import { FiFile } from "react-icons/fi";
 import moment from "moment";
 import { TbEdit } from "react-icons/tb";
 import NoDataFound from "../../../components/NoDataFound.jsx";
-import {
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 
 const Dashboard = () => {
   const {
@@ -43,94 +30,12 @@ const Dashboard = () => {
 
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData(["session"]);
-  const [chartData, setChartData] = useState({
-    notesStatusData: [],
-    filesComparisonData: [],
-    categoryDistribution: [],
-  });
 
   useEffect(() => {
     if (isStatsError) {
       toast.error(statsError.message);
     }
   }, [isStatsError, statsError]);
-
-  // Prepare data for charts
-  const prepareChartData = useCallback(() => {
-    if (!stats?.data)
-      return {
-        notesStatusData: [],
-        filesComparisonData: [],
-        categoryDistribution: [],
-      };
-
-    const publicNotes = stats.data.publicNotes || 0;
-    const privateNotes = stats.data.privateNotes || 0;
-    const totalNotes = stats.data.totalNotes || 0;
-    const notesWithFiles = stats.data.notesWithFiles || 0;
-
-    return {
-      notesStatusData: [
-        { name: "Public", value: publicNotes },
-        { name: "Private", value: privateNotes },
-      ],
-      filesComparisonData: [
-        { name: "With Files", value: notesWithFiles, fill: "#00C49F" },
-        {
-          name: "Without Files",
-          value: totalNotes - notesWithFiles,
-          fill: "#FF8042",
-        },
-      ],
-      categoryDistribution: Array.isArray(stats.data.categories)
-        ? stats.data.categories.map((cat) => ({
-            name: cat.name || "Unnamed",
-            value: cat._count?.Notes || 0,
-          }))
-        : [],
-    };
-  }, [stats]);
-
-  useEffect(() => {
-    const { notesStatusData, filesComparisonData, categoryDistribution } =
-      prepareChartData();
-    setChartData({
-      notesStatusData,
-      filesComparisonData,
-      categoryDistribution,
-    });
-  }, [stats, isStatsSuccess, prepareChartData]);
-
-  // Loading and Error States
-  if (isStatsLoading || isStatsPending) {
-    return <LoadingModal isVisible={true} text="Fetching stats..." />;
-  }
-
-  if (isStatsError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-82">
-          <div className="mb-4">
-            <img src="/500.svg" alt="500" className="object-cover mx-auto" />
-          </div>
-          <div className="text-center">
-            <button
-              type="button"
-              disabled={isStatsPending}
-              onClick={() => refetchStats()}
-              className="btn btn-primary"
-            >
-              {isStatsPending ? (
-                <span className="loading loading-spinner"></span>
-              ) : (
-                "Try Again"
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   const getActivityIcon = (action) => {
     switch (action) {
@@ -166,65 +71,60 @@ const Dashboard = () => {
     }
   };
 
-  // Ensure stats success and user data before rendering
-  if (!stats.success || !user) {
-    return <NoDataFound text="No data available" />;
+  if (isStatsLoading) {
+    return <LoadingModal isVisible={true} text="Fetching stats..." />;
   }
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
-
   const dashboardStats = [
     {
       title: "Total Notes",
-      value: stats?.data.totalNotes || "_ _",
+      value: stats ? stats.data.totalNotes : "_ _",
       icon: FaRegFileAlt,
       color: "blue",
     },
     {
       title: "Total Categories",
-      value: stats?.data.categories.length || "0",
+      value: stats ? stats.data.totalCategories : "_ _",
       icon: BiCategory,
       color: "green",
     },
     {
       title: "Starred Notes",
-      value: stats?.data.starredNotes || "_ _",
+      value: stats ? stats.data.starredNotes : "_ _",
       icon: FaRegStar,
       color: "yellow",
     },
     {
-      title: "Created This Week (7 days)",
-      value: stats?.data.notesLastWeek || "_ _",
+      title: "Created This Week ( 7 days )", // in last 7 days
+      value: stats ? stats.data.notesLastWeek : "_ _",
       icon: FaRegCalendarAlt,
       color: "purple",
     },
     {
       title: "Public Notes",
-      value: stats?.data.publicNotes || "_ _",
+      value: stats ? stats.data.publicNotes : "_ _",
       icon: TfiUnlock,
       color: "red",
     },
     {
       title: "Private Notes",
-      value: stats?.data.privateNotes || "_ _",
+      value: stats ? stats.data.privateNotes : "_ _",
       icon: TfiLock,
       color: "gray",
     },
     {
-      title: "Notes with Files",
-      value: stats?.data.notesWithFiles || "_ _",
+      title: "Note with PDF",
+      value: stats ? stats.data.notesWithFiles : "_ _",
       icon: FiFile,
       color: "orange",
     },
     {
-      title: "Created This Month (30 days)",
-      value: stats?.data.notesLastMonth || "_ _",
+      title: "Created This Month ( 30 days )",
+      value: stats ? stats.data.notesLastMonth : "_ _",
       icon: MdCalendarMonth,
       color: "pink",
     },
   ];
-
-  return (
+  return stats.success && user ? (
     <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Dashboard Header */}
@@ -264,7 +164,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {stats.data.lastThreeNotes.length ? (
+            {stats && stats.data.lastThreeNotes.length ? (
               stats.data.lastThreeNotes.map((obj) => (
                 <NotesCard
                   key={obj.id}
@@ -287,12 +187,15 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions & Recent Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Quick Actions */}
           <QuickActions />
+          {/* Recent Activity */}
           <div className="bg-white rounded-lg shadow p-4 lg:col-span-2">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Recent Activity
             </h2>
+
             <div className="space-y-4">
               {stats.data.lastFiveActivities.slice(0, 5).map((obj, index) => (
                 <ActivityItem
@@ -306,104 +209,30 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ChartWrapper
-            title="Notes Status (Public/Private)"
-            data={chartData.notesStatusData}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={chartData.notesStatusData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label={({ name, percent }) =>
-                    `${name}: ${(percent * 100).toFixed(0)}%`
-                  }
-                >
-                  {chartData.notesStatusData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </ChartWrapper>
-
-          <ChartWrapper
-            title="Notes With Attachments"
-            data={chartData.filesComparisonData}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartData.filesComparisonData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar
-                  dataKey="value"
-                  name="Number of Notes"
-                  radius={[4, 4, 0, 0]}
-                >
-                  {chartData.filesComparisonData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartWrapper>
-        </div>
-
-        {/* Category Distribution Chart */}
-        <ChartWrapper
-          title="Category Distribution"
-          data={chartData.categoryDistribution}
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={chartData.categoryDistribution}
-              layout="vertical"
-              margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis type="number" axisLine={false} tickLine={false} />
-              <YAxis
-                dataKey="name"
-                type="category"
-                width={80}
-                tick={{ fontSize: 12 }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" name="Notes Count" radius={[0, 4, 4, 0]}>
-                {chartData.categoryDistribution.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                    strokeWidth={0}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartWrapper>
       </div>
     </main>
+  ) : (
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-82 ">
+        <div className="mb-4">
+          <img src="/500.svg" alt="500" className="object-cover mx-auto" />
+        </div>
+        <div className="text-center">
+          <button
+            type="button"
+            disabled={isStatsPending}
+            onClick={() => refetchStats()}
+            className="btn btn-primary"
+          >
+            {isStatsPending ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Try Again"
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -430,24 +259,6 @@ const ActivityItem = ({ title, time, Icon, color }) => {
         <p className="font-medium capitalize">{title.toLowerCase()}</p>
         <p className="text-sm text-gray-500">{moment(time).fromNow()}</p>
       </div>
-    </div>
-  );
-};
-
-const ChartWrapper = ({ children, data, title }) => {
-  if (!Array.isArray(data) || data.length === 0) {
-    return (
-      <div className="bg-white rounded-lg shadow p-4">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
-        <NoDataFound text="No data available for this chart" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
-      <div className="h-64">{children}</div>
     </div>
   );
 };
