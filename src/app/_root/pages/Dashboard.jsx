@@ -54,6 +54,7 @@ const Dashboard = () => {
       toast.error(statsError.message);
     }
   }, [isStatsError, statsError]);
+
   // Prepare data for charts
   const prepareChartData = useCallback(() => {
     if (!stats?.data)
@@ -63,7 +64,6 @@ const Dashboard = () => {
         categoryDistribution: [],
       };
 
-    // Ensure we have fallback values for all data points
     const publicNotes = stats.data.publicNotes || 0;
     const privateNotes = stats.data.privateNotes || 0;
     const totalNotes = stats.data.totalNotes || 0;
@@ -90,6 +90,7 @@ const Dashboard = () => {
         : [],
     };
   }, [stats]);
+
   useEffect(() => {
     const { notesStatusData, filesComparisonData, categoryDistribution } =
       prepareChartData();
@@ -99,6 +100,37 @@ const Dashboard = () => {
       categoryDistribution,
     });
   }, [stats, isStatsSuccess, prepareChartData]);
+
+  // Loading and Error States
+  if (isStatsLoading || isStatsPending) {
+    return <LoadingModal isVisible={true} text="Fetching stats..." />;
+  }
+
+  if (isStatsError) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-82">
+          <div className="mb-4">
+            <img src="/500.svg" alt="500" className="object-cover mx-auto" />
+          </div>
+          <div className="text-center">
+            <button
+              type="button"
+              disabled={isStatsPending}
+              onClick={() => refetchStats()}
+              className="btn btn-primary"
+            >
+              {isStatsPending ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Try Again"
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const getActivityIcon = (action) => {
     switch (action) {
@@ -134,8 +166,9 @@ const Dashboard = () => {
     }
   };
 
-  if (isStatsLoading) {
-    return <LoadingModal isVisible={true} text="Fetching stats..." />;
+  // Ensure stats success and user data before rendering
+  if (!stats.success || !user) {
+    return <NoDataFound text="No data available" />;
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
@@ -143,55 +176,55 @@ const Dashboard = () => {
   const dashboardStats = [
     {
       title: "Total Notes",
-      value: stats ? stats.data.totalNotes : "_ _",
+      value: stats?.data.totalNotes || "_ _",
       icon: FaRegFileAlt,
       color: "blue",
     },
     {
       title: "Total Categories",
-      value: stats ? stats.data.categories.length : "0",
+      value: stats?.data.categories.length || "0",
       icon: BiCategory,
       color: "green",
     },
     {
       title: "Starred Notes",
-      value: stats ? stats.data.starredNotes : "_ _",
+      value: stats?.data.starredNotes || "_ _",
       icon: FaRegStar,
       color: "yellow",
     },
     {
       title: "Created This Week (7 days)",
-      value: stats ? stats.data.notesLastWeek : "_ _",
+      value: stats?.data.notesLastWeek || "_ _",
       icon: FaRegCalendarAlt,
       color: "purple",
     },
     {
       title: "Public Notes",
-      value: stats ? stats.data.publicNotes : "_ _",
+      value: stats?.data.publicNotes || "_ _",
       icon: TfiUnlock,
       color: "red",
     },
     {
       title: "Private Notes",
-      value: stats ? stats.data.privateNotes : "_ _",
+      value: stats?.data.privateNotes || "_ _",
       icon: TfiLock,
       color: "gray",
     },
     {
       title: "Notes with Files",
-      value: stats ? stats.data.notesWithFiles : "_ _",
+      value: stats?.data.notesWithFiles || "_ _",
       icon: FiFile,
       color: "orange",
     },
     {
       title: "Created This Month (30 days)",
-      value: stats ? stats.data.notesLastMonth : "_ _",
+      value: stats?.data.notesLastMonth || "_ _",
       icon: MdCalendarMonth,
       color: "pink",
     },
   ];
 
-  return stats.success && user ? (
+  return (
     <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Dashboard Header */}
@@ -231,7 +264,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {stats && stats.data.lastThreeNotes.length ? (
+            {stats.data.lastThreeNotes.length ? (
               stats.data.lastThreeNotes.map((obj) => (
                 <NotesCard
                   key={obj.id}
@@ -255,9 +288,7 @@ const Dashboard = () => {
 
         {/* Quick Actions & Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Quick Actions */}
           <QuickActions />
-          {/* Recent Activity */}
           <div className="bg-white rounded-lg shadow p-4 lg:col-span-2">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Recent Activity
@@ -276,8 +307,8 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Notes Status Pie Chart */}
           <ChartWrapper
             title="Notes Status (Public/Private)"
             data={chartData.notesStatusData}
@@ -308,7 +339,6 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </ChartWrapper>
 
-          {/* Files Comparison Chart */}
           <ChartWrapper
             title="Notes With Attachments"
             data={chartData.filesComparisonData}
@@ -374,28 +404,6 @@ const Dashboard = () => {
         </ChartWrapper>
       </div>
     </main>
-  ) : (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-82 ">
-        <div className="mb-4">
-          <img src="/500.svg" alt="500" className="object-cover mx-auto" />
-        </div>
-        <div className="text-center">
-          <button
-            type="button"
-            disabled={isStatsPending}
-            onClick={() => refetchStats()}
-            className="btn btn-primary"
-          >
-            {isStatsPending ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              "Try Again"
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
   );
 };
 
