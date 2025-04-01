@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DashStatsCard from "../../../components/_root/dash/DashStatsCard.jsx";
 import { FaRegCalendarAlt, FaRegFileAlt, FaRegStar } from "react-icons/fa";
 import { MdCalendarMonth, MdOutlineRemoveRedEye } from "react-icons/md";
@@ -43,12 +43,62 @@ const Dashboard = () => {
 
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData(["session"]);
+  const [chartData, setChartData] = useState({
+    notesStatusData: [],
+    filesComparisonData: [],
+    categoryDistribution: [],
+  });
 
   useEffect(() => {
     if (isStatsError) {
       toast.error(statsError.message);
     }
   }, [isStatsError, statsError]);
+  // Prepare data for charts
+  const prepareChartData = useCallback(() => {
+    if (!stats?.data)
+      return {
+        notesStatusData: [],
+        filesComparisonData: [],
+        categoryDistribution: [],
+      };
+
+    // Ensure we have fallback values for all data points
+    const publicNotes = stats.data.publicNotes || 0;
+    const privateNotes = stats.data.privateNotes || 0;
+    const totalNotes = stats.data.totalNotes || 0;
+    const notesWithFiles = stats.data.notesWithFiles || 0;
+
+    return {
+      notesStatusData: [
+        { name: "Public", value: publicNotes },
+        { name: "Private", value: privateNotes },
+      ],
+      filesComparisonData: [
+        { name: "With Files", value: notesWithFiles, fill: "#00C49F" },
+        {
+          name: "Without Files",
+          value: totalNotes - notesWithFiles,
+          fill: "#FF8042",
+        },
+      ],
+      categoryDistribution: Array.isArray(stats.data.categories)
+        ? stats.data.categories.map((cat) => ({
+            name: cat.name || "Unnamed",
+            value: cat._count?.Notes || 0,
+          }))
+        : [],
+    };
+  }, [stats]);
+  useEffect(() => {
+    const { notesStatusData, filesComparisonData, categoryDistribution } =
+      prepareChartData();
+    setChartData({
+      notesStatusData,
+      filesComparisonData,
+      categoryDistribution,
+    });
+  }, [stats, isStatsSuccess, prepareChartData]);
 
   const getActivityIcon = (action) => {
     switch (action) {
@@ -87,47 +137,6 @@ const Dashboard = () => {
   if (isStatsLoading) {
     return <LoadingModal isVisible={true} text="Fetching stats..." />;
   }
-
-  // Prepare data for charts
-  const prepareChartData = () => {
-    if (!stats?.data) return {};
-
-    // Notes Status data
-    const notesStatusData = [
-      { name: "Public", value: stats.data.publicNotes },
-      { name: "Private", value: stats.data.privateNotes },
-    ];
-
-    // Notes with Files vs Without Files
-    const filesComparisonData = [
-      {
-        name: "With Files",
-        value: stats.data.notesWithFiles,
-        fill: "#00C49F",
-      },
-      {
-        name: "Without Files",
-        value: stats.data.totalNotes - stats.data.notesWithFiles,
-        fill: "#FF8042",
-      },
-    ];
-
-    // Category distribution data
-    const categoryDistribution = stats?.data?.categories
-      ? stats.data.categories.map((cat) => {
-          console.log();
-          return {
-            name: cat.name,
-            value: cat._count.Notes || 0,
-          };
-        })
-      : [];
-
-    return { notesStatusData, filesComparisonData, categoryDistribution };
-  };
-
-  const { notesStatusData, filesComparisonData, categoryDistribution } =
-    prepareChartData();
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
@@ -267,135 +276,102 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Notes Status Pie Chart */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Notes Status (Public/Private)
-            </h2>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={notesStatusData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
-                  >
-                    {notesStatusData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+          <ChartWrapper
+            title="Notes Status (Public/Private)"
+            data={chartData.notesStatusData}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={chartData.notesStatusData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) =>
+                    `${name}: ${(percent * 100).toFixed(0)}%`
+                  }
+                >
+                  {chartData.notesStatusData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </ChartWrapper>
 
           {/* Files Comparison Chart */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Notes With Attachments
-            </h2>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={filesComparisonData}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          <ChartWrapper
+            title="Notes With Attachments"
+            data={chartData.filesComparisonData}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={chartData.filesComparisonData}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar
+                  dataKey="value"
+                  name="Number of Notes"
+                  radius={[4, 4, 0, 0]}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar
-                    dataKey="value"
-                    name="Number of Notes"
-                    radius={[4, 4, 0, 0]}
-                  >
-                    {filesComparisonData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.fill} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+                  {chartData.filesComparisonData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartWrapper>
         </div>
 
         {/* Category Distribution Chart */}
-        {categoryDistribution.length > 0 ? (
-          <div className="bg-white rounded-lg shadow  mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Category Distribution
-            </h2>
-            <div className="h-[400px] w-full">
-              {" "}
-              {/* Use Tailwind classes */}
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={categoryDistribution}
-                  layout="vertical"
-                  margin={{
-                    top: 10, // Reduced
-                    right: 10, // Reduced
-                    left: 10, // Reduced significantly
-                    bottom: 10, // Reduced
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis
-                    type="number"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fontSize: 12 }}
+        <ChartWrapper
+          title="Category Distribution"
+          data={chartData.categoryDistribution}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartData.categoryDistribution}
+              layout="vertical"
+              margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis type="number" axisLine={false} tickLine={false} />
+              <YAxis
+                dataKey="name"
+                type="category"
+                width={80}
+                tick={{ fontSize: 12 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" name="Notes Count" radius={[0, 4, 4, 0]}>
+                {chartData.categoryDistribution.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                    strokeWidth={0}
                   />
-                  <YAxis
-                    dataKey="name"
-                    type="category"
-                    width={80} // Reduced width
-                    tick={{ fontSize: 12 }}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      borderRadius: "8px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend wrapperStyle={{ paddingTop: "10px" }} />
-                  <Bar dataKey="value" name="Notes Count" radius={[0, 4, 4, 0]}>
-                    {categoryDistribution?.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                        strokeWidth={0}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow p-4 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Category Distribution
-            </h2>
-            <NoDataFound text="No category data available" />
-          </div>
-        )}
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartWrapper>
       </div>
     </main>
   ) : (
@@ -446,6 +422,24 @@ const ActivityItem = ({ title, time, Icon, color }) => {
         <p className="font-medium capitalize">{title.toLowerCase()}</p>
         <p className="text-sm text-gray-500">{moment(time).fromNow()}</p>
       </div>
+    </div>
+  );
+};
+
+const ChartWrapper = ({ children, data, title }) => {
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <div className="bg-white rounded-lg shadow p-4">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
+        <NoDataFound text="No data available for this chart" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow p-4">
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
+      <div className="h-64">{children}</div>
     </div>
   );
 };
