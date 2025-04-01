@@ -28,11 +28,9 @@ const FavNotes = () => {
   } = useNotesQuery(page, limit, category, "starred", orderBy);
 
   useEffect(() => {
-    const params = { page, limit, category, orderBy };
-    setSearchParams(params);
     refetch();
-  }, [page, limit, category, setSearchParams, refetch, orderBy]);
-
+  }, [page, limit, category, orderBy, refetch]);
+  console.log("notes", notes);
   useEffect(() => {
     if (isSuccess) {
       setTotalPages(notes.pagination.totalPages);
@@ -51,7 +49,7 @@ const FavNotes = () => {
   return (
     <>
       {/* Notes Grid */}
-      {notes && notes.notes && notes.notes.length > 0 ? (
+      {notes && notes.data && notes.data.length > 0 ? (
         <>
           {" "}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
