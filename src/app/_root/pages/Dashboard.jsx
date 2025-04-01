@@ -376,7 +376,7 @@ const Dashboard = () => {
                   />
                   <Legend wrapperStyle={{ paddingTop: "10px" }} />
                   <Bar dataKey="value" name="Notes Count" radius={[0, 4, 4, 0]}>
-                    {categoryDistribution.map((entry, index) => (
+                    {categoryDistribution?.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
