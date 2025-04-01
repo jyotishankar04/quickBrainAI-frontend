@@ -25,6 +25,15 @@ const UserProfilePage = () => {
     }
   }, [isUserError, userError]);
 
+  if (isLoadingUser) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+        <p className="ml-2 text-gray-900">Loading...</p>
+      </div>
+    );
+  }
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     toast.custom((t) => (
