@@ -8,11 +8,12 @@ import { CollapseStateProvider } from "./context/CollapseStateContext.jsx";
 import EditorProvider from "./context/EditorContext.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { isMobile } from "react-device-detect";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <Toaster position="bottom-right" />
+    <Toaster position={isMobile ? "top-center" : "top-right"} />
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CollapseStateProvider>
