@@ -41,7 +41,6 @@ User → Frontend → Backend (Express)
     └→ LangChain + Gemini (Quiz Generation)
     └→ Pinecone (Vector DB)
     └→ PostgreSQL (Quiz Metadata, User Activity)
-Admin ← Frontend (Reports)
 ```
 
 ---
