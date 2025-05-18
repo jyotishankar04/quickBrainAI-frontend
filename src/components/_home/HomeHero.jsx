@@ -32,7 +32,7 @@ const HeroSection = () => {
               >
                 Get Started — Free
               </Link>
-              <div className="bg-transparent border border-gray-400 hover:border-white text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+              <button disabled className="bg-transparent border  border-gray-400 hover:border-white text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
                 <span>Watch Demo</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ const HeroSection = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
 
             {/* Login Link */}

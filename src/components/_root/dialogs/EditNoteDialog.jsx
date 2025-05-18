@@ -113,13 +113,13 @@ const EditNoteDialog = ({
                   <select
                     {...register("noteCategory")}
                     defaultValue={category.id}
-                    className="select flex-1 ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
+                    className="select flex-1 ring-blue-800   focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
                   >
                     {categories.data?.map((cat) => (
                       <option
                         key={cat.id}
                         value={cat.id}
-                        className="text-black"
+                        className="text-black w-full"
                       >
                         {cat.name}
                       </option>

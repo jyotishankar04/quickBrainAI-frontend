@@ -11,7 +11,7 @@ const PDFViewer = ({ url }) => {
     );
   }
   return (
-    <iframe className="w-full h-full" src={url} title="PDF Viewer"></iframe>
+       <iframe className="w-full h-full" src={url} title="PDF Viewer"></iframe>
   );
 };
 

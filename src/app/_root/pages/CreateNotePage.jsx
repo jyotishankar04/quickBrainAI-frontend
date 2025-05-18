@@ -236,7 +236,7 @@ const CreateNotePage = () => {
                 <select
                   disabled={isNoteCreating}
                   {...register("category")}
-                  defaultValue="Pick a browser"
+                  defaultValue="Pick a category"
                   className="select flex-1 capitalize  ring-blue-800 focus:ring focus:ring-blue-800 border-blue-800 bg-blue-50 w-full px-4 "
                 >
                   {isCategorySuccess && categories.data.length > 0 ? (

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faCamera,
-  faSave,
-  faEdit,
-} from "@fortawesome/free-solid-svg-icons";
+
 import { useNavigate } from "react-router-dom";
 import {
   useUpdateUserMutation,
@@ -13,6 +7,8 @@ import {
 } from "../../../lib/query/react-query";
 import { extractUsername } from "../../../util/usernameExtract";
 import toast from "react-hot-toast";
+import { FaArrowLeft, FaCamera } from "react-icons/fa6";
+import { BiEdit, BiSave } from "react-icons/bi";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -152,7 +148,8 @@ const SettingsPage = () => {
             onClick={() => navigate(-1)}
             className="text-gray-600 rounded-button whitespace-nowrap cursor-pointer"
           >
-            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+
+            <FaArrowLeft className="mr-2" />
             Back
           </button>
           <h1 className="text-2xl font-semibold">Settings</h1>
@@ -174,7 +171,7 @@ const SettingsPage = () => {
                       htmlFor="profile-image"
                       className="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full cursor-pointer hover:bg-blue-600"
                     >
-                      <FontAwesomeIcon icon={faCamera} />
+                      <FaCamera className="text-white" />
                       <input
                         disabled={isUpdateLoading}
                         id="profile-image"
@@ -197,10 +194,9 @@ const SettingsPage = () => {
                   onClick={isEditing ? handleSubmit : toggleEditMode}
                   className="text-blue-600 rounded-button whitespace-nowrap cursor-pointer"
                 >
-                  <FontAwesomeIcon
-                    icon={isEditing ? faSave : faEdit}
-                    className="mr-2"
-                  />
+                  {
+                    isEditing ? (<BiSave className="mr-2" />) : (<BiEdit className="mr-2" />)
+                  }
                   {isEditing ? (
                     isUpdateLoading ? (
                       <span>
